@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- reference to user pages
 
 ### Updated
 
