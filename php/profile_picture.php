@@ -85,7 +85,7 @@ add_filter( 'get_avatar' , function ( $avatar, $idOrEmail, $size, $default, $alt
 		//Get profile picture id from db
 		$url = getProfilePictureUrl($user->ID);
 		if ( empty($url )){
-			$url = plugins_url('', __DIR__).'/pictures/usericon.png';
+			$url = SIM\pathToUrl(MODULE_PATH.'pictures/usericon.png');
 		}
 		$avatar = "<img alt='$alt' src='$url' loading='lazy' class='avatar avatar-{$size} photo' height='$size' width='$size' />";
     }
