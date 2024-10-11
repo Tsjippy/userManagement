@@ -76,7 +76,7 @@ add_shortcode("userstatistics",function (){
 	}, 10, 3);
 
 	if(isset($_REQUEST['getlist'])){
-		SIM\USERPAGE\buildUserDetailPdf('screen');
+		SIM\USERPAGES\buildUserDetailPdf('screen');
 		return;
 	}
 

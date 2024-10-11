@@ -287,8 +287,8 @@ class UpdateFamily{
         }
 
         //update user page if needed
-        if(function_exists('SIM\USERPAGE\createUserPage')){
-            SIM\USERPAGE\createUserPage($this->userId);
+        if(function_exists('SIM\USERPAGES\createUserPage')){
+            SIM\USERPAGES\createUserPage($this->userId);
         }
     }
 
