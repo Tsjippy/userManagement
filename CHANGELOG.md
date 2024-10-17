@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- mobile device display of userpage
 
 ### Updated
 
