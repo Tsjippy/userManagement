@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- reference to user pages
 
 ### Updated
+
+## [8.0.3] - 2024-10-12
+
+
+### Fixed
+- reference to user pages
 
 ## [8.0.2] - 2024-10-11
 
