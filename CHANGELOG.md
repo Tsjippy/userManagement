@@ -8,6 +8,11 @@
 ### Fixed
 
 ### Updated
+
+## [8.0.5] - 2024-10-17
+
+
+### Updated
 - userpage js
 - blocks
 
