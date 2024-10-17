@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- mobile device display of userpage
 
 ### Updated
+
+## [8.0.6] - 2024-10-17
+
+
+### Fixed
+- mobile device display of userpage
 
 ## [8.0.5] - 2024-10-17
 
