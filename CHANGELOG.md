@@ -8,6 +8,7 @@
 ### Fixed
 
 ### Updated
+- userpage js
 
 ## [8.0.4] - 2024-10-17
 
