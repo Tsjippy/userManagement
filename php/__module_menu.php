@@ -9,8 +9,6 @@ DEFINE(__NAMESPACE__.'\MODULE_SLUG', strtolower(basename(dirname(__DIR__))));
 DEFINE(__NAMESPACE__.'\MODULE_PATH', plugin_dir_path(__DIR__));
 
 add_filter('sim_submenu_description', function($description, $moduleSlug){
-	global $Modules;
-	
 	//module slug should be the same as the constant
 	if($moduleSlug != MODULE_SLUG)	{
 		return $description;
@@ -51,7 +49,7 @@ add_filter('sim_submenu_description', function($description, $moduleSlug){
 		<?php
 	}
 
-	return ob_get_clean();
+	return $description.ob_get_clean();
 }, 10, 2);
 
 add_filter('sim_submenu_options', function($optionsHtml, $moduleSlug, $settings){
