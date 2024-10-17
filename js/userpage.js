@@ -1,4 +1,4 @@
-import { addStyles } from './../../../js/imports.js';
+import { addStyles } from './../../../plugins/sim-plugin/includes/js/imports.js';
 
 async function loadTab(tab){
 
