@@ -49,7 +49,7 @@
 	}
 
 	#profile_menu{
-		width: 100%;
+		width: calc(100vw - 60px);
 		margin-bottom: 30px;
 		overflow-x: auto !important;
 		overflow-y: hidden;
