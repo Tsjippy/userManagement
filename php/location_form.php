@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 //create birthday and anniversary events
-add_filter('sim_before_saving_formdata',function($formResults, $object){
+add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingLocationFormData', 10, 2);
+function beforeSavingLocationFormData($formResults, $object){
 	if($object->formData->name != 'user_location'){
 		return $formResults;
 	}
@@ -44,4 +45,4 @@ add_filter('sim_before_saving_formdata',function($formResults, $object){
 	}
 	
 	return $formResults;
-}, 10, 2);
+}

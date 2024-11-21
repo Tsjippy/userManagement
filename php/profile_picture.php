@@ -7,7 +7,8 @@ add_action('init', function(){
 });
 
 
-add_filter('sim_before_saving_formdata',function($formResults, $object){
+add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingPictureFormData', 10, 2);
+function beforeSavingPictureFormData($formResults, $object){
 	if($object->formData->name != 'profile_picture'){
 		return $formResults;
 	}
@@ -19,7 +20,7 @@ add_filter('sim_before_saving_formdata',function($formResults, $object){
 	}
 
 	return $formResults;
-}, 10, 2);
+}
 
 /**
  * Get the url of the profile picture of a particular size
@@ -63,7 +64,8 @@ function getProfilePicturePath($userId){
 }
 
 // Apply filter
-add_filter( 'get_avatar' , function ( $avatar, $idOrEmail, $size, $default, $alt ) {
+add_filter( 'get_avatar' , __NAMESPACE__.'\getAvatar', 1 , 5 );
+function getAvatar( $avatar, $idOrEmail, $size, $default, $alt ) {
     $user = false;
 
 	//Check if an, id, email or user is given
@@ -90,4 +92,4 @@ add_filter( 'get_avatar' , function ( $avatar, $idOrEmail, $size, $default, $alt
 		$avatar = "<img alt='$alt' src='$url' loading='lazy' class='avatar avatar-{$size} photo' height='$size' width='$size' />";
     }
     return $avatar;
-}, 1 , 5 );
+}

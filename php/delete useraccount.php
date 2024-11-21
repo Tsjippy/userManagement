@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 //Delete user shortcode
-add_shortcode( 'delete_user', function(){
+add_shortcode( 'delete_user', __NAMESPACE__.'\deleteUser');
+function deleteUser(){
 	require_once(ABSPATH.'wp-admin/includes/user.php');
 	
 	$user = wp_get_current_user();
@@ -37,7 +38,7 @@ add_shortcode( 'delete_user', function(){
 	$html .= SIM\userSelect("Select an user to delete from the website:");
 	
 	return $html;
-});
+}
 
 function askConfirmation($userdata, $nonceString, $family){
 	$html	="<script>";

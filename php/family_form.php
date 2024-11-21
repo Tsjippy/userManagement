@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 //Add availbale partners as default
-add_filter( 'sim_add_form_multi_defaults', function($defaultArrayValues, $userId, $formName){
+add_filter( 'sim_add_form_multi_defaults', __NAMESPACE__.'\addMultiDefault', 10, 3);
+function addMultiDefault($defaultArrayValues, $userId, $formName){
 	if($formName != 'user_family'){
 		return $defaultArrayValues;
 	}
@@ -17,10 +18,11 @@ add_filter( 'sim_add_form_multi_defaults', function($defaultArrayValues, $userId
 	$defaultArrayValues['Potential children']	= $potentials->potentialChildren();
 	
 	return $defaultArrayValues;
-}, 10, 3);
+}
 
 //Save family
-add_filter('sim_before_saving_formdata', function($formResults, $object){
+add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingFormData', 10, 2);
+function beforeSavingFormData($formResults, $object){
 	if($object->formData->name != 'user_family'){
 		return $formResults;
 	}
@@ -38,10 +40,11 @@ add_filter('sim_before_saving_formdata', function($formResults, $object){
 	$formResults["family"]	= $updateFamily->family;
 	
 	return $formResults;
-}, 10, 2);
+}
 
 // add a family member modal
-add_filter('sim_before_form', function ($html, $formName){
+add_filter('sim_before_form', __NAMESPACE__.'\beforeForm', 10, 2);
+function beforeForm($html, $formName){
 	if($formName != 'user_family'){
 		return $html;
 	}
@@ -83,4 +86,4 @@ add_filter('sim_before_form', function ($html, $formName){
 	<?php
 
 	return $html.ob_get_clean();
-}, 10, 2);
+}

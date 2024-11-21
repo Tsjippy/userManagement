@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 //check if account is disabled
-add_filter( 'wp_authenticate_user', function($user, $password){
+add_filter( 'wp_authenticate_user', __NAMESPACE__.'\authenticateUser', 10, 2);
+function authenticateUser($user, $password){
 	if (
 		!is_wp_error( $user ) && 									// there is no error
 		get_user_meta( $user->ID, 'disabled', true ) && 			// the account is disabled
@@ -16,7 +17,7 @@ add_filter( 'wp_authenticate_user', function($user, $password){
 	}
 
 	return $user;
-}, 10, 2);
+}
 
 function changePasswordForm($userId = null){
 	if(is_numeric($userId)){
@@ -101,6 +102,7 @@ function changePasswordForm($userId = null){
 				}
 
 				?>
+				<br>
 				<form method='post'>
 					<input type='hidden' name='user_id' value='<?php echo $userId;?>'>
 					<input type='hidden' name='wp_2fa_nonce' value='<?php echo $nonce;?>'>

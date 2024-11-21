@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 //Shortcode for adding user accounts
-add_shortcode('create_user_account', function (){
+add_shortcode('create_user_account', __NAMESPACE__.'\createUserAccountForm');
+function createUserAccountForm(){
 	wp_enqueue_script( 'sim_user_management');
 
 	$user = wp_get_current_user();
@@ -54,10 +55,11 @@ add_shortcode('create_user_account', function (){
 	}else{
 		return "You have no permission to see this";
 	}
-});
+}
 
 //Shortcode to display the pending user accounts
-add_shortcode('pending_user', function (){
+add_shortcode('pending_user', __NAMESPACE__.'\pendingUsers');
+function pendingUsers(){
 	if ( !current_user_can( 'edit_others_pages' ) ){
 		return "No permission!";
 	}
@@ -128,10 +130,11 @@ add_shortcode('pending_user', function (){
 		$html	.= "</p>";
 		return $html;
 	}
-});
+}
 
 //Shortcode to display number of pending user accounts
-add_shortcode('pending_user_icon',function (){
+add_shortcode('pending_user_icon', __NAMESPACE__.'\pendingUsersIcon');
+function pendingUsersIcon(){
 	$pendingUsers = get_users(array(
 		'meta_key'     => 'disabled',
 		'meta_value'   => 'pending',
@@ -141,4 +144,4 @@ add_shortcode('pending_user_icon',function (){
 	if (count($pendingUsers) > 0){
 		return '<span class="numberCircle">'.count($pendingUsers).'</span>';
 	}
-});
+}

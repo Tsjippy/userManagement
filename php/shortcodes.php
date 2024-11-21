@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 //Shortcode for the dashboard
-add_action('sim_dashboard_warnings', function($userId){
+add_action('sim_dashboard_warnings', __NAMESPACE__.'\dashboardWarnings', 20);
+function dashboardWarnings($userId){
 	$dashboardWarnings	= new DashboardWarnings($userId);
 
 	$dashboardWarnings->greenCardReminder();
@@ -31,7 +32,7 @@ add_action('sim_dashboard_warnings', function($userId){
 		</div>
 		<?php
 	}
-}, 20);
+}
 
 //Shortcode for expiry warnings
 add_shortcode("expiry_warnings", __NAMESPACE__.'\expiryWarnings');
@@ -69,7 +70,8 @@ function expiryWarnings(){
 	return  "<div id=reminders>$html</p></div>";
 }
 
-add_shortcode("userstatistics",function (){
+add_shortcode("userstatistics", __NAMESPACE__.'\userStatistics');
+function userStatistics(){
 
 	add_filter('post-edit-button', function($buttonHtml, $post, $content){
 		return $buttonHtml."<form style='display: inline-block;' action='' method='post'><button class='button small' name='getlist' value='true'>Get Contact List</button></form>";
@@ -145,4 +147,4 @@ add_shortcode("userstatistics",function (){
 	</div>
 	<?php
 	return ob_get_clean();
-});
+}

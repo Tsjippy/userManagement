@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 use WP_User;
 
-add_action( 'rest_api_init', function () {
+add_action( 'rest_api_init', __NAMESPACE__.'\restApiInit');
+function restApiInit() {
 	// add element to form
 	register_rest_route(
 		RESTAPIPREFIX.'/user_management',
@@ -131,7 +132,7 @@ add_action( 'rest_api_init', function () {
 			)
 		)
 	);
-});
+}
 
 function getUserPageTab($wpRestRequest){
 	$params	= $wpRestRequest->get_params();

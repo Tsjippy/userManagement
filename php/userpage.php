@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 // edit users dropdown
-add_action('sim_user_description', function($user){
+add_action('sim_user_description', __NAMESPACE__.'\userDescription');
+function userDescription($user){
     //Add a useraccount edit button if the user has the usermanagement role
 	if (in_array('usermanagement', wp_get_current_user()->roles)){
         $url	= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user_edit_page');
@@ -29,7 +30,7 @@ add_action('sim_user_description', function($user){
 
         echo $html;
 	}
-});
+}
 
 //Shortcode for userdata forms
 add_shortcode("user-info", __NAMESPACE__.'\userInfoPage');

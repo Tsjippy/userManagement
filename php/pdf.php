@@ -2,7 +2,8 @@
 namespace SIM\USERMANAGEMENT;
 use SIM;
 
-add_filter('sim_before_pdf_text', function($cellText, $pdf){
+add_filter('sim_before_pdf_text', __NAMESPACE__.'\beforePdfText', 10, 3);
+function beforePdfText($cellText, $pdf){
     //text contains a filepath
     if(is_array($cellText) && isset($cellText['picture'])){
         $cellText	= $cellText['name'];
@@ -19,13 +20,14 @@ add_filter('sim_before_pdf_text', function($cellText, $pdf){
     }
 
     return $cellText;
-}, 10, 3);
+}
 
-add_action('sim_after_pdf_text', function($cellText, $pdf, $x, $y, $cellWidth, $reset){
+add_action('sim_after_pdf_text', __NAMESPACE__.'\afterPdfText', 10, 6);
+function afterPdfText($cellText, $pdf, $x, $y, $cellWidth, $reset){
     if(is_array($cellText) && isset($cellText['picture'])){
         $filePath	= $cellText['picture'];
         
         $pdf->addCellPicture($filePath, $x, $y, '', 6, $reset);
     }
 
-}, 10, 6);
+}

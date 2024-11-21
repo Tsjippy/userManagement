@@ -2,7 +2,8 @@
 namespace SIM\USERMANAGEMENT;
 use SIM;
 
-add_action('init', function(){
+add_action('init', __NAMESPACE__.'\taskInit');
+function taskInit(){
 	//add action for use in scheduled task
 	add_action( 'birthday_check_action', __NAMESPACE__.'\birthdayCheck' );
     add_action( 'vaccination_reminder_action', __NAMESPACE__.'\vaccinationReminder' );
@@ -11,7 +12,7 @@ add_action('init', function(){
     add_action( 'account_expiry_check_action', __NAMESPACE__.'\accountExpiryCheck' );
 	add_action( 'review_reminders_action', __NAMESPACE__.'\reviewReminders' );
 	add_action( 'check_last_login_date_action', __NAMESPACE__.'\checkLastLoginDate' );
-});
+}
 
 function scheduleTasks(){
     SIM\scheduleTask('birthday_check_action', 'daily');
@@ -811,17 +812,3 @@ function checkLastLoginDate(){
 	}
 
 }
-
-// Remove scheduled tasks upon module deactivatio
-add_action('sim_module_deactivated', function($moduleSlug){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG)	{return;}
-
-	wp_clear_scheduled_hook( 'birthday_check_action' );
-	wp_clear_scheduled_hook( 'account_expiry_check_action' );
-	wp_clear_scheduled_hook( 'vaccination_reminder_action' );
-	wp_clear_scheduled_hook( 'greencard_reminder_action' );
-	wp_clear_scheduled_hook( 'check_details_mail_action' );
-	wp_clear_scheduled_hook( 'review_reminders_action' );
-	wp_clear_scheduled_hook( 'check_last_login_date_action' );
-});

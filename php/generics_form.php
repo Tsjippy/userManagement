@@ -2,7 +2,8 @@
 namespace SIM\USERMANAGEMENT;
 use SIM;
 
-add_filter('sim_forms_load_userdata',function($usermeta,$userId){
+add_filter('sim_forms_load_userdata', __NAMESPACE__.'\loadUserData', 10, 2);
+function loadUserData($usermeta,$userId){
 	$userdata	= (array)get_userdata($userId)->data;
 
 	//Change ID to userid because its a confusing name
@@ -10,10 +11,11 @@ add_filter('sim_forms_load_userdata',function($usermeta,$userId){
 	unset($userdata['ID']);
 	
 	return array_merge($usermeta, $userdata);
-}, 10, 2);
+}
 
 // phonenumbers and more
-add_filter('sim_before_saving_formdata', function($formResults, $object){
+add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingData', 10, 2);
+function beforeSavingData($formResults, $object){
 	if($object->formData->name != 'user_generics'){
 		return $formResults;
 	}
@@ -68,10 +70,11 @@ add_filter('sim_before_saving_formdata', function($formResults, $object){
 	}
 	
 	return $formResults;
-}, 10, 2);
+}
 
 //Add ministry modal
-add_filter('sim_before_form', function ($html, $formName){
+add_filter('sim_before_form', __NAMESPACE__.'\beforeGenericsForm', 10, 2);
+function beforeGenericsForm($html, $formName){
 	if($formName != 'user_generics'){
 		return $html;
 	}
@@ -111,7 +114,7 @@ add_filter('sim_before_form', function ($html, $formName){
 	<?php
 
 	return $html.ob_get_clean();
-}, 10, 2);
+}
 
 /**
  * Get all locations with the ministries category

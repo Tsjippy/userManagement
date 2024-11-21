@@ -8,7 +8,8 @@ DEFINE(__NAMESPACE__.'\MODULE_SLUG', strtolower(basename(dirname(__DIR__))));
 
 DEFINE(__NAMESPACE__.'\MODULE_PATH', plugin_dir_path(__DIR__));
 
-add_filter('sim_submenu_description', function($description, $moduleSlug){
+add_filter('sim_submenu_description', __NAMESPACE__.'\moduleDescription', 10, 2);
+function moduleDescription($description, $moduleSlug){
 	//module slug should be the same as the constant
 	if($moduleSlug != MODULE_SLUG)	{
 		return $description;
@@ -50,9 +51,10 @@ add_filter('sim_submenu_description', function($description, $moduleSlug){
 	}
 
 	return $description.ob_get_clean();
-}, 10, 2);
+}
 
-add_filter('sim_submenu_options', function($optionsHtml, $moduleSlug, $settings){
+add_filter('sim_submenu_options', __NAMESPACE__.'\moduleOptions', 10, 3);
+function moduleOptions($optionsHtml, $moduleSlug, $settings){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG){
 		return $optionsHtml;
@@ -92,9 +94,10 @@ add_filter('sim_submenu_options', function($optionsHtml, $moduleSlug, $settings)
 	}
 
 	return ob_get_clean().$optionsHtml;
-}, 10, 3);
+}
 
-add_filter('sim_email_settings', function($optionsHtml, $moduleSlug, $settings){
+add_filter('sim_email_settings', __NAMESPACE__.'\emailSettings', 10, 3);
+function emailSettings($optionsHtml, $moduleSlug, $settings){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG){
 		return $optionsHtml;
@@ -180,9 +183,10 @@ add_filter('sim_email_settings', function($optionsHtml, $moduleSlug, $settings){
 	$greenCardReminderMail->printInputs($settings);
 
 	return ob_get_clean();
-}, 10, 3);
+}
 
-add_filter('sim_module_updated', function($options, $moduleSlug, $oldOptions){
+add_filter('sim_module_updated', __NAMESPACE__.'\moduleUpdated', 10, 3);
+function moduleUpdated($options, $moduleSlug, $oldOptions){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG){
 		return $options;
@@ -210,9 +214,10 @@ add_filter('sim_module_updated', function($options, $moduleSlug, $oldOptions){
 	scheduleTasks();
 
 	return $options;
-}, 10, 3);
+}
 
-add_filter('display_post_states', function ( $states, $post ) {
+add_filter('display_post_states', __NAMESPACE__.'\postStates', 10, 2);
+function postStates( $states, $post ) {
 
 	if ( in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'account_page', false))) {
 		$states[] = __('Account page');
@@ -225,10 +230,11 @@ add_filter('display_post_states', function ( $states, $post ) {
 	}
 
 	return $states;
-}, 10, 2);
+}
 
 
-add_action('sim_module_deactivated', function($moduleSlug, $options){
+add_action('sim_module_deactivated', __NAMESPACE__.'\moduleDeActivated', 10, 2);
+function moduleDeActivated($moduleSlug, $options){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG)	{
 		return;
@@ -257,9 +263,18 @@ add_action('sim_module_deactivated', function($moduleSlug, $options){
 		// Remove the auto created page
 		wp_delete_post($page, true);
 	}
-}, 10, 2);
 
-add_action('sim_module_activated', function($moduleSlug){
+	wp_clear_scheduled_hook( 'birthday_check_action' );
+	wp_clear_scheduled_hook( 'account_expiry_check_action' );
+	wp_clear_scheduled_hook( 'vaccination_reminder_action' );
+	wp_clear_scheduled_hook( 'greencard_reminder_action' );
+	wp_clear_scheduled_hook( 'check_details_mail_action' );
+	wp_clear_scheduled_hook( 'review_reminders_action' );
+	wp_clear_scheduled_hook( 'check_last_login_date_action' );
+}
+
+add_action('sim_module_activated', __NAMESPACE__.'\moduleActivated');
+function moduleActivated($moduleSlug){
 	//module slug should be the same as grandparent folder name
 	if($moduleSlug != MODULE_SLUG)	{
 		return;
@@ -282,4 +297,4 @@ add_action('sim_module_activated', function($moduleSlug){
     foreach(get_users(['meta_key' => 'last_login_date','meta_compare'  => 'NOT EXISTS']) as $user){
         update_user_meta( $user->ID, 'last_login_date', date('Y-m-d'));
     }
-});
+}

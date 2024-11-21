@@ -3,12 +3,14 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 //Add link to the user menu to resend the confirmation e-mail
-add_filter( 'user_row_actions', function ( $actions, $user ) {
+add_filter( 'user_row_actions', __NAMESPACE__.'\userRowActions', 10, 2 );
+function userRowActions( $actions, $user ) {
     $actions['Resend welcome mail'] = "<a href='".SITEURL."/wp-admin/users.php?send_activation_email=$user->ID'>Resend welcome email</a>";
     return $actions;
-}, 10, 2 );
+}
 
-add_action('admin_menu', function() {
+add_action('admin_menu', __NAMESPACE__.'\adminMenu');
+function adminMenu() {
 	//Process the request
 	if(!empty($_GET['send_activation_email']) && is_numeric($_GET['send_activation_email'] )){
 		$userId    = $_GET['send_activation_email'];
@@ -16,10 +18,11 @@ add_action('admin_menu', function() {
 		SIM\printArray("Sending welcome email to $email");
 		wp_new_user_notification($userId, null, 'user');
 	}
-});
+}
 
 //Apply our e-mail settings
-add_filter( 'wp_new_user_notification_email', function($args, $user){
+add_filter( 'wp_new_user_notification_email', __NAMESPACE__.'\notificationEmail', 10, 2);
+function notificationEmail($args, $user){
 	
 	$expirationDuration	= apply_filters( 'password_reset_expiration', DAY_IN_SECONDS );
 	$key		 		= get_password_reset_key($user);
@@ -47,4 +50,4 @@ add_filter( 'wp_new_user_notification_email', function($args, $user){
 	$args['message']	= $mail->message;
 
 	return $args;
-}, 10, 2);
+}
