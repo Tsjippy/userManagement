@@ -3,7 +3,8 @@ namespace SIM\USERMANAGEMENT;
 use SIM;
 
 //Remove user page and user marker on user account deletion
-add_action('delete_user', function ($userId){
+add_action('delete_user', __NAMESPACE__.'\userDeleted');
+function userDeleted($userId){
 	$userdata		= get_userdata($userId);
 	$displayname	= $userdata->display_name;
 	
@@ -63,4 +64,4 @@ add_action('delete_user', function ($userId){
 	$accountRemoveMail->filterMail();
 						
 	wp_mail( $userdata->user_email, $accountRemoveMail->subject, $accountRemoveMail->message);
-});
+}

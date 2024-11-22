@@ -2,9 +2,10 @@
 namespace SIM\USERMANAGEMENT;
 use SIM;
 
-add_action('init', function(){
+add_action('init', __NAMESPACE__.'\init');
+function init(){
 	add_image_size('avatar', 50, 50, true);
-});
+}
 
 
 add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingPictureFormData', 10, 2);
