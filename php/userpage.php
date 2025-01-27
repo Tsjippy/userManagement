@@ -102,12 +102,6 @@ function userInfoPage($atts){
 		return "<div class='error'>No user to display</div>";
 	}
 
-	$accountType	= get_user_meta($userId, 'account-type', true);
-	// positional account with usermanagement rights as a normal account so they can change the forms
-	if($accountType == 'positional' && in_array('usermanagement', $userRoles )){
-		$accountType	= 'normal';
-	}
-
 	/*
 		Dashboard
 	*/
@@ -133,14 +127,15 @@ function userInfoPage($atts){
 		Family Info
 	*/
 	if(
-		$accountType != 'positional'	&&							// we are not a positional account
 		(
 			array_intersect($genericInfoRoles, $userRoles ) ||		// we do  have permission to view others data
 			$showCurrentUserData									// or its our own data
 		) &&
 		in_array('family', $availableForms)							// and the family form is enabled
 	){
-		if($userAge > 18){
+		$shouldShow	= apply_filters('sim-should-show-family-form', true, $userId);
+
+		if($shouldShow && $userAge > 18){
 			//Tab button
 			$tabs[]	= '<li class="tablink" id="show_family_info" data-target="family_info">Family</li>';
 			
@@ -179,26 +174,29 @@ function userInfoPage($atts){
 		Location Info
 	*/
 	if(
-		$accountType != 'positional'	&&
 		(
 			array_intersect($genericInfoRoles, $userRoles ) ||
 			$showCurrentUserData
 		) &&
 		in_array('location', $availableForms)
 	){
-		//Add tab button
-		$tabs[]	= '<li class="tablink" id="show_location_info" data-target="location_info">Location</li>';
-		
-		//Content
-		$html .= '<div id="location_info" class="tabcontent hidden">';
-		
-			if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'location_info'){
-				$html	.= do_shortcode('[formbuilder formname=user_location]');
-			}else{
-				$html	.= "<div class='loader-wrapper loading hidden'></div><img class='tabloader' src='".SIM\LOADERIMAGEURL."' loading='lazy'>";
-			}
+		$shouldShow	= apply_filters('sim-should-show-location-form', true, $userId);
 
-		$html .= '</div>';
+		if($shouldShow){
+			//Add tab button
+			$tabs[]	= '<li class="tablink" id="show_location_info" data-target="location_info">Location</li>';
+			
+			//Content
+			$html .= '<div id="location_info" class="tabcontent hidden">';
+			
+				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'location_info'){
+					$html	.= do_shortcode('[formbuilder formname=user_location]');
+				}else{
+					$html	.= "<div class='loader-wrapper loading hidden'></div><img class='tabloader' src='".SIM\LOADERIMAGEURL."' loading='lazy'>";
+				}
+
+			$html .= '</div>';
+		}
 	}
 	
 	/*
@@ -215,23 +213,27 @@ function userInfoPage($atts){
 		PROFILE PICTURE Info
 	*/
 	if((in_array('usermanagement', $userRoles ) || $showCurrentUserData) && in_array('profile picture', $availableForms)){
-		//Add tab button
-		$tabs[]	= '<li class="tablink" id="show_profile_picture_info" data-target="profile_picture_info">Profile picture</li>';
-		
-		//Content
-		$html	.= '<div id="profile_picture_info" class="tabcontent hidden">';
+		$shouldShow	= apply_filters('sim-should-show-picture-form', true, $userId);
 
-			if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'profile_picture'){
-				if(SIM\isChild($userId)){
-					$html	.= do_shortcode("[formbuilder formname=profile_picture userid='$userId']");
+		if($shouldShow){
+			//Add tab button
+			$tabs[]	= '<li class="tablink" id="show_profile_picture_info" data-target="profile_picture_info">Profile picture</li>';
+			
+			//Content
+			$html	.= '<div id="profile_picture_info" class="tabcontent hidden">';
+
+				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'profile_picture'){
+					if(SIM\isChild($userId)){
+						$html	.= do_shortcode("[formbuilder formname=profile_picture userid='$userId']");
+					}else{
+						$html	.= do_shortcode('[formbuilder formname=profile_picture]');
+					}
 				}else{
-					$html	.= do_shortcode('[formbuilder formname=profile_picture]');
+					$html	.= "<div class='loader-wrapper loading hidden'></div><img class='tabloader' src='".SIM\LOADERIMAGEURL."' loading='lazy'>";
 				}
-			}else{
-				$html	.= "<div class='loader-wrapper loading hidden'></div><img class='tabloader' src='".SIM\LOADERIMAGEURL."' loading='lazy'>";
-			}
 
-		$html .= '</div>';
+			$html .= '</div>';
+		}
 	}
 	
 	/*
@@ -268,60 +270,66 @@ function userInfoPage($atts){
 		SECURITY INFO
 	*/
 	if(
-		$accountType != 'positional'	&&
 		(
 			array_intersect($genericInfoRoles, $userRoles ) ||
 			$showCurrentUserData
 		) &&
 		in_array('security', $availableForms)
 	){
-		//Tab button
-		$tabs[]	= "<li class='tablink' id='show_security_info' data-target='security_info'>Security</li>";
-		
-		//Content
-		$html	.= "<div id='security_info' class='tabcontent hidden'>";
+		$shouldShow	= apply_filters('sim-should-show-security-form', true, $userId);
 
-			if(isset($_GET['main_tab']) && $_GET['main_tab'] == "security_info"){
-				$html	.= do_shortcode('[formbuilder formname=security_questions]');
-			}else{
-				$html	.= "<div class='loader-wrapper loading hidden'></div><img class='tabloader' src='".SIM\LOADERIMAGEURL."' loading='lazy'>";
-			}
+		if($shouldShow){
+			//Tab button
+			$tabs[]	= "<li class='tablink' id='show_security_info' data-target='security_info'>Security</li>";
+			
+			//Content
+			$html	.= "<div id='security_info' class='tabcontent hidden'>";
 
-		$html .= '</div>';
+				if(isset($_GET['main_tab']) && $_GET['main_tab'] == "security_info"){
+					$html	.= do_shortcode('[formbuilder formname=security_questions]');
+				}else{
+					$html	.= "<div class='loader-wrapper loading hidden'></div><img class='tabloader' src='".SIM\LOADERIMAGEURL."' loading='lazy'>";
+				}
+
+			$html .= '</div>';
+		}
 	}
 
 	/*
 		Vaccinations Info
 	*/
 	if(
-		$accountType != 'positional'	&&
 		(
 			array_intersect($medicalRoles, $userRoles) ||
 			$showCurrentUserData
 		) &&
 		in_array('vaccinations', $availableForms)
 	){
-		if($showCurrentUserData){
-			$active = '';
-			$class = 'class="hidden"';
-		}else{
-			$active = 'active';
-			$class = '';
-		}
-		
-		//Add tab button
-		$tabs[]	= "<li class='tablink $active' id='show_medical_info' data-target='medical_info'>Vaccinations</li>";
-		
-		//Content
-		$html	.= "<div id='medical_info' $class>";
+		$shouldShow	= apply_filters('sim-should-show-vaccination-form', true, $userId);
 
-			if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'medical_info'){
-				$html	.= getMedicalTab($userId);
+		if($shouldShow){
+			if($showCurrentUserData){
+				$active = '';
+				$class = 'class="hidden"';
 			}else{
-				$html	.= "<div class='loader-wrapper loading hidden'></div><img class='tabloader' src='".SIM\LOADERIMAGEURL."' loading='lazy'>";
+				$active = 'active';
+				$class = '';
 			}
+			
+			//Add tab button
+			$tabs[]	= "<li class='tablink $active' id='show_medical_info' data-target='medical_info'>Vaccinations</li>";
+			
+			//Content
+			$html	.= "<div id='medical_info' $class>";
 
-		$html	.= "</div>";
+				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'medical_info'){
+					$html	.= getMedicalTab($userId);
+				}else{
+					$html	.= "<div class='loader-wrapper loading hidden'></div><img class='tabloader' src='".SIM\LOADERIMAGEURL."' loading='lazy'>";
+				}
+
+			$html	.= "</div>";
+		}
 	}
 
 	//  Add filter to add extra pages, children tabs should always be last
@@ -371,9 +379,9 @@ function userInfoPage($atts){
 /**
  * Get the contents of the generics tab
  *
- * @param int		$userId		Wp user id
+ * @param int		$userId			Wp user id
  *
- * @return	string				The html
+ * @return	string					The html
  */
 function getGenericsTab($userId){
 	
@@ -413,10 +421,16 @@ function getGenericsTab($userId){
 		$html	.= "</div>";
 	}
 
-	if(SIM\isChild($userId)){
-		$html	.= do_shortcode("[formbuilder formname=child_generic userid=$userId]");
+	$form	= apply_filters('sim-generics-form', '', $userId);
+
+	if(empty($form)){
+		if(SIM\isChild($userId)){
+			$html	.= do_shortcode("[formbuilder formname=child_generic userid=$userId]");
+		}else{
+			$html	.= do_shortcode("[formbuilder formname=user_generics userid='$userId']");
+		}
 	}else{
-		$html	.= do_shortcode("[formbuilder formname=user_generics userid='$userId']");
+		$html	.= $form;
 	}
 
 	return $html;

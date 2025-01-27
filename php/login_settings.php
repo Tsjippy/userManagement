@@ -48,10 +48,9 @@ function changePasswordForm($userId = null){
 		}elseif($_REQUEST['action'] == 'Change to e-mail'){
 			update_user_meta($userId, '2fa_methods', ['email']);
 			echo "<div class='success'>Succesfully changed the 2fa factor for $name to e-mail</div>";
-		}elseif($_REQUEST['action'] == 'Change account type'){
-			update_user_meta($userId, 'account-type', $_REQUEST['type']);
-			echo "<div class='success'>Succesfully changed the account type for $name to {$_REQUEST['type']}</div>";
 		}
+
+		do_action('sim-login-settings-save', $userId, $name);
 	}
 				
 	//Content
@@ -82,7 +81,7 @@ function changePasswordForm($userId = null){
 		}
 		
 		$methods	= get_user_meta($userId, '2fa_methods', true);
-		$nonce	= wp_create_nonce( "wp-2fa-reset-nonce_$userId" );
+		$nonce		= wp_create_nonce( "wp-2fa-reset-nonce_$userId" );
 		if(is_array($methods)){
 
 			?>
@@ -109,24 +108,14 @@ function changePasswordForm($userId = null){
 
 					Use the button below to turn off Two Factor Authentication for <?php echo $name;?><br>
 					<input type='submit' name='action' value='Reset 2FA' class='button small'>
-			</form>
+				</form>
 			</div>
+			<br>
 		<?php
 		}
 
-		$type			= 'positional';
-		if(get_user_meta($userId, 'account-type', true) == 'positional'){
-			$type		= 'normal';
-		}
+		do_action('sim-after-login-settings', $userId, $nonce);
 		?>
-		<form method='post'>
-			<input type='hidden' name='user_id' value='<?php echo $userId;?>'>
-			<input type='hidden' name='wp_2fa_nonce' value='<?php echo $nonce;?>'>
-			<input type='hidden' name='type' value='<?php echo $type;?>'>
-
-			Use the button below to switch this account to a <?php echo $type;?> account<br>
-			<input type='submit' name='action' value='Change account type' class='button small'>
-		</form>
 	</div>
 	<?php
 	return ob_get_clean();
