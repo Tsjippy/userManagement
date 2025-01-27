@@ -232,7 +232,6 @@ function postStates( $states, $post ) {
 	return $states;
 }
 
-
 add_action('sim_module_deactivated', __NAMESPACE__.'\moduleDeActivated', 10, 2);
 function moduleDeActivated($moduleSlug, $options){
 	//module slug should be the same as grandparent folder name
