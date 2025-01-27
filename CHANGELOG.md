@@ -2,6 +2,17 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
+
+### Changed
+
+### Fixed
+
+### Updated
+
+## [8.0.9] - 2025-01-27
+
+
+### Added
 - hooks
 
 ### Changed
@@ -9,8 +20,6 @@
 
 ### Fixed
 - imports
-
-### Updated
 
 ## [8.0.8] - 2024-11-22
 
