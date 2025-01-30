@@ -14,9 +14,9 @@ class AccountApproveddMail extends ADMIN\MailSetting{
 
         $this->addUser($user);
 
-        $this->replaceArray['%login_url%']    = $loginUrl;
-        $this->replaceArray['%user_name%']    = $user->user_login;
-        $this->replaceArray['%valid_till%']    = $validTill;
+        $this->replaceArray['%login_url%']  = $loginUrl;
+        $this->replaceArray['%user_name%']  = $user->user_login;
+        $this->replaceArray['%valid_till%'] = $validTill;
 
         $this->defaultSubject    = 'We have approved your account on %site_name%';
 
