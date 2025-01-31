@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- extra js hook
 
 ### Fixed
 
 ### Updated
+
+## [8.1.0] - 2025-01-31
+
+
+### Changed
+- extra js hook
 
 ## [8.0.9] - 2025-01-27
 
