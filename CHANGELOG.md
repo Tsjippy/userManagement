@@ -2,13 +2,18 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
-- newest import.js function
 
 ### Changed
 
 ### Fixed
 
 ### Updated
+
+## [8.1.2] - 2025-02-04
+
+
+### Added
+- newest import.js function
 
 ## [8.1.1] - 2025-02-04
 
