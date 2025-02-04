@@ -18,12 +18,6 @@ async function loadTab(tab){
 	if(response){
 		tab.querySelector('.loader-wrapper').innerHTML	= response.html;
 
-		// Enable any inline js script
-		let scripts = tab.querySelector('.loader-wrapper').getElementsByTagName('script');
-		for (let n = 0; n < scripts.length; n++){
-    		eval(scripts[n].innerHTML)				//run script inside div
-		}
-
 		// after scripts have been loaded over AJAX
 		tab.addEventListener("scriptsloaded", function(event) {
 			event.target.querySelectorAll('.loader-wrapper.hidden').forEach(el=>el.classList.remove('hidden'));
