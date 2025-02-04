@@ -2,13 +2,18 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
-- support for inline script over AJAX
 
 ### Changed
 
 ### Fixed
 
 ### Updated
+
+## [8.1.1] - 2025-02-04
+
+
+### Added
+- support for inline script over AJAX
 
 ## [8.1.0] - 2025-01-31
 
