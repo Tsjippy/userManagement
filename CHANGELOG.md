@@ -2,6 +2,7 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
+- support for inline script over AJAX
 
 ### Changed
 
