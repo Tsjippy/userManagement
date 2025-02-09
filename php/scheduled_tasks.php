@@ -7,10 +7,8 @@ function taskInit(){
 	//add action for use in scheduled task
 	add_action( 'birthday_check_action', __NAMESPACE__.'\birthdayCheck' );
     add_action( 'vaccination_reminder_action', __NAMESPACE__.'\vaccinationReminder' );
-    add_action( 'greencard_reminder_action', __NAMESPACE__.'\greencardReminder' );
     add_action( 'check_details_mail_action', __NAMESPACE__.'\checkDetailsMail' );
     add_action( 'account_expiry_check_action', __NAMESPACE__.'\accountExpiryCheck' );
-	add_action( 'review_reminders_action', __NAMESPACE__.'\reviewReminders' );
 	add_action( 'check_last_login_date_action', __NAMESPACE__.'\checkLastLoginDate' );
 }
 
@@ -18,13 +16,8 @@ function scheduleTasks(){
     SIM\scheduleTask('birthday_check_action', 'daily');
     SIM\scheduleTask('account_expiry_check_action', 'daily');
     SIM\scheduleTask('vaccination_reminder_action', 'monthly');
-	//SIM\scheduleTask('review_reminders_action', 'monthly');
 	SIM\scheduleTask('check_last_login_date_action', 'monthly');
 
-	$freq	= SIM\getModuleOption(MODULE_SLUG, 'greencard_reminder_freq');
-	if($freq){
-		SIM\scheduleTask('greencard_reminder_action', $freq);
-	}
 	$freq	= SIM\getModuleOption(MODULE_SLUG, 'check_details_mail_freq');
 	if($freq){
 		SIM\scheduleTask('check_details_mail_action', $freq);
@@ -136,6 +129,7 @@ function vaccinationReminder(){
 					$vaccinationWarningMail->filterMail();
 					$subject					= $vaccinationWarningMail->subject;
 					$message					= $vaccinationWarningMail->message;
+					$headers					= $vaccinationWarningMail->headers;
 
 					//Send Signal message
 					SIM\trySendSignal("Hi $userdata->first_name,\nPlease renew your vaccinations!\n\n".SITEURL, $user->ID);
@@ -152,8 +146,6 @@ function vaccinationReminder(){
 						$healtCoordinator->display_name = '';
 						error_log("Please assign someone the health coorodinator role!");
 					}
-
-					$headers = ['Reply-To: '.$healtCoordinator->display_name.' <'.SIM\getModuleOption(MODULE_SLUG, 'health_email').'>'];
 
 					//Send the mail
 					wp_mail($recipients , $subject, $message, $headers );
@@ -246,62 +238,6 @@ function checkExpiryDate($date, $expiryName){
 		}
 
 		return $reminderHtml;
-	}
-}
-
-/**
- * loop over all users and scan for expiry greencards, if so contact them
- */
-function greencardReminder(){
-	//Get the current travel coordinator
-	$travelCoordinator 			= get_users( array( 'role' => 'visainfo' ));
-	if($travelCoordinator != null){
-		$travelCoordinator = $travelCoordinator[0];
-	}else{
-		$travelCoordinator = new \stdClass();
-		$travelCoordinator->display_name = '';
-		error_log("Please assign someone the travelcoorodinator role!");
-	}
-	//Change the user to the adminaccount otherwise get_users will not work
-	wp_set_current_user(1);
-
-	//Retrieve all users
-	$users = get_users( array( 'fields' => array( 'ID','user_login','display_name' ) ) );
-
-	//loop over the users
-	foreach($users as $user){
-		$visaInfo = get_user_meta( $user->ID, "visa_info", true);
-
-		//If there are reminders, send an e-mail
-		if (is_array($visaInfo) && isset($visaInfo['greencard_expiry'])){
-			$reminder = checkExpiryDate($visaInfo['greencard_expiry'], 'greencard');
-			$reminder = str_replace(['</li>', '<li>'], "", $reminder);
-
-			if(!empty($reminder)){
-				$to = $user->user_email;
-
-				//Skip if not valid email
-				if(empty($to) || str_contains($to,'.empty')){
-					continue;
-				}
-
-				//Send e-mail
-				$greenCardReminderMail    = new GreenCardReminderMail($user, $reminder);
-				$greenCardReminderMail->filterMail();
-				$headers = ['Reply-To: '.$travelCoordinator->display_name.' <'.$travelCoordinator->user_email.'>'];
-
-				wp_mail( $to, $greenCardReminderMail->subject, $greenCardReminderMail->message, $headers);
-
-				//Send OneSignal message
-				$accountPageUrl	= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'account_page');
-
-				if(empty($accountPageUrl)){
-					SIM\printArray('No account page defined');
-				}
-				$date		= date("M jS, Y", strtotime($visaInfo['greencard_expiry']));
-				SIM\trySendSignal("Hi $user->first_name,\nPlease renew your greencard!\nIt has expired on $date\n\nIf you have already renewed it, please indicate so on $accountPageUrl?main_tab=immigration", $user->ID);
-			}
-		}
 	}
 }
 
@@ -595,9 +531,6 @@ function accountExpiryCheck(){
 	//Change the user to the adminaccount otherwise get_users will not work
 	wp_set_current_user(1);
 
-	$personnelCoordinatorEmail	= SIM\getModuleOption(MODULE_SLUG, 'personnel_email');
-	$staEmail					= SIM\getModuleOption(MODULE_SLUG, 'sta_email');
-
 	//Get the users who will expire in 1 month
 	$users = get_users(
 		array(
@@ -628,20 +561,14 @@ function accountExpiryCheck(){
 		$accountExpiryMail    = new AccountExpiryMail($user);
 		$accountExpiryMail->filterMail();
 
-		$headers 	= [
-			"Reply-To: STA Coordinator <$staEmail>",
-			"cc: $personnelCoordinatorEmail",
-			"cc: $staEmail"
-		];
-
 		//Send the mail if valid email
 		if(!str_contains($user->user_email,'.empty')){
 			$recipient = $user->user_email;
 		}else{
-			$recipient = $staEmail;
+			$recipient = '';
 		}
 
-		wp_mail( $recipient, $accountExpiryMail->subject, $accountExpiryMail->message, $headers);
+		wp_mail( $recipient, $accountExpiryMail->subject, $accountExpiryMail->message, $accountExpiryMail->headers);
 
 		//Send OneSignal message
 		SIM\trySendSignal("Hi ".$user->first_name.",\nThis is just a reminder that your account on ".SITEURLWITHOUTSCHEME." will be deleted on ".date("d F Y", strtotime(" +1 months")),$user->ID);
@@ -687,66 +614,6 @@ function accountExpiryCheck(){
 		//Delete the account
 		SIM\printArray("Deleting user with id $user->ID and name $user->display_name as it was a temporary account.");
 		wp_delete_user($user->ID);
-	}
-}
-
-/**
- * send reminders about annual review
- */
-function reviewReminders(){
-	$genericDocuments = get_option('personnel_documents');
-	if(is_array($genericDocuments) && !empty($genericDocuments['Annual review form'])){
-		$personnelCoordinatorEmail	= SIM\getModuleOption(MODULE_SLUG, 'personnel_email');
-		//Change the user to the adminaccount otherwise get_users will not work
-		wp_set_current_user(1);
-
-		//Retrieve all users
-		$users = SIM\getUserAccounts();
-
-		//loop over the users
-		foreach($users as $user){
-			//Check for upcoming reviews, but only if not set to be hidden for this year
-			if(get_user_meta($user->ID, 'hide_annual_review', true) != date('Y')){
-				$personnelInfo	= get_user_meta($user->ID, "personnel", true);
-				$arrivalDate	= get_user_meta($user->ID, 'arrival_date', true);
-				//Only do when not arriving this year
-				if(is_array($personnelInfo) && !empty($personnelInfo['review_date']) && !str_contains($arrivalDate, date('Y')) ){
-					$reviewDate	= date('m', strtotime($personnelInfo['review_date']));
-					//Start sending the warning 1 month before until it is done.
-					if(($reviewDate - 2) < date('m')){
-						//Send e-mail
-						$to = $user->user_email;
-						//Skip if not valid email
-						if(str_contains($to,'.empty')){
-							continue;
-						}
-
-						$subject 	 = "Please fill in the annual review questionary.";
-						$message 	 = 'Hi '.$user->first_name.',<br><br>';
-
-						//Send Signal message
-						SIM\trySendSignal(
-							"Hi ".$user->first_name.",\n\nIt is time for your annual review.\nPlease fill in the annual review questionary:\n\n".SITEURL.'/'.$genericDocuments['Annual review form']."\n\nThen send it to $personnelCoordinatorEmail",
-							$user->ID
-						);
-
-						//Send e-mail
-						$message 	.= 'It is time for your annual review.<br>';
-						$message 	.= 'Please fill in the <a href="'.SITEURL.'/'.$genericDocuments['Annual review form'].'">review questionaire</a> to prepare for the talk.<br>';
-						$message 	.= 'When filled it in send it to me by replying to this e-mail<br><br>';
-						$message	.= 'Kind regards,<br><br>the personnel coordinator';
-						$headers 	 = array(
-							'Content-Type: text/html; charset=UTF-8',
-							"Reply-To: $personnelCoordinatorEmail",
-							"Bcc: $personnelCoordinatorEmail"
-						);
-
-						//Send the mail
-						wp_mail($to , $subject, $message, $headers );
-					}
-				}
-			}
-		}
 	}
 }
 

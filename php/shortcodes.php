@@ -6,12 +6,6 @@ use SIM;
 add_action('sim_dashboard_warnings', __NAMESPACE__.'\dashboardWarnings', 20);
 function dashboardWarnings($userId){
 	$dashboardWarnings	= new DashboardWarnings($userId);
-
-	$dashboardWarnings->greenCardReminder();
-		
-	$dashboardWarnings->vaccinationReminders();
-	
-	$dashboardWarnings->reviewReminder();
 	
 	if (!empty($dashboardWarnings->reminderHtml)){
 		$text	= 'Reminders';
@@ -44,12 +38,6 @@ function expiryWarnings(){
 	}
 
 	$dashboardWarnings	= new DashboardWarnings($userId);
-
-	$dashboardWarnings->greenCardReminder();
-		
-	$dashboardWarnings->vaccinationReminders();
-	
-	$dashboardWarnings->reviewReminder();
 
 	if (empty($dashboardWarnings->reminderHtml)){
 		if(str_contains($_SERVER['REQUEST_URI'], 'wp-admin/post.php') || str_contains($_SERVER['REQUEST_URI'], 'wp-json')){

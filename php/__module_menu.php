@@ -266,9 +266,7 @@ function moduleDeActivated($moduleSlug, $options){
 	wp_clear_scheduled_hook( 'birthday_check_action' );
 	wp_clear_scheduled_hook( 'account_expiry_check_action' );
 	wp_clear_scheduled_hook( 'vaccination_reminder_action' );
-	wp_clear_scheduled_hook( 'greencard_reminder_action' );
 	wp_clear_scheduled_hook( 'check_details_mail_action' );
-	wp_clear_scheduled_hook( 'review_reminders_action' );
 	wp_clear_scheduled_hook( 'check_last_login_date_action' );
 }
 
