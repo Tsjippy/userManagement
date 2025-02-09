@@ -171,16 +171,6 @@ function emailSettings($optionsHtml, $moduleSlug, $settings){
 	$vaccinationWarningMail    = new ChildVaccinationWarningMail(wp_get_current_user());
 	$vaccinationWarningMail->printPlaceholders();
 	$vaccinationWarningMail->printInputs($settings);
-	?>
-	<br>
-	<br>
-
-	<h4>E-mail when the greencard is about to expire</h4>
-	<label>Define the e-mail people get when one or more vaccinations of a child are about to expire</label>
-	<?php
-	$greenCardReminderMail    = new GreenCardReminderMail(wp_get_current_user());
-	$greenCardReminderMail->printPlaceholders();
-	$greenCardReminderMail->printInputs($settings);
 
 	return ob_get_clean();
 }
