@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- greencard e-mail reference
 
 ### Updated
+
+## [8.1.4] - 2025-02-10
+
+
+### Fixed
+- greencard e-mail reference
 
 ## [8.1.3] - 2025-02-09
 
