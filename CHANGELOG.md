@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- greencard e-mail reference
 
 ### Updated
 
