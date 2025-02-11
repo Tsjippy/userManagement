@@ -2,13 +2,8 @@
 namespace SIM\USERMANAGEMENT;
 use SIM;
 
-add_filter('sim_module_updated', __NAMESPACE__.'\addRoles', 10, 2);
-function addRoles($options, $moduleSlug){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG){
-		return $options;
-	}
-
+add_filter('sim_module_usermanagement_after_save', __NAMESPACE__.'\addRoles');
+function addRoles($options){
 	// Only add the new role if it does not exist
 	if(!wp_roles()->is_role( 'rolemanagement' )){
 		$roleSet 					= get_role( 'contributor' )->capabilities;
