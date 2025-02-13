@@ -8,13 +8,8 @@ DEFINE(__NAMESPACE__.'\MODULE_SLUG', strtolower(basename(dirname(__DIR__))));
 
 DEFINE(__NAMESPACE__.'\MODULE_PATH', plugin_dir_path(__DIR__));
 
-add_filter('sim_submenu_description', __NAMESPACE__.'\moduleDescription', 10, 2);
+add_filter('sim_submenu_usermanagement_description', __NAMESPACE__.'\moduleDescription', 10, 2);
 function moduleDescription($description, $moduleSlug){
-	//module slug should be the same as the constant
-	if($moduleSlug != MODULE_SLUG)	{
-		return $description;
-	}
-
 	ob_start();
 	$links		= [];
 	$url		= SIM\ADMIN\getDefaultPageLink($moduleSlug, 'account_page');
@@ -53,13 +48,8 @@ function moduleDescription($description, $moduleSlug){
 	return $description.ob_get_clean();
 }
 
-add_filter('sim_submenu_options', __NAMESPACE__.'\moduleOptions', 10, 3);
-function moduleOptions($optionsHtml, $moduleSlug, $settings){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG){
-		return $optionsHtml;
-	}
-
+add_filter('sim_submenu_usermanagement_options', __NAMESPACE__.'\moduleOptions', 10, 2);
+function moduleOptions($optionsHtml, $settings){
 	ob_start();
 	?>
 	<label>
@@ -96,13 +86,8 @@ function moduleOptions($optionsHtml, $moduleSlug, $settings){
 	return ob_get_clean().$optionsHtml;
 }
 
-add_filter('sim_email_settings', __NAMESPACE__.'\emailSettings', 10, 3);
-function emailSettings($optionsHtml, $moduleSlug, $settings){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG){
-		return $optionsHtml;
-	}
-
+add_filter('sim_email_usermanagement_settings', __NAMESPACE__.'\emailSettings', 10, 2);
+function emailSettings($html, $settings){
 	ob_start();
 	?>
 	<h4>E-mail to people who's account is just approved</h4>
@@ -172,7 +157,7 @@ function emailSettings($optionsHtml, $moduleSlug, $settings){
 	$vaccinationWarningMail->printPlaceholders();
 	$vaccinationWarningMail->printInputs($settings);
 
-	return ob_get_clean();
+	return $html.ob_get_clean();
 }
 
 add_filter('sim_module_usermanagement_after_save', __NAMESPACE__.'\moduleUpdated', 10, 2);
@@ -217,13 +202,8 @@ function postStates( $states, $post ) {
 	return $states;
 }
 
-add_action('sim_module_deactivated', __NAMESPACE__.'\moduleDeActivated', 10, 2);
-function moduleDeActivated($moduleSlug, $options){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG)	{
-		return;
-	}
-
+add_action('sim_module_usermanagement_deactivated', __NAMESPACE__.'\moduleDeActivated');
+function moduleDeActivated($options){
 	$removePages	= [];
 	
 	if(is_array($options['account_page'])){
@@ -255,13 +235,8 @@ function moduleDeActivated($moduleSlug, $options){
 	wp_clear_scheduled_hook( 'check_last_login_date_action' );
 }
 
-add_action('sim_module_activated', __NAMESPACE__.'\moduleActivated');
-function moduleActivated($moduleSlug){
-	//module slug should be the same as grandparent folder name
-	if($moduleSlug != MODULE_SLUG)	{
-		return;
-	}
-
+add_action('sim_module_usermanagement_activated', __NAMESPACE__.'\moduleActivated');
+function moduleActivated(){
 	// Enable forms module
 	if(!SIM\getModuleOption('forms', 'enable')){
 		SIM\ADMIN\enableModule('forms');
