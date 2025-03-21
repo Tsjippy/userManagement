@@ -103,7 +103,6 @@ function vaccinationReminder(){
 					$subject					= $vaccinationWarningMail->subject;
 					$message					= $vaccinationWarningMail->message;
 
-					$childTitle = SIM\getChildTitle($user->ID);
 					foreach($parents as $parent){
 						if(!str_contains($parent->user_email,'.empty')){
 							if(!empty($recipients)){
@@ -111,12 +110,6 @@ function vaccinationReminder(){
 							}
 							$recipients .= $parent->user_email;
 						}
-
-						//Send OneSignal message
-						SIM\trySendSignal(
-							"Hi $parent->first_name,\nPlease renew the vaccinations  of your $childTitle $userdata->first_name!\n\n".SITEURL,
-							$user->ID
-						);
 					}
 				//not a child
 				}else{
@@ -130,9 +123,6 @@ function vaccinationReminder(){
 					$subject					= $vaccinationWarningMail->subject;
 					$message					= $vaccinationWarningMail->message;
 					$headers					= $vaccinationWarningMail->headers;
-
-					//Send Signal message
-					SIM\trySendSignal("Hi $userdata->first_name,\nPlease renew your vaccinations!\n\n".SITEURL, $user->ID);
 				}
 
 
@@ -569,9 +559,6 @@ function accountExpiryCheck(){
 		}
 
 		wp_mail( $recipient, $accountExpiryMail->subject, $accountExpiryMail->message, $accountExpiryMail->headers);
-
-		//Send OneSignal message
-		SIM\trySendSignal("Hi ".$user->first_name.",\nThis is just a reminder that your account on ".SITEURLWITHOUTSCHEME." will be deleted on ".date("d F Y", strtotime(" +1 months")),$user->ID);
 	}
 
 	//Get the users who are expired
@@ -604,12 +591,6 @@ function accountExpiryCheck(){
 		if(!strtotime(get_user_meta($user->ID, 'account_validity', true))){
 			continue;
 		}
-
-		//Send Signal message
-		SIM\trySendSignal(
-			"Hi ".$user->first_name.",\nYour account is expired, as you are no longer in country.",
-			$user->ID
-		);
 
 		//Delete the account
 		SIM\printArray("Deleting user with id $user->ID and name $user->display_name as it was a temporary account.");
@@ -662,12 +643,6 @@ function checkLastLoginDate(){
 				if(str_contains($to, '.empty')){
 					continue;
 				}
-
-				//Send Signal message
-				SIM\trySendSignal(
-					"Hi $user->first_name,\n\nWe miss you! We haven't seen you since $lastLogin\n\nPlease pay us a visit on\n".SITEURL,
-					$user->ID
-				);
 
 				//Send e-mail
 				$weMissYouMail    = new WeMissYouMail($user, $lastLogin);
