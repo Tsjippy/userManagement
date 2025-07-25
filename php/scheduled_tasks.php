@@ -48,7 +48,11 @@ function birthdayCheck(){
 		}
 
 		//Send birthday wish to the user
-		SIM\trySendSignal("Hi $firstName,\nCongratulations with your birthday!", $userId);
+		add_action(
+			'sim-user-management-birthday-message',
+			"Hi $firstName,\nCongratulations with your birthday!", 
+			$userId
+		);
 
 		//Send to parents
 		if (isset($family["father"]) || isset($family["mother"])){
@@ -58,13 +62,15 @@ function birthdayCheck(){
 		}
 
 		if (isset($family["father"])){
-			SIM\trySendSignal(
+			add_action(
+				'sim-user-management-birthday-message',
 				"Hi ".get_userdata($family["father"])->first_name.",\n$message",
 				$family["father"]
 			);
 		}
 		if (isset($family["mother"])){
-			SIM\trySendSignal(
+			add_action(
+				'sim-user-management-birthday-message',
 				"Hi ".get_userdata($family["mother"])->first_name.",\n$message",
 				$family["mother"]
 			);
