@@ -2,13 +2,18 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
-- 'sim-user-management-birthday-message' action hook
 
 ### Changed
 
 ### Fixed
 
 ### Updated
+
+## [8.2.0] - 2025-07-25
+
+
+### Added
+- 'sim-user-management-birthday-message' action hook
 
 ## [8.1.9] - 2025-05-08
 
