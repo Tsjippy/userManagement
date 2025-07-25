@@ -2,6 +2,7 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
+- 'sim-user-management-birthday-message' action hook
 
 ### Changed
 
