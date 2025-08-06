@@ -4,12 +4,19 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+### Updated
+
+## [8.2.1] - 2025-08-06
+
+
+### Changed
 - less niceselect code
 
 ### Fixed
 - bugs
-
-### Updated
 
 ## [8.2.0] - 2025-07-25
 
