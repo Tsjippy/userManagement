@@ -33,9 +33,6 @@ async function submitAddAccountForm(event){
 			if(select.selectedIndex == 0){
 				select.querySelector(`[value="${userId}"]`).defaultSelected	= true;
 			}
-
-			// Update the nice select
-			select._niceselect.update();
 		});
 
 		Main.displayMessage(response.message, 'success');
