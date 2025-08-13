@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- selected menu item in darkmode
 
 ### Fixed
 
