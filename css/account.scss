@@ -27,6 +27,10 @@
 		text-decoration: underline;
 		-webkit-text-decoration-color: #bd2919;
 		text-decoration-color: #bd2919;
+
+		@media (prefers-color-scheme: dark) {
+			color: blanchedalmond;
+		}
 	}
 	
 	&:hover{
