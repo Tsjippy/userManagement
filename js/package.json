@@ -5,7 +5,9 @@
   "main": "./user_management.js",
   "scripts": {
     "management": "webpack --watch --entry ./user_management.js --output-path . --output-filename user_management.min.js --progress --mode=production --devtool source-map",
-    "page": "webpack --watch --entry ./userpage.js --output-path . --output-filename userpage.min.js --progress --mode=production --devtool source-map"
+    "page": "webpack --watch --entry ./userpage.js --output-path . --output-filename userpage.min.js --progress --mode=production --devtool source-map",
+    "family": "webpack --watch --entry ./user_family.js --output-path . --output-filename user_family.min.js --progress --mode=production",
+    "generics": "webpack --watch --entry ./user_generics.js --output-path . --output-filename user_generics.min.js --progress --mode=production"
   },
   "author": "Ewald Harmsen",
   "license": "ISC",
