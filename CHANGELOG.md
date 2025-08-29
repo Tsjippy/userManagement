@@ -2,6 +2,7 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
+- minified user forms js
 
 ### Changed
 - selected menu item in darkmode
