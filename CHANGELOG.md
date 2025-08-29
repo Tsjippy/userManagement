@@ -2,14 +2,21 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
-- minified user forms js
 
 ### Changed
-- selected menu item in darkmode
 
 ### Fixed
 
 ### Updated
+
+## [8.2.2] - 2025-08-29
+
+
+### Added
+- minified user forms js
+
+### Changed
+- selected menu item in darkmode
 
 ## [8.2.1] - 2025-08-06
 
