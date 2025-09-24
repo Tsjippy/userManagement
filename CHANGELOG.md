@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- loader images
 
 ### Fixed
 
