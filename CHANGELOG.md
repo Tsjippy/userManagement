@@ -4,13 +4,18 @@
 ### Added
 
 ### Changed
-- loader images
-- _ for - in classnames
-- _ for - in classnames
 
 ### Fixed
 
 ### Updated
+
+## [8.2.3] - 2025-09-26
+
+
+### Changed
+- loader images
+- _ for - in classnames
+- _ for - in classnames
 
 ## [8.2.2] - 2025-08-29
 
