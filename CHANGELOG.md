@@ -6,7 +6,6 @@
 ### Changed
 - loader images
 - _ for - in classnames
-- _ for - in classnames
 
 ### Fixed
 
