@@ -14,7 +14,7 @@ function userDescription($user){
 
 		$url .= '/?userid=';
 		
-		$html = "<div class='flex edit_useraccounts'><a href='$url$user->ID' class='button sim'>Edit useraccount for ".$user->first_name."</a>";
+		$html = "<div class='flex edit-useraccounts'><a href='$url$user->ID' class='button sim'>Edit useraccount for ".$user->first_name."</a>";
         $partner    = SIM\hasPartner($user->ID, true);
 		if($partner){
 			$html .= "<a  href='$url$partner->ID' class='button sim'>Edit useraccount for $partner->first_name</a>";
@@ -359,15 +359,15 @@ function userInfoPage($atts){
 	}
 
 	$result	= "<div style='min-width: 50vw;'>";
-		$result	.= "<nav id='profile_menu'>";
-			$result	.= "<ul id='profile_menu_list'>";
+		$result	.= "<nav id='profile-menu'>";
+			$result	.= "<ul id='profile-menu-list'>";
 				foreach($tabs as $tab){
 					$result	.= $tab;
 				}
 			$result	.= "</ul>";
 		$result	.= "</nav>";
 
-		$result	.= "<div id='profile_forms'>";
+		$result	.= "<div id='profile-forms'>";
 			$result .= "<input type='hidden' class='input-text' name='userid' value='$userId'>";
 			$result	.= $html;
 		$result	.= "</div>";

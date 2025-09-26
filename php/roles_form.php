@@ -43,14 +43,14 @@ function displayRoles($userId=''){
 			margin-bottom: 10px;
 		}
 
-		.role_info .info_icon{
+		.role_info .info-icon{
 			margin-bottom:0px;
 			position: absolute;
 			right: 10px;
 			max-width: 20px;
 		}
 
-		.role_info .infobox .info_text{
+		.role_info .infobox .info-text{
 			position: absolute;
     		right: 40px;
 			bottom: unset;
@@ -79,11 +79,11 @@ function displayRoles($userId=''){
 					?>
 					<div class="infobox">
 						<div class="info-icon-wrapper">
-							<p class="info_icon">
+							<p class="info-icon">
 								<img draggable="false" role="img" class="emoji" alt="ℹ" loading='lazy' src="<?php echo SIM\PICTURESURL;?>/info.png">
 							</p>
 						</div>
-						<span class="info_text">
+						<span class="info-text">
 							<?php
 							echo $roleName.' - <i>'.apply_filters('sim_role_description', '', $key).'</i>';
 							?>
