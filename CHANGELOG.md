@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- 2fa_methods
 
 ### Fixed
 
 ### Updated
+
+## [8.2.4] - 2025-10-02
+
+
+### Changed
+- 2fa_methods
 
 ## [8.2.3] - 2025-09-26
 
