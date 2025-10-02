@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- 2fa_methods
 
 ### Fixed
 
