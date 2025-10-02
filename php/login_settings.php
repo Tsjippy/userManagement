@@ -46,7 +46,7 @@ function changePasswordForm($userId = null){
 			SIM\LOGIN\reset2fa($userId);
 			echo "<div class='success'>Succesfully turned off 2fa for $name</div>";
 		}elseif($_REQUEST['action'] == 'Change to e-mail'){
-			update_user_meta($userId, '2fa_methods', ['email']);
+			add_user_meta($userId, '2fa_methods', 'email');
 			echo "<div class='success'>Succesfully changed the 2fa factor for $name to e-mail</div>";
 		}
 
@@ -80,7 +80,7 @@ function changePasswordForm($userId = null){
 			echo SIM\LOGIN\passwordResetForm($user);
 		}
 		
-		$methods	= get_user_meta($userId, '2fa_methods', true);
+		$methods	= get_user_meta($userId, '2fa_methods');
 		$nonce		= wp_create_nonce( "wp-2fa-reset-nonce_$userId" );
 		if(is_array($methods)){
 
