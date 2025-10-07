@@ -6,7 +6,7 @@ add_filter('sim_forms_load_userdata', __NAMESPACE__.'\loadUserData', 10, 2);
 function loadUserData($usermeta,$userId){
 	$userdata	= (array)get_userdata($userId)->data;
 
-	//Change ID to userid because its a confusing name
+	//Change ID to user-id because its a confusing name
 	$userdata['user_id']	= $userdata['ID'];
 	unset($userdata['ID']);
 	

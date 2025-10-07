@@ -12,7 +12,7 @@ function userDescription($user){
 			return;
 		}
 
-		$url .= '/?userid=';
+		$url .= '/?user-id=';
 		
 		$html = "<div class='flex edit-useraccounts'><a href='$url$user->ID' class='button sim'>Edit useraccount for ".$user->first_name."</a>";
         $partner    = SIM\hasPartner($user->ID, true);
@@ -75,8 +75,8 @@ function userInfoPage($atts){
 		$userId	= $a['id'];
 		$user	= false;
 		
-		if(isset($_GET["userid"])){
-			$userId	= $_GET['userid'];
+		if(isset($_GET["user-id"])){
+			$userId	= $_GET['user-id'];
 		}
 
 		if(is_numeric($userId)){
@@ -84,7 +84,7 @@ function userInfoPage($atts){
 		}
 
 		if($user){
-			$userId = $_GET["userid"];
+			$userId = $_GET["user-id"];
 		}else{
 			return SIM\userSelect("Select an user to show the data of:", false, false, '', 'user-selection', [], '', []);
 		}
@@ -113,7 +113,7 @@ function userInfoPage($atts){
 		}
 		
 		//Add a tab button
-		$tabs[]	= "<li class='tablink active' id='show_dashboard' data-target='dashboard'>Dashboard</li>";
+		$tabs[]	= "<li class='tablink active' id='show-dashboard' data-target='dashboard'>Dashboard</li>";
 		$html .= "<div id='dashboard'>";
 			if(!isset($_GET['main_tab']) || $_GET['main_tab'] == 'dashboard' ){
 				$html	.= showDashboard($userId, $admin);
@@ -137,7 +137,7 @@ function userInfoPage($atts){
 
 		if($shouldShow && $userAge > 18){
 			//Tab button
-			$tabs[]	= '<li class="tablink" id="show_family_info" data-target="family_info">Family</li>';
+			$tabs[]	= '<li class="tablink" id="show-family_info" data-target="family_info">Family</li>';
 			
 			//Content
 			$html	.= '<div id="family_info" class="tabcontent hidden">';
@@ -157,7 +157,7 @@ function userInfoPage($atts){
 	*/
 	if((array_intersect($genericInfoRoles, $userRoles ) || $showCurrentUserData) && in_array('generic', $availableForms)){
 		//Add a tab button
-		$tabs[]	= '<li class="tablink" id="show_generic_info" data-target="generic_info">Generic info</li>';
+		$tabs[]	= '<li class="tablink" id="show-generic_info" data-target="generic_info">Generic info</li>';
 
 		$html	.= "<div id='generic_info' class='tabcontent hidden'>";
 
@@ -184,7 +184,7 @@ function userInfoPage($atts){
 
 		if($shouldShow){
 			//Add tab button
-			$tabs[]	= '<li class="tablink" id="show_location_info" data-target="location_info">Location</li>';
+			$tabs[]	= '<li class="tablink" id="show-location_info" data-target="location_info">Location</li>';
 			
 			//Content
 			$html .= '<div id="location_info" class="tabcontent hidden">';
@@ -204,7 +204,7 @@ function userInfoPage($atts){
 	*/
 	if(in_array('usermanagement', $userRoles )){
 		//Add a tab button
-		$tabs[]	= '<li class="tablink" id="show_login-info" data-target="login-info">Login info</li>';
+		$tabs[]	= '<li class="tablink" id="show-login-info" data-target="login-info">Login info</li>';
 		
 		$html .= changePasswordForm($userId);
 	}
@@ -217,14 +217,14 @@ function userInfoPage($atts){
 
 		if($shouldShow){
 			//Add tab button
-			$tabs[]	= '<li class="tablink" id="show_profile_picture_info" data-target="profile_picture_info">Profile picture</li>';
+			$tabs[]	= '<li class="tablink" id="show-profile_picture_info" data-target="profile_picture_info">Profile picture</li>';
 			
 			//Content
 			$html	.= '<div id="profile_picture_info" class="tabcontent hidden">';
 
 				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'profile_picture'){
 					if(SIM\isChild($userId)){
-						$html	.= do_shortcode("[formbuilder formname=profile_picture userid='$userId']");
+						$html	.= do_shortcode("[formbuilder formname=profile_picture user-id='$userId']");
 					}else{
 						$html	.= do_shortcode('[formbuilder formname=profile_picture]');
 					}
@@ -241,7 +241,7 @@ function userInfoPage($atts){
 	*/
 	if(in_array('rolemanagement', $userRoles ) || in_array('administrator', $userRoles )){
 		//Add a tab button
-		$tabs[]	= '<li class="tablink" id="show_roles" data-target="role-info">Roles</li>';
+		$tabs[]	= '<li class="tablink" id="show-roles" data-target="role-info">Roles</li>';
 		
 		//Content
 		ob_start();
@@ -253,7 +253,7 @@ function userInfoPage($atts){
 				If you want to disable a user go to the login info tab.
 			</p>
 			<form>
-				<input type='hidden' name='userid' value='<?php echo $userId;?>'>
+				<input type='hidden' name='user-id' value='<?php echo $userId;?>'>
 				<?php
 				echo displayRoles($userId);
 				
@@ -280,7 +280,7 @@ function userInfoPage($atts){
 
 		if($shouldShow){
 			//Tab button
-			$tabs[]	= "<li class='tablink' id='show_security_info' data-target='security_info'>Security</li>";
+			$tabs[]	= "<li class='tablink' id='show-security_info' data-target='security_info'>Security</li>";
 			
 			//Content
 			$html	.= "<div id='security_info' class='tabcontent hidden'>";
@@ -317,7 +317,7 @@ function userInfoPage($atts){
 			}
 			
 			//Add tab button
-			$tabs[]	= "<li class='tablink $active' id='show_medical_info' data-target='medical_info'>Vaccinations</li>";
+			$tabs[]	= "<li class='tablink $active' id='show-medical_info' data-target='medical_info'>Vaccinations</li>";
 			
 			//Content
 			$html	.= "<div id='medical_info' $class>";
@@ -346,7 +346,7 @@ function userInfoPage($atts){
 			foreach($family['children'] as $childId){
 				$firstName = get_userdata($childId)->first_name;
 				//Add tab button
-				$tabs[]	= "<li class='tablink' id='show_child_info_$childId' data-target='child_info_$childId'>$firstName</li>";
+				$tabs[]	= "<li class='tablink' id='show-child_info_$childId' data-target='child_info_$childId'>$firstName</li>";
 				
 				//Content
 				$html	.= "<div id='child_info_$childId' class='tabcontent hidden'>";
@@ -368,7 +368,7 @@ function userInfoPage($atts){
 		$result	.= "</nav>";
 
 		$result	.= "<div id='profile-forms'>";
-			$result .= "<input type='hidden' class='input-text' name='userid' value='$userId'>";
+			$result .= "<input type='hidden' class='input-text' name='user-id' value='$userId'>";
 			$result	.= $html;
 		$result	.= "</div>";
 	$result	.= "</div>";
@@ -402,7 +402,7 @@ function getGenericsTab($userId){
 				wp_enqueue_script( 'sim_user_management');
 				
 				$html	.= "<form>";
-					$html	.= "<input type='hidden' name='userid' value='$userId'>";
+					$html	.= "<input type='hidden' name='user-id' value='$userId'>";
 					$html	.= "This user account is only valid till ".date_format($removalDate, "d F Y");
 					$html	.= "<br><br>";
 					$html	.= "Change expiry date to";
@@ -425,9 +425,9 @@ function getGenericsTab($userId){
 
 	if(empty($form)){
 		if(SIM\isChild($userId)){
-			$html	.= do_shortcode("[formbuilder formname=child_generic userid=$userId]");
+			$html	.= do_shortcode("[formbuilder formname=child_generic user-id=$userId]");
 		}else{
-			$html	.= do_shortcode("[formbuilder formname=user_generics userid='$userId']");
+			$html	.= do_shortcode("[formbuilder formname=user_generics user-id='$userId']");
 		}
 	}else{
 		$html	.= $form;
@@ -440,14 +440,14 @@ function getMedicalTab($userId){
 	ob_start();
 	
 	if(SIM\isChild($userId)){
-		echo do_shortcode("[formbuilder formname=user_medical userid=$userId]");
+		echo do_shortcode("[formbuilder formname=user_medical user-id=$userId]");
 	}else{
 		echo do_shortcode('[formbuilder formname=user_medical]');
 	}
 				
 	?>
 	<form method='post' id='print-medicals-form'>
-		<input type='hidden' name='userid' id='userid' value='<?php echo $userId;?>'>
+		<input type='hidden' name='user-id' id='user-id' value='<?php echo $userId;?>'>
 		<button class='button button-primary' type='submit' name='print-medicals' value='generate'>Export data as PDF</button>
 	</form>
 	<?php

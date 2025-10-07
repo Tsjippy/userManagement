@@ -32,7 +32,7 @@ function restApiInit() {
                 return in_array('usermanagement', wp_get_current_user()->roles);
             },
 			'args'					=> array(
-				'userid'		=> array(
+				'user-id'		=> array(
 					'required'	=> true,
                     'validate_callback' => function($userId){
 						return is_numeric($userId);
@@ -49,13 +49,13 @@ function restApiInit() {
 		array(
 			'methods' 				=> 'POST',
 			'callback' 				=> 	function($wp_rest_request){
-				return updateRoles($_REQUEST['userid'], $_REQUEST['roles']);
+				return updateRoles($_REQUEST['user-id'], $_REQUEST['roles']);
 			},
 			'permission_callback' 	=> function(){
                 return (bool)array_intersect(['usermanagement', 'administrator'], wp_get_current_user()->roles);
             },
 			'args'					=> array(
-				'userid'		=> array(
+				'user-id'		=> array(
 					'required'	=> true,
                     'validate_callback' => function($userId){
 						return is_numeric($userId);
@@ -98,7 +98,7 @@ function restApiInit() {
                 return in_array('usermanagement', wp_get_current_user()->roles);
             },
 			'args'					=> array(
-				'userid'		=> array(
+				'user-id'		=> array(
 					'required'	=> true,
                     'validate_callback' => function($userId){
 						return is_numeric($userId);
@@ -120,7 +120,7 @@ function restApiInit() {
 			'callback' 				=> 	__NAMESPACE__.'\getUserPageTab',
 			'permission_callback' 	=> '__return_true',
 			'args'					=> array(
-				'userid'		=> array(
+				'user-id'		=> array(
 					'required'	=> true,
                     'validate_callback' => function($userId){
 						return is_numeric($userId);
@@ -137,7 +137,7 @@ function restApiInit() {
 function getUserPageTab($wpRestRequest){
 	$params	= $wpRestRequest->get_params();
 
-	$userId	= $params['userid'];
+	$userId	= $params['user-id'];
 
 	$genericInfoRoles 	= array_merge(['usermanagement'], ["medicalinfo"], ['administrator']);
 	$userSelectRoles	= apply_filters('sim_user_page_dropdown', $genericInfoRoles);
@@ -158,19 +158,19 @@ function getUserPageTab($wpRestRequest){
 			$html	= showDashboard($userId, $admin);
 			break;
 		case 'family':
-			$html	= do_shortcode("[formbuilder formname=user_family userid='$userId']");
+			$html	= do_shortcode("[formbuilder formname=user_family user-id='$userId']");
 			break;
 		case 'location':
-			$html	= do_shortcode("[formbuilder formname=user_location userid='$userId']");
+			$html	= do_shortcode("[formbuilder formname=user_location user-id='$userId']");
 			break;
 		case 'location':
-			$html	= do_shortcode("[formbuilder formname=user_location userid='$userId']");
+			$html	= do_shortcode("[formbuilder formname=user_location user-id='$userId']");
 			break;
 		case 'profile_picture':
-			$html	= do_shortcode("[formbuilder formname=profile_picture userid='$userId']");
+			$html	= do_shortcode("[formbuilder formname=profile_picture user-id='$userId']");
 			break;
 		case 'security':
-			$html	= do_shortcode("[formbuilder formname=security_questions userid='$userId']");
+			$html	= do_shortcode("[formbuilder formname=security_questions user-id='$userId']");
 			break;
 		case 'medical':
 			$html	= getMedicalTab($userId);
@@ -203,11 +203,11 @@ function getUserPageTab($wpRestRequest){
 }
 
 function disableUserAccount(){
-	if(empty(get_user_meta( $_POST['userid'], 'disabled', true ))){
-		update_user_meta( $_POST['userid'], 'disabled', true );
+	if(empty(get_user_meta( $_POST['user-id'], 'disabled', true ))){
+		update_user_meta( $_POST['user-id'], 'disabled', true );
 		return 'Succesfully disabled the user account';
 	}else{
-		delete_user_meta( $_POST['userid'], 'disabled');
+		delete_user_meta( $_POST['user-id'], 'disabled');
 		return 'Succesfully enabled the user account';
 	}
 }
@@ -266,7 +266,7 @@ function updateRoles($userId='', $newRoles=[]){
 	populate_roles();
 
 	if(empty($userId)){
-		$userId	= $_POST['userid'];
+		$userId	= $_POST['user-id'];
 	}
 	
 	$user 		= get_userdata($userId);
@@ -331,7 +331,7 @@ function createUserAccount(){
 	}
 	
     if(in_array('usermanagement', $userRoles)){
-        $url		= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user_edit_page')."?userid=$userId";
+        $url		= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user_edit_page')."?user-id=$userId";
         $message = "Succesfully created an useraccount for $firstName<br>You can edit the deails <a href='$url'>here</a>";
     }else{
         $message = "Succesfully created useraccount for $firstName<br>You can now select $firstName in the dropdowns";
@@ -347,7 +347,7 @@ function createUserAccount(){
  * Extend the validity of an temporary account
  */
 function extendValidity(){
-	$userId = $_POST['userid'];
+	$userId = $_POST['user-id'];
     if(isset($_POST['unlimited']) && $_POST['unlimited'] == 'unlimited'){
         $date       = 'unlimited';
         $message    = "Marked the useraccount for ".get_userdata($userId)->first_name." to never expire.";

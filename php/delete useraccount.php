@@ -18,8 +18,8 @@ function deleteUser(){
 
 	$html = "";
 	
-	if(isset($_GET["userid"])){
-		$userId = $_GET["userid"];
+	if(isset($_GET["user-id"])){
+		$userId = $_GET["user-id"];
 		$userdata = get_userdata($userId);
 		if(!$userdata){
 			return "<div class='error'>User with id $userId does not exist.</div>";
@@ -84,7 +84,7 @@ function removeUserAccount($nonceString, $family, $userdata){
 		$html .= "<div class='success'>Useraccount for $deletedName succcesfully deleted.</div>";
 		$html .= "<script>";
 			$html .= "setTimeout(function(){";
-				$html .= "window.location = window.location.href.replace('/?userid=$userdata->ID&delete_user_{$userdata->ID}_nonce=".$_GET[$nonceString]."&confirm=true','').replace('&family=true','');";
+				$html .= "window.location = window.location.href.replace('/?user-id=$userdata->ID&delete_user_{$userdata->ID}_nonce=".$_GET[$nonceString]."&confirm=true','').replace('&family=true','');";
 			$html .= "}, 3000);";
 		$html .= "</script>";
 	}

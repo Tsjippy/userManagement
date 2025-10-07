@@ -64,7 +64,7 @@ function changePasswordForm($userId = null){
 			?>
 			<form data-reset='true' class='sim-form'>
 				<input type="hidden" name="disable-user-account"		value="<?php echo wp_create_nonce("disable-user-account");?>">
-				<input type="hidden" name="userid"					value="<?php echo $userId; ?>">
+				<input type="hidden" name="user-id"					value="<?php echo $userId; ?>">
 				<input type="hidden" name="action"					value="<?php echo $actionText;?>_useraccount">
 
 				<p style="margin:30px 0px 0px;">

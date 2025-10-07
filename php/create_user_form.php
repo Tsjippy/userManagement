@@ -14,5 +14,5 @@ function afterUserCreateForm(){
 // store the results of the form above
 add_action('sim_approved_user', __NAMESPACE__.'\userApproved');
 function userApproved($userId){
-    update_user_meta($userId, 'visa_info', $_POST['visa_info']);
+    update_user_meta($userId, 'visa_info', $_POST['visa-info']);
 }

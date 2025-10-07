@@ -49,8 +49,8 @@ function beforeForm($html, $formName){
 		return $html;
 	}
 	
-	if(isset($_GET['userid'])){
-		$lastname = get_userdata($_GET['userid'])->last_name;
+	if(isset($_GET['user-id'])){
+		$lastname = get_userdata($_GET['user-id'])->last_name;
 	}else{
 		$lastname = wp_get_current_user()->last_name;
 	}
