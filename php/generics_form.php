@@ -83,13 +83,13 @@ function beforeGenericsForm($html, $formName){
 	?>
 	<div id="add_ministry_modal" class="modal hidden">
 		<div class="modal-content">
-			<span id="modal_close" class="close">&times;</span>
+			<span id="modal-close" class="close">&times;</span>
 			<form action="" method="post" id="add_ministry_form">
 				<p>Please fill in the form to create a page describing your ministry and list it as an option</p>
 				
 				<label>
 					<h4>Ministry name<span class="required">*</span></h4>
-					<input type="text" name="location_name" class='wide' required>
+					<input type="text" name="location-name" class='wide' required>
 				</label>
 				
 				<label>
@@ -173,7 +173,7 @@ function displayMinistryPositions($userId){
 	
 	ob_start();
 	?>
-	<div id="ministries_list" name='displayministrypositions_php'>
+	<div id="ministries_list" name='display-ministry-positions-php'>
 		<ul style='margin-left:0px;'>
 			<?php
 			//Retrieve all the ministries from the database
@@ -199,11 +199,11 @@ function displayMinistryPositions($userId){
 							?>
 							<li style="list-style-type: none">
 								<label>
-									<input type='checkbox' class='ministry_option_checkbox' name='ministries[]' value='<?php echo $pageId;?>' <?php echo $checked;?>>
-									<span class='optionlabel'><?php echo $ministry;?></span>
+									<input type='checkbox' class='ministry-option-checkbox' name='ministries[]' value='<?php echo $pageId;?>' <?php echo $checked;?>>
+									<span class='option-label'><?php echo $ministry;?></span>
 								</label>
 								<label class='ministryposition <?php echo $class;?>' style='display:block;'>
-									<h4 class='labeltext'>Position at <?php echo $ministry;?>:</h4>
+									<h4 class='label-text'>Position at <?php echo $ministry;?>:</h4>
 									<input type='text' name='jobs[<?php echo $pageId;?>]' value='<?php echo $position;?>'>
 									<?php
 									if ($ministry == "Other"){

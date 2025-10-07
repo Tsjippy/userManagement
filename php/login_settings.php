@@ -38,9 +38,9 @@ function changePasswordForm($userId = null){
 	//Check if action is needed
 	if(
 		isset($_REQUEST['action']) 			&&
-		isset($_REQUEST['wp_2fa_nonce'])	&&
-		isset($_REQUEST['user_id'])			&&
-		wp_verify_nonce( $_REQUEST['wp_2fa_nonce'], "wp-2fa-reset-nonce_".$_REQUEST['user_id'])
+		isset($_REQUEST['wp-2fa-nonce'])	&&
+		isset($_REQUEST['user-id'])			&&
+		wp_verify_nonce( $_REQUEST['wp-2fa-nonce'], "wp-2fa-reset-nonce_".$_REQUEST['user-id'])
 	){
 		if($_REQUEST['action'] == 'Reset 2FA' && function_exists('SIM\LOGIN\reset2fa')){
 			SIM\LOGIN\reset2fa($userId);
@@ -55,15 +55,15 @@ function changePasswordForm($userId = null){
 				
 	//Content
 	?>
-	<div id="login_info" class="tabcontent hidden">
+	<div id="login-info" class="tabcontent hidden">
 		<h3>User login</h3>
 
 		<?php
 		if(in_array('usermanagement', wp_get_current_user()->roles)){
 			wp_enqueue_script( 'sim_user_management');
 			?>
-			<form data-reset='true' class='sim_form'>
-				<input type="hidden" name="disable_useraccount"		value="<?php echo wp_create_nonce("disable_useraccount");?>">
+			<form data-reset='true' class='sim-form'>
+				<input type="hidden" name="disable-user-account"		value="<?php echo wp_create_nonce("disable-user-account");?>">
 				<input type="hidden" name="userid"					value="<?php echo $userId; ?>">
 				<input type="hidden" name="action"					value="<?php echo $actionText;?>_useraccount">
 
@@ -71,7 +71,7 @@ function changePasswordForm($userId = null){
 					Click the button below if you want to <?php echo $actionText;?> the useraccount for <?php echo $name;?>.
 				</p>
 
-				<?php echo SIM\addSaveButton('disable_useraccount', ucfirst($actionText)." useraccount for $name");?>
+				<?php echo SIM\addSaveButton('disable-user-account', ucfirst($actionText)." useraccount for $name");?>
 			</form>
 			<?php
 		}
@@ -90,8 +90,8 @@ function changePasswordForm($userId = null){
 				if(!in_array('email', $methods)){
 					?>
 					<form method='post'>
-						<input type='hidden' name='user_id' value='<?php echo $userId;?>'>
-						<input type='hidden' name='wp_2fa_nonce' value='<?php echo $nonce;?>'>
+						<input type='hidden' name='user-id' value='<?php echo $userId;?>'>
+						<input type='hidden' name='wp-2fa-nonce' value='<?php echo $nonce;?>'>
 
 						Use the button below to change the 2fa factor for <?php echo $name;?> to e-mail<br>
 						<input type='submit' name='action' value='Change to e-mail' class='button small'>
@@ -103,8 +103,8 @@ function changePasswordForm($userId = null){
 				?>
 				<br>
 				<form method='post'>
-					<input type='hidden' name='user_id' value='<?php echo $userId;?>'>
-					<input type='hidden' name='wp_2fa_nonce' value='<?php echo $nonce;?>'>
+					<input type='hidden' name='user-id' value='<?php echo $userId;?>'>
+					<input type='hidden' name='wp-2fa-nonce' value='<?php echo $nonce;?>'>
 
 					Use the button below to turn off Two Factor Authentication for <?php echo $name;?><br>
 					<input type='submit' name='action' value='Reset 2FA' class='button small'>

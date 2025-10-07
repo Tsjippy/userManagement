@@ -66,12 +66,12 @@ function beforeForm($html, $formName){
 								
 				<label>
 					<h4>First name</h4>
-					<input type="text"  class='wide' name="first_name">
+					<input type="text"  class='wide' name="first-name">
 				</label>
 				
 				<label>
 					<h4>Last name</h4>
-					<input type="text" name="last_name"  class='wide' value="<?php echo $lastname;?>">
+					<input type="text" name="last-name"  class='wide' value="<?php echo $lastname;?>">
 				</label>
 				
 				<label>

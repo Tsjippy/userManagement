@@ -84,7 +84,7 @@
 }
 
 a.statement{
-	background-color: $primary_color;
+	background-color: $primaryColor;
 	padding: 1px 5px;
 	border-radius: 10px;
 	color: white;
@@ -92,7 +92,7 @@ a.statement{
 
 a.statement:hover{
 	color: white;
-	background-color:$secundary_color;
+	background-color:$secundaryColor;
 }
 
 /*
@@ -113,9 +113,9 @@ a.statement:hover{
 	}
 
 	.wp-2fa-configuration-form .button{
-		background-color: $primary_color;
+		background-color: $primaryColor;
 		&:hover{
-			background-color:$secundary_color;
+			background-color:$secundaryColor;
 		}
 	}
 

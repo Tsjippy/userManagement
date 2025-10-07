@@ -35,29 +35,29 @@ function displayRoles($userId=''){
 	//Content
 	?>
 	<style>
-		.role_info .infobox{
+		.role-info .infobox{
 			margin-top: -20px;
 		}
 
-		.role_info .info-icon-wrapper{
+		.role-info .info-icon-wrapper{
 			margin-bottom: 10px;
 		}
 
-		.role_info .info-icon{
+		.role-info .info-icon{
 			margin-bottom:0px;
 			position: absolute;
 			right: 10px;
 			max-width: 20px;
 		}
 
-		.role_info .infobox .info-text{
+		.role-info .infobox .info-text{
 			position: absolute;
     		right: 40px;
 			bottom: unset;
 		}
 	</style>
 
-	<div class="role_info">
+	<div class="role-info">
 		<?php
 		if(wp_is_mobile()){
 			foreach($userRoles as $key=>$roleName){

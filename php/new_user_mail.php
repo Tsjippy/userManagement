@@ -35,7 +35,7 @@ function notificationEmail($args, $user){
 
 	$validTillString	= date($format, $validTill);
 
-	$pageUrl	= get_permalink(SIM\getModuleOption('login', 'password_reset_page')[0]);
+	$pageUrl	= get_permalink(SIM\getModuleOption('login', 'password-reset-page')[0]);
 	$url		= "$pageUrl?key=$key&login=$user->user_login";
 
 	if(get_user_meta($user->ID, 'disabled', true) == 'pending'){

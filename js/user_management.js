@@ -1,5 +1,5 @@
 async function disableUserAccount(target){
-	var response	= await FormSubmit.submitForm(target, 'user_management/disable_useraccount');
+	var response	= await FormSubmit.submitForm(target, 'user_management/disable-user-account');
 
 	if(response){
 		if(target.textContent.includes('Disable')){
@@ -38,7 +38,7 @@ async function createUserAccount(target){
 document.addEventListener('click', ev=>{
     const target    = ev.target;
 
-    if(target.name == "disable_useraccount"){	
+    if(target.name == "disable-user-account"){	
 		ev.preventDefault();
         disableUserAccount(target);
     }else if(target.name == 'updateroles'){

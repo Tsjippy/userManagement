@@ -57,11 +57,11 @@ function moduleOptions($optionsHtml, $settings){
 		Enable temporary user accounts
 	</label>
 	<br>
-	<label for="check_details_mail_freq">How often should people asked to check their details for changes?</label>
+	<label for="check-details-mail-freq">How often should people asked to check their details for changes?</label>
 	<br>
-	<select name="check_details_mail_freq">
+	<select name="check-details-mail-freq">
 		<?php
-		SIM\ADMIN\recurrenceSelector($settings['check_details_mail_freq']);
+		SIM\ADMIN\recurrenceSelector($settings['check-details-mail-freq']);
 		?>
 	</select>
 	<br>
@@ -231,7 +231,7 @@ function moduleDeActivated($options){
 	wp_clear_scheduled_hook( 'birthday_check_action' );
 	wp_clear_scheduled_hook( 'account_expiry_check_action' );
 	wp_clear_scheduled_hook( 'vaccination_reminder_action' );
-	wp_clear_scheduled_hook( 'check_details_mail_action' );
+	wp_clear_scheduled_hook( 'check-details-mail_action' );
 	wp_clear_scheduled_hook( 'check_last_login_date_action' );
 }
 

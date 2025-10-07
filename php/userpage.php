@@ -86,7 +86,7 @@ function userInfoPage($atts){
 		if($user){
 			$userId = $_GET["userid"];
 		}else{
-			return SIM\userSelect("Select an user to show the data of:", false, false, '', 'user_selection', [], '', []);
+			return SIM\userSelect("Select an user to show the data of:", false, false, '', 'user-selection', [], '', []);
 		}
 
 		$userBirthday = get_user_meta($userId, "birthday", true);
@@ -204,7 +204,7 @@ function userInfoPage($atts){
 	*/
 	if(in_array('usermanagement', $userRoles )){
 		//Add a tab button
-		$tabs[]	= '<li class="tablink" id="show_login_info" data-target="login_info">Login info</li>';
+		$tabs[]	= '<li class="tablink" id="show_login-info" data-target="login-info">Login info</li>';
 		
 		$html .= changePasswordForm($userId);
 	}
@@ -241,12 +241,12 @@ function userInfoPage($atts){
 	*/
 	if(in_array('rolemanagement', $userRoles ) || in_array('administrator', $userRoles )){
 		//Add a tab button
-		$tabs[]	= '<li class="tablink" id="show_roles" data-target="role_info">Roles</li>';
+		$tabs[]	= '<li class="tablink" id="show_roles" data-target="role-info">Roles</li>';
 		
 		//Content
 		ob_start();
 		?>
-		<div id="role_info" class="tabcontent hidden">
+		<div id="role-info" class="tabcontent hidden">
 			<h3>Select user roles</h3>
 			<p>
 				Select the roles this user should have.<br>
@@ -406,7 +406,7 @@ function getGenericsTab($userId){
 					$html	.= "This user account is only valid till ".date_format($removalDate, "d F Y");
 					$html	.= "<br><br>";
 					$html	.= "Change expiry date to";
-					$html	.= "<input type='date' name='new_expiry_date' min='$accountValidity' style='width:auto; display: initial; padding:0px; margin:0px;'>";
+					$html	.= "<input type='date' name='new-expiry-date' min='$accountValidity' style='width:auto; display: initial; padding:0px; margin:0px;'>";
 					$html	.= "<br>";
 					$html	.= "<input type='checkbox' name='unlimited' value='unlimited' style='width:auto; display: initial; padding:0px; margin:0px;'>";
 					$html	.= "<label for='unlimited'> Check if the useraccount should never expire.</label>";
@@ -446,9 +446,9 @@ function getMedicalTab($userId){
 	}
 				
 	?>
-	<form method='post' id='print_medicals-form'>
+	<form method='post' id='print-medicals-form'>
 		<input type='hidden' name='userid' id='userid' value='<?php echo $userId;?>'>
-		<button class='button button-primary' type='submit' name='print_medicals' value='generate'>Export data as PDF</button>
+		<button class='button button-primary' type='submit' name='print-medicals' value='generate'>Export data as PDF</button>
 	</form>
 	<?php
 

@@ -14,7 +14,7 @@ function restApiInit() {
 			'callback' 				=> 	__NAMESPACE__.'\addMinistry',
 			'permission_callback' 	=> '__return_true',
 			'args'					=> array(
-				'location_name'		=> array(
+				'location-name'		=> array(
 					'required'	=> true
 				)
 			)
@@ -24,7 +24,7 @@ function restApiInit() {
     // disable or enable useraccount
 	register_rest_route(
 		RESTAPIPREFIX.'/user_management',
-		'/disable_useraccount',
+		'/disable-user-account',
 		array(
 			'methods' 				=> 'POST',
 			'callback' 				=> 	__NAMESPACE__.'\disableUserAccount',
@@ -80,7 +80,7 @@ function restApiInit() {
 				'first_name' => array(
 					'required'	=> true
                 ),
-                'last_name'	 => array(
+                'last-name'	 => array(
 					'required'	=> true
 				)
 			)
@@ -104,7 +104,7 @@ function restApiInit() {
 						return is_numeric($userId);
 					}
                 ),
-                'new_expiry_date'		=> array(
+                'new-expiry-date'		=> array(
 					'required'	=> true
 				)
 			)
@@ -217,7 +217,7 @@ function disableUserAccount(){
  */
 function addMinistry(){
     //Get the post data
-    $name = sanitize_text_field($_POST["location_name"]);
+    $name = sanitize_text_field($_POST["location-name"]);
 
 	$status	= 'pending';
 	if(wp_get_current_user()->has_cap( 'publish_post' )){
@@ -300,8 +300,8 @@ function createUserAccount(){
 		$approved = true;
 	}
 
-	$lastName	= ucfirst(sanitize_text_field($_POST["last_name"]));
-	$firstName	= ucfirst(sanitize_text_field($_POST["first_name"]));
+	$lastName	= ucfirst(sanitize_text_field($_POST["last-name"]));
+	$firstName	= ucfirst(sanitize_text_field($_POST["first-name"]));
 	
 	if (empty($_POST["email"])){
 		$username = SIM\getAvailableUsername($firstName, $lastName);
@@ -352,7 +352,7 @@ function extendValidity(){
         $date       = 'unlimited';
         $message    = "Marked the useraccount for ".get_userdata($userId)->first_name." to never expire.";
     }else{
-        $date       = sanitize_text_field($_POST['new_expiry_date']);
+        $date       = sanitize_text_field($_POST['new-expiry-date']);
         $dateStr   = date(DATEFORMAT, strtotime($date));
         $message    = "Extended valitidy for ".get_userdata($userId)->first_name." till $dateStr";
     }

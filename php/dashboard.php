@@ -77,7 +77,7 @@ function showDashboard($userId, $admin=false){
 			$pageAge 	= $pageAge->format("%a");
 			
 			//Get the first warning parameter and convert to days
-			$days 		= SIM\getModuleOption('frontendposting', 'max_page_age') * 30;
+			$days 		= SIM\getModuleOption('frontendposting', 'max-page-age') * 30;
 			
 			//If the page is not modified since the parameter
 			if ($pageAge > $days ){
@@ -86,7 +86,7 @@ function showDashboard($userId, $admin=false){
 				if(!$url){
 					$url 	= '';
 				}
-				$url			= add_query_arg( ['post_id' => $postId], $url );
+				$url			= add_query_arg( ['post-id' => $postId], $url );
 
 				$warningHtml 	.= "<li><a href='$url'>$postTitle</a></li>";
 			}

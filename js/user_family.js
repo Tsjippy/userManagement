@@ -10,8 +10,8 @@ async function submitAddAccountForm(event){
 	if(response){
 		var form		= target.closest('form');
 
-		var firstName	= form.querySelector('[name="first_name"]').value;
-		var lastName	= form.querySelector('[name="last_name"]').value;
+		var firstName	= form.querySelector('[name="first-name"]').value;
+		var lastName	= form.querySelector('[name="last-name"]').value;
 		var userId		= response.user_id;
 
 		//check if we should add a new child field
@@ -46,7 +46,7 @@ function showAddAccountModal(){
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-	document.querySelectorAll('[name="add_user_account_button"]').forEach(el=>el.addEventListener('click', showAddAccountModal));
+	document.querySelectorAll('[name="add-user-account-button"]').forEach(el=>el.addEventListener('click', showAddAccountModal));
 
 	document.querySelectorAll('[name="adduseraccount"]').forEach(el=>el.addEventListener('click', submitAddAccountForm));
 });

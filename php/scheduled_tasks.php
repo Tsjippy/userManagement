@@ -7,7 +7,7 @@ function taskInit(){
 	//add action for use in scheduled task
 	add_action( 'birthday_check_action', __NAMESPACE__.'\birthdayCheck' );
     add_action( 'vaccination_reminder_action', __NAMESPACE__.'\vaccinationReminder' );
-    add_action( 'check_details_mail_action', __NAMESPACE__.'\checkDetailsMail' );
+    add_action( 'check-details-mail_action', __NAMESPACE__.'\checkDetailsMail' );
     add_action( 'account_expiry_check_action', __NAMESPACE__.'\accountExpiryCheck' );
 	add_action( 'check_last_login_date_action', __NAMESPACE__.'\checkLastLoginDate' );
 }
@@ -18,9 +18,9 @@ function scheduleTasks(){
     SIM\scheduleTask('vaccination_reminder_action', 'monthly');
 	SIM\scheduleTask('check_last_login_date_action', 'monthly');
 
-	$freq	= SIM\getModuleOption(MODULE_SLUG, 'check_details_mail_freq');
+	$freq	= SIM\getModuleOption(MODULE_SLUG, 'check-details-mail-freq');
 	if($freq){
-		SIM\scheduleTask('check_details_mail_action', $freq);
+		SIM\scheduleTask('check-details-mail_action', $freq);
 	}
 }
 
@@ -196,7 +196,7 @@ function vaccinationReminders($userId){
  * @return	string					Html listing all vaccination who are expired
  */
 function checkExpiryDate($date, $expiryName){
-	$vaccinationWarningTime	= SIM\getModuleOption(MODULE_SLUG, 'vaccination_warning_time');
+	$vaccinationWarningTime	= SIM\getModuleOption(MODULE_SLUG, 'vaccination-warning-time');
 	if ($vaccinationWarningTime && !empty($date)){
 		$reminderHtml 	= "";
 
@@ -314,7 +314,7 @@ function checkDetailsMail(){
 			$message .= "</tr>";
 
 			$visaInfo = get_user_meta( $user->ID, 'visa_info', true );
-			if(!isset($visaInfo['permit_type']) || $visaInfo['permit_type'] == 'greencard'){
+			if(!isset($visaInfo['permit-type']) || $visaInfo['permit-type'] == 'greencard'){
 				$sendingOffice = get_user_meta($user->ID, 'sending_office', true);
 				if(empty($sendingOffice)){
 					$sendingOffice = 'No sending office specified';
@@ -629,7 +629,7 @@ function checkLastLoginDate(){
 				return $key;
 			}
 
-			$pageUrl	 = get_permalink(SIM\getModuleOption('login', 'password_reset_page')[0]);
+			$pageUrl	 = get_permalink(SIM\getModuleOption('login', 'password-reset-page')[0]);
 			$url		 = "$pageUrl?key=$key&login=$user->user_login";
 
 			$mail = new AccountCreatedMail($user, $url);

@@ -10,17 +10,17 @@ async function addNewMinistry(target){
 	var response = await FormSubmit.submitForm(target, 'user_management/add_ministry');
 	
 	if(response){
-		var ministryName 		= target.closest('form').querySelector('[name="location_name"]').value;
+		var ministryName 		= target.closest('form').querySelector('[name="location-name"]').value;
 		ministryName			= ministryName.charAt(0).toUpperCase() + ministryName.slice(1);
 
 		var html = `
 		<li style="list-style-type: none"> 
 			<label>
-				<input type="checkbox" class="ministry_option_checkbox" name="ministries[]" value="${response.postId}" checked>
-				<span class="optionlabel">${ministryName}</span>
+				<input type="checkbox" class="ministry-option-checkbox" name="ministries[]" value="${response.postId}" checked>
+				<span class="option-label">${ministryName}</span>
 			</label>
 			<label class="ministryposition" style="display:block;">
-				<h4 class="labeltext">Position at ${ministryName}:</h4>
+				<h4 class="label-text">Position at ${ministryName}:</h4>
 				<input type="text" id="justadded" name="jobs[${response.postId}]">
 			</label>
 		</li>`;
@@ -46,14 +46,14 @@ document.addEventListener('click', function(event) {
 	//show add ministry modal
 	if(target.id == 'add-ministry-button'){
 		//uncheck other and hide
-		target.closest('li').querySelector('.ministry_option_checkbox').checked = false;
+		target.closest('li').querySelector('.ministry-option-checkbox').checked = false;
 		target.closest('.ministryposition').classList.add('hidden');
 
 		//Show the modal
 		Main.showModal('add_ministry');
 	}
 	
-	if(target.matches('.ministry_option_checkbox')){
+	if(target.matches('.ministry-option-checkbox')){
 		changeVisibility(target);
 	}
 
@@ -71,7 +71,7 @@ function onBlur(ev){
 		input.closest('.ministryposition').classList.remove('hidden');
 
 		// check the ministry
-		input.closest('li').querySelector('.ministry_option_checkbox').checked	= true;
+		input.closest('li').querySelector('.ministry-option-checkbox').checked	= true;
 	});
 }
 

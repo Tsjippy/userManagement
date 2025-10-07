@@ -12,17 +12,17 @@ function createUserAccountForm(){
 		ob_start();
 		?>
 		<div class="tabcontent">
-			<form class='sim_form' data-reset="true">
+			<form class='sim-form' data-reset="true">
 				<p>Please fill in the form to create an user account</p>
 				
 				<label>
 					<h4>First name<span class="required">*</span></h4>
-					<input type="text"  class='wide' name="first_name" value="" required>
+					<input type="text"  class='wide' name="first-name" value="" required>
 				</label>
 				
 				<label>
 					<h4>Last name<span class="required">*</span></h4>
-					<input type="text" class='wide' name="last_name" required>
+					<input type="text" class='wide' name="last-name" required>
 				</label>
 				
 				<label>
