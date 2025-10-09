@@ -12,22 +12,22 @@ function showChildrenFields($childId){
 	$active	= 'active';
 	$hidden	= '';
 	if(in_array('generic', $availableForms)){
-		echo "<button class=' button tablink $active' id='show-generic_child_info_$childId' data-target='generic_child_info_$childId'>Generic info</button>";
+		echo "<button class=' button tablink $active' id='show-generic-child-info-$childId' data-target='generic-child-info-$childId'>Generic info</button>";
 		$active= '';
 	}
 
 	if(in_array('vaccinations', $availableForms)){
-		echo "<button class='button tablink $active' id='show-medical_child_info_$childId' data-target='medical_child_info_$childId'>Vaccinations</button>";
+		echo "<button class='button tablink $active' id='show-generic-child-info-$childId' data-target='generic-child-info-$childId'>Vaccinations</button>";
 		$active= '';
 	}
 
 	if(in_array('profile picture', $availableForms)){
-		echo "<button class='button tablink $active' id='show-profile_picture_child_info_$childId' data-target='profile_picture_child_info_$childId'>Profile picture</button>";
+		echo "<button class='button tablink $active' id='show-profile-picture-child-info-$childId' data-target='profile-picture-child-info-$childId'>Profile picture</button>";
 	}
 	
 	if(in_array('generic', $availableForms)){
 		?>
-		<div id='generic_child_info_<?php echo $childId;?>' class='tabcontent'>
+		<div id='generic-child-info-<?php echo $childId;?>' class='tabcontent'>
 			<?php echo do_shortcode("[formbuilder formname=child_generic user-id=$childId]"); ?>
 		</div>
 		<?php
@@ -36,7 +36,7 @@ function showChildrenFields($childId){
 	}
 
 	if(in_array('vaccinations', $availableForms)){
-		echo	"<div id='medical_child_info_$childId' class='tabcontent $hidden'>";
+		echo	"<div id='generic-child-info-$childId' class='tabcontent $hidden'>";
 			echo do_shortcode("[formbuilder formname=user_medical user-id=$childId]");
 		echo	"</div>";
 
@@ -44,7 +44,7 @@ function showChildrenFields($childId){
 	}
 
 	if(in_array('profile picture', $availableForms)){
-		echo	"<div id='profile_picture_child_info_$childId' class='tabcontent $hidden'>";
+		echo	"<div id='profile-picture-child-info-$childId' class='tabcontent $hidden'>";
 			echo do_shortcode("[formbuilder formname=profile_picture user-id='$childId']");
 		echo	"</div>";
 	}

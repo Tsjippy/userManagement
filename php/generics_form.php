@@ -81,10 +81,10 @@ function beforeGenericsForm($html, $formName){
 
 	ob_start();
 	?>
-	<div id="add_ministry_modal" class="modal hidden">
+	<div id="add-ministry-modal" class="modal hidden">
 		<div class="modal-content">
 			<span id="modal-close" class="close">&times;</span>
-			<form action="" method="post" id="add_ministry_form">
+			<form action="" method="post" id="add-ministry-form">
 				<p>Please fill in the form to create a page describing your ministry and list it as an option</p>
 				
 				<label>
@@ -173,7 +173,7 @@ function displayMinistryPositions($userId){
 	
 	ob_start();
 	?>
-	<div id="ministries_list" name='display-ministry-positions-php'>
+	<div id="ministries-list" name='display-ministry-positions-php'>
 		<ul style='margin-left:0px;'>
 			<?php
 			//Retrieve all the ministries from the database

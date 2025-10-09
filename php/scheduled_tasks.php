@@ -287,7 +287,7 @@ function checkDetailsMail(){
 		/*
 		** PERSONAL DETAILS
  		*/
-		$message .= "<a href='{$baseUrl}generic_info' $styleString><b>Personal details</b></a><br>";
+		$message .= "<a href='{$baseUrl}generic-info' $styleString><b>Personal details</b></a><br>";
 		$message .= "<table>";
 			$message .= "<tr>";
 				$message .= "<td>";
@@ -309,7 +309,7 @@ function checkDetailsMail(){
 					$message .= "Birthday:";
 				$message .= "</td>";
 				$message .= "<td>";
-					$message .= "<a href='{$baseUrl}generic_info#birthday' $styleString>$birthday</a>";
+					$message .= "<a href='{$baseUrl}generic-info#birthday' $styleString>$birthday</a>";
 				$message .= "</td>";
 			$message .= "</tr>";
 
@@ -324,7 +324,7 @@ function checkDetailsMail(){
 						$message .= "Sending office:";
 					$message .= "</td>";
 					$message .= "<td>";
-						$message .= "<a href='{$baseUrl}generic_info#sending_office' $styleString>$sendingOffice</a>";
+						$message .= "<a href='{$baseUrl}generic-info#sending_office' $styleString>$sendingOffice</a>";
 					$message .= "</td>";
 				$message .= "</tr>";
 
@@ -339,7 +339,7 @@ function checkDetailsMail(){
 						$message .= "Arrival date:";
 					$message .= "</td>";
 					$message .= "<td>";
-						$message .= "<a href='{$baseUrl}generic_info#arrivalDate' $styleString>$arrivalDate</a>";
+						$message .= "<a href='{$baseUrl}generic-info#arrivalDate' $styleString>$arrivalDate</a>";
 					$message .= "</td>";
 				$message .= "</tr>";
 			}
@@ -356,18 +356,18 @@ function checkDetailsMail(){
 			$title .= 's';
 		}
 
-		$message .= "<a href='{$baseUrl}generic_info' $styleString><b>$title</b></a><br>";
+		$message .= "<a href='{$baseUrl}generic-info' $styleString><b>$title</b></a><br>";
 		$message .= "<table>";
 		if(empty($phonenumbers)){
 			$message .= "<tr>";
 				$message .= "<td>";
-					$message .= "<a href='{$baseUrl}generic_info#phonenumbers[0]' $styleString>No phonenumbers provided</a>";
+					$message .= "<a href='{$baseUrl}generic-info#phonenumbers[0]' $styleString>No phonenumbers provided</a>";
 				$message .= "</td>";
 			$message .= "</tr>";
 		}elseif(count($phonenumbers) == 1){
 			$message .= "<tr>";
 				$message .= "<td>";
-					$message .= "<a href='{$baseUrl}generic_info#phonenumbers[0]' $styleString>".array_values($phonenumbers)[0].'</a>';
+					$message .= "<a href='{$baseUrl}generic-info#phonenumbers[0]' $styleString>".array_values($phonenumbers)[0].'</a>';
 				$message .= "</td>";
 			$message .= "</tr>";
 		}else{
@@ -378,7 +378,7 @@ function checkDetailsMail(){
 						$message .= "Phonenumber $nr:";
 					$message .= "</td>";
 					$message .= "<td>";
-						$message .= "<a href='{$baseUrl}generic_info#phonenumbers[$key]' $styleString>$number</a>";
+						$message .= "<a href='{$baseUrl}generic-info#phonenumbers[$key]' $styleString>$number</a>";
 					$message .= "</td>";
 				$message .= "</tr>";
 			}
@@ -395,14 +395,14 @@ function checkDetailsMail(){
 		}else{
 			$title	= 'Ministry';
 		}
-		$message .= "<a href='{$baseUrl}generic_info' $styleString><b>$title</b></a><br>";
+		$message .= "<a href='{$baseUrl}generic-info' $styleString><b>$title</b></a><br>";
 
 		$message .= "<table>";
 			SIM\cleanUpNestedArray($userMinistries);
 			if(empty($userMinistries)){
 				$message .= "<tr>";
 					$message .= "<td>";
-						$message .= "<a href='{$baseUrl}generic_info#ministries[]' $styleString>No ministry provided</a>";
+						$message .= "<a href='{$baseUrl}generic-info#ministries[]' $styleString>No ministry provided</a>";
 					$message .= "</td>";
 				$message .= "</tr>";
 			}else{
@@ -412,7 +412,7 @@ function checkDetailsMail(){
 							$message .= get_the_title($ministry).":";
 						$message .= "</td>";
 						$message .= "<td>";
-							$message .= "<a href='{$baseUrl}generic_info#ministries[]' $styleString>$job</a>";
+							$message .= "<a href='{$baseUrl}generic-info#ministries[]' $styleString>$job</a>";
 						$message .= "</td>";
 					$message .= "</tr>";
 				}

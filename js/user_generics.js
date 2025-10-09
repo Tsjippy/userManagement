@@ -25,7 +25,7 @@ async function addNewMinistry(target){
 			</label>
 		</li>`;
 		
-		document.querySelector("#ministries_list").insertAdjacentHTML('beforeEnd', html);
+		document.querySelector("#ministries-list").insertAdjacentHTML('beforeEnd', html);
 		
 		//hide the SWAL window
 		setTimeout(function(){document.querySelectorAll('.swal2-container').forEach(el=>el.remove());}, 1500);

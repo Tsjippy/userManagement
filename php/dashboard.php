@@ -37,7 +37,7 @@ function showDashboard($userId, $admin=false){
 		}
 		
 		//show last login date
-		echo "<p id='login_message' style='border: 3px solid #bd2919; padding: 10px; text-align: center;'>$message</p>";
+		echo "<p id='login-message' style='border: 3px solid #bd2919; padding: 10px; text-align: center;'>$message</p>";
 	}
 	
 	echo "<p>Hello $firstName</p>";
@@ -82,7 +82,7 @@ function showDashboard($userId, $admin=false){
 			//If the page is not modified since the parameter
 			if ($pageAge > $days ){
 				//Get the edit page url
-				$url			= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'front_end_post_pages');
+				$url			= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'front-end-post-pages');
 				if(!$url){
 					$url 	= '';
 				}

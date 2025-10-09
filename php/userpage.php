@@ -137,10 +137,10 @@ function userInfoPage($atts){
 
 		if($shouldShow && $userAge > 18){
 			//Tab button
-			$tabs[]	= '<li class="tablink" id="show-family_info" data-target="family_info">Family</li>';
+			$tabs[]	= '<li class="tablink" id="show-family-info" data-target="family-info">Family</li>';
 			
 			//Content
-			$html	.= '<div id="family_info" class="tabcontent hidden">';
+			$html	.= '<div id="family-info" class="tabcontent hidden">';
 
 				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'family'){
 					$html	.= do_shortcode('[formbuilder formname=user_family]');
@@ -157,11 +157,11 @@ function userInfoPage($atts){
 	*/
 	if((array_intersect($genericInfoRoles, $userRoles ) || $showCurrentUserData) && in_array('generic', $availableForms)){
 		//Add a tab button
-		$tabs[]	= '<li class="tablink" id="show-generic_info" data-target="generic_info">Generic info</li>';
+		$tabs[]	= '<li class="tablink" id="show-generic-info" data-target="generic-info">Generic info</li>';
 
-		$html	.= "<div id='generic_info' class='tabcontent hidden'>";
+		$html	.= "<div id='generic-info' class='tabcontent hidden'>";
 
-			if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'generic_info'){
+			if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'generic-info'){
 				$html	.= getGenericsTab($userId);
 			}else{
 				$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -184,12 +184,12 @@ function userInfoPage($atts){
 
 		if($shouldShow){
 			//Add tab button
-			$tabs[]	= '<li class="tablink" id="show-location_info" data-target="location_info">Location</li>';
+			$tabs[]	= '<li class="tablink" id="show-location-info" data-target="location-info">Location</li>';
 			
 			//Content
-			$html .= '<div id="location_info" class="tabcontent hidden">';
+			$html .= '<div id="location-info" class="tabcontent hidden">';
 			
-				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'location_info'){
+				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'location-info'){
 					$html	.= do_shortcode('[formbuilder formname=user_location]');
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -217,10 +217,10 @@ function userInfoPage($atts){
 
 		if($shouldShow){
 			//Add tab button
-			$tabs[]	= '<li class="tablink" id="show-profile_picture_info" data-target="profile_picture_info">Profile picture</li>';
+			$tabs[]	= '<li class="tablink" id="show-profile-picture-info" data-target="profile-picture-info">Profile picture</li>';
 			
 			//Content
-			$html	.= '<div id="profile_picture_info" class="tabcontent hidden">';
+			$html	.= '<div id="profile-picture-info" class="tabcontent hidden">';
 
 				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'profile_picture'){
 					if(SIM\isChild($userId)){
@@ -280,12 +280,12 @@ function userInfoPage($atts){
 
 		if($shouldShow){
 			//Tab button
-			$tabs[]	= "<li class='tablink' id='show-security_info' data-target='security_info'>Security</li>";
+			$tabs[]	= "<li class='tablink' id='show-security-info' data-target='security-info'>Security</li>";
 			
 			//Content
-			$html	.= "<div id='security_info' class='tabcontent hidden'>";
+			$html	.= "<div id='security-info' class='tabcontent hidden'>";
 
-				if(isset($_GET['main_tab']) && $_GET['main_tab'] == "security_info"){
+				if(isset($_GET['main_tab']) && $_GET['main_tab'] == "security-info"){
 					$html	.= do_shortcode('[formbuilder formname=security_questions]');
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -317,12 +317,12 @@ function userInfoPage($atts){
 			}
 			
 			//Add tab button
-			$tabs[]	= "<li class='tablink $active' id='show-medical_info' data-target='medical_info'>Vaccinations</li>";
+			$tabs[]	= "<li class='tablink $active' id='show-medical-info' data-target='medical-info'>Vaccinations</li>";
 			
 			//Content
-			$html	.= "<div id='medical_info' $class>";
+			$html	.= "<div id='medical-info' $class>";
 
-				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'medical_info'){
+				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'medical-info'){
 					$html	.= getMedicalTab($userId);
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -346,10 +346,10 @@ function userInfoPage($atts){
 			foreach($family['children'] as $childId){
 				$firstName = get_userdata($childId)->first_name;
 				//Add tab button
-				$tabs[]	= "<li class='tablink' id='show-child_info_$childId' data-target='child_info_$childId'>$firstName</li>";
+				$tabs[]	= "<li class='tablink' id='show-child-info-$childId' data-target='child-info-$childId'>$firstName</li>";
 				
 				//Content
-				$html	.= "<div id='child_info_$childId' class='tabcontent hidden'>";
+				$html	.= "<div id='child-info-$childId' class='tabcontent hidden'>";
 
 					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
 
@@ -397,7 +397,7 @@ function getGenericsTab($userId){
 	if(!empty($accountValidity) && $accountValidity != 'unlimited' && !is_numeric($accountValidity)){
 		$removalDate 	= date_create($accountValidity);
 		
-		$html	.= "<div id='validity_warning' style='border: 3px solid #bd2919; padding: 10px;'>";
+		$html	.= "<div id='validity-warning' style='border: 3px solid #bd2919; padding: 10px;'>";
 			if(array_intersect($genericInfoRoles, $userRoles )){
 				wp_enqueue_script( 'sim_user_management');
 				

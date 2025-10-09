@@ -58,10 +58,10 @@ function beforeForm($html, $formName){
 	ob_start();
 		
 	?>
-	<div id='add_account_modal' class="modal hidden">
+	<div id='add-account-modal' class="modal hidden">
 		<div class="modal-content">
 			<span class="close">&times;</span>
-			<form action="" method="post" id="add_member_form">
+			<form action="" method="post" id="add-member-form">
 				<p>Please fill in the form to create a user profile for a family member</p>
 								
 				<label>
