@@ -62,7 +62,7 @@ add_shortcode("userstatistics", __NAMESPACE__.'\userStatistics');
 function userStatistics(){
 
 	add_filter('post-edit-button', function($buttonHtml, $post, $content){
-		return $buttonHtml."<form style='display: inline-block;' action='' method='post'><button class='button small' name='getlist' value='true'>Get Contact List</button></form>";
+		return $buttonHtml."<form style='display: inline-block;' action='' method='post'><button class='button small' name='getlist' value=1>Get Contact List</button></form>";
 	}, 10, 3);
 
 	if(isset($_REQUEST['getlist'])){

@@ -115,7 +115,7 @@ function userInfoPage($atts){
 		//Add a tab button
 		$tabs[]	= "<li class='tablink active' id='show-dashboard' data-target='dashboard'>Dashboard</li>";
 		$html .= "<div id='dashboard'>";
-			if(!isset($_GET['main_tab']) || $_GET['main_tab'] == 'dashboard' ){
+			if(!isset($_GET['main-tab']) || $_GET['main-tab'] == 'dashboard' ){
 				$html	.= showDashboard($userId, $admin);
 			}else{
 				$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -142,7 +142,7 @@ function userInfoPage($atts){
 			//Content
 			$html	.= '<div id="family-info" class="tabcontent hidden">';
 
-				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'family'){
+				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'family'){
 					$html	.= do_shortcode('[formbuilder formname=user_family]');
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -161,7 +161,7 @@ function userInfoPage($atts){
 
 		$html	.= "<div id='generic-info' class='tabcontent hidden'>";
 
-			if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'generic-info'){
+			if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'generic-info'){
 				$html	.= getGenericsTab($userId);
 			}else{
 				$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -189,7 +189,7 @@ function userInfoPage($atts){
 			//Content
 			$html .= '<div id="location-info" class="tabcontent hidden">';
 			
-				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'location-info'){
+				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'location-info'){
 					$html	.= do_shortcode('[formbuilder formname=user_location]');
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -222,7 +222,7 @@ function userInfoPage($atts){
 			//Content
 			$html	.= '<div id="profile-picture-info" class="tabcontent hidden">';
 
-				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'profile_picture'){
+				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'profile_picture'){
 					if(SIM\isChild($userId)){
 						$html	.= do_shortcode("[formbuilder formname=profile_picture user-id='$userId']");
 					}else{
@@ -285,7 +285,7 @@ function userInfoPage($atts){
 			//Content
 			$html	.= "<div id='security-info' class='tabcontent hidden'>";
 
-				if(isset($_GET['main_tab']) && $_GET['main_tab'] == "security-info"){
+				if(isset($_GET['main-tab']) && $_GET['main-tab'] == "security-info"){
 					$html	.= do_shortcode('[formbuilder formname=security_questions]');
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
@@ -322,7 +322,7 @@ function userInfoPage($atts){
 			//Content
 			$html	.= "<div id='medical-info' $class>";
 
-				if(isset($_GET['main_tab']) && $_GET['main_tab'] == 'medical-info'){
+				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'medical-info'){
 					$html	.= getMedicalTab($userId);
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;

@@ -62,7 +62,7 @@ function changePasswordForm($userId = null){
 		if(in_array('usermanagement', wp_get_current_user()->roles)){
 			wp_enqueue_script( 'sim_user_management');
 			?>
-			<form data-reset='true' class='sim-form'>
+			<form data-reset=1 class='sim-form'>
 				<input type="hidden" name="disable-user-account"		value="<?php echo wp_create_nonce("disable-user-account");?>">
 				<input type="hidden" name="user-id"					value="<?php echo $userId; ?>">
 				<input type="hidden" name="action"					value="<?php echo $actionText;?>_useraccount">

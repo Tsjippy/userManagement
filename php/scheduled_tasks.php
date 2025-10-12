@@ -253,7 +253,7 @@ function checkDetailsMail(){
 		SIM\printArray('No account page defined');
 		return;
 	}
-	$baseUrl		= "$accountPageUrl?main_tab=";
+	$baseUrl		= "$accountPageUrl?main-tab=";
 
 	$styleString	= "style='text-decoration:none; color:#444;'";
 
