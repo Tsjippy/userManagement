@@ -76,7 +76,7 @@ function userStatistics(){
 
 	$users 		= SIM\getUserAccounts(false, true);
 
-	$baseUrl	= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user_edit_page');
+	$baseUrl	= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user-edit-page');
 
 	
 	?>

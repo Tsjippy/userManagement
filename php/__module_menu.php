@@ -17,7 +17,7 @@ function moduleDescription($description, $moduleSlug){
 		$links[]	= "<a href='$url'>Account</a><br>";
 	}
 
-	$url		= SIM\ADMIN\getDefaultPageLink($moduleSlug, 'user_edit_page');
+	$url		= SIM\ADMIN\getDefaultPageLink($moduleSlug, 'user-edit-page');
 	if(!empty($url)){
 		$links[]	= "<a href='$url'>Edit users</a><br>";
 	}
@@ -27,7 +27,7 @@ function moduleDescription($description, $moduleSlug){
 		$links[]	= "<a href='$url'>Create user accounts</a><br>";
 	}
 
-	$url		= SIM\ADMIN\getDefaultPageLink($moduleSlug, 'pending_users_page');
+	$url		= SIM\ADMIN\getDefaultPageLink($moduleSlug, 'pending-users-page');
 	if(!empty($url)){
 		$links[]	= "<a href='$url'>Pending user accounts</a><br>";
 	}
@@ -173,13 +173,13 @@ function moduleUpdated($options, $oldOptions){
 	$options	= SIM\ADMIN\createDefaultPage($options, 'account_page', 'Account', '[user-info currentuser=true]', $oldOptions);
 
 	// Create user edit page
-	$options	= SIM\ADMIN\createDefaultPage($options, 'user_edit_page', 'Edit users', '[user-info]', $oldOptions);
+	$options	= SIM\ADMIN\createDefaultPage($options, 'user-edit-page', 'Edit users', '[user-info]', $oldOptions);
 
 	// Create user create page
 	$options	= SIM\ADMIN\createDefaultPage($options, 'account_create_page', 'Add user account', '[create_user_account]', $oldOptions);
 
 	// Create pending users page
-	$options	= SIM\ADMIN\createDefaultPage($options, 'pending_users_page', 'Pending user accounts', '[pending_user]', $oldOptions);
+	$options	= SIM\ADMIN\createDefaultPage($options, 'pending-users-page', 'Pending user accounts', '[pending_user]', $oldOptions);
 	
 	scheduleTasks();
 
@@ -191,11 +191,11 @@ function postStates( $states, $post ) {
 
 	if ( in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'account_page', false))) {
 		$states[] = __('Account page');
-	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'user_edit_page', false)) ) {
+	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'user-edit-page', false)) ) {
 		$states[] = __('User edit page');
 	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'account_create_page', false))) {
 		$states[] = __('Account create page');
-	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'pending_users_page', false))) {
+	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'pending-users-page', false))) {
 		$states[] = __('Pending users page');
 	}
 
@@ -207,19 +207,19 @@ function moduleDeActivated($options){
 	$removePages	= [];
 	
 	if(is_array($options['account_page'])){
-		$removePages	= array_merge($removePages, $options['2fa_page']);
+		$removePages	= array_merge($removePages, $options['2fa-page']);
 	}
 
-	if(is_array($options['user_edit_page'])){
-		$removePages	= array_merge($removePages, $options['user_edit_page']);
+	if(is_array($options['user-edit-page'])){
+		$removePages	= array_merge($removePages, $options['user-edit-page']);
 	}
 
 	if(is_array($options['account_create_page'])){
 		$removePages	= array_merge($removePages, $options['account_create_page']);
 	}
 
-	if(is_array($options['pending_users_page'])){
-		$removePages	= array_merge($removePages, $options['pending_users_page']);
+	if(is_array($options['pending-users-page'])){
+		$removePages	= array_merge($removePages, $options['pending-users-page']);
 	}
 
 	// Remove the auto created pages
