@@ -253,7 +253,7 @@ function userInfoPage($atts){
 				If you want to disable a user go to the login info tab.
 			</p>
 			<form>
-				<input type='hidden' name='user-id' value='<?php echo $userId;?>'>
+				<input type='hidden' class='no-reset' name='user-id' value='<?php echo $userId;?>'>
 				<?php
 				echo displayRoles($userId);
 				
@@ -368,7 +368,7 @@ function userInfoPage($atts){
 		$result	.= "</nav>";
 
 		$result	.= "<div id='profile-forms'>";
-			$result .= "<input type='hidden' class='input-text' name='user-id' value='$userId'>";
+			$result .= "<input type='hidden' class='no-reset' class='input-text' name='user-id' value='$userId'>";
 			$result	.= $html;
 		$result	.= "</div>";
 	$result	.= "</div>";
@@ -402,7 +402,7 @@ function getGenericsTab($userId){
 				wp_enqueue_script( 'sim_user_management');
 				
 				$html	.= "<form>";
-					$html	.= "<input type='hidden' name='user-id' value='$userId'>";
+					$html	.= "<input type='hidden' class='no-reset' name='user-id' value='$userId'>";
 					$html	.= "This user account is only valid till ".date_format($removalDate, "d F Y");
 					$html	.= "<br><br>";
 					$html	.= "Change expiry date to";
@@ -447,7 +447,7 @@ function getMedicalTab($userId){
 				
 	?>
 	<form method='post' id='print-medicals-form'>
-		<input type='hidden' name='user-id' id='user-id' value='<?php echo $userId;?>'>
+		<input type='hidden' class='no-reset' name='user-id' id='user-id' value='<?php echo $userId;?>'>
 		<button class='button button-primary' type='submit' name='print-medicals' value='generate'>Export data as PDF</button>
 	</form>
 	<?php

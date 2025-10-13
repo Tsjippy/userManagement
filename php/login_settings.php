@@ -63,9 +63,9 @@ function changePasswordForm($userId = null){
 			wp_enqueue_script( 'sim_user_management');
 			?>
 			<form data-reset=1 class='sim-form'>
-				<input type="hidden" name="disable-user-account"		value="<?php echo wp_create_nonce("disable-user-account");?>">
-				<input type="hidden" name="user-id"					value="<?php echo $userId; ?>">
-				<input type="hidden" name="action"					value="<?php echo $actionText;?>_useraccount">
+				<input type="hidden" class="no-reset" name="disable-user-account"		value="<?php echo wp_create_nonce("disable-user-account");?>">
+				<input type="hidden" class="no-reset" name="user-id"					value="<?php echo $userId; ?>">
+				<input type="hidden" class="no-reset" name="action"					value="<?php echo $actionText;?>_useraccount">
 
 				<p style="margin:30px 0px 0px;">
 					Click the button below if you want to <?php echo $actionText;?> the useraccount for <?php echo $name;?>.
@@ -90,8 +90,8 @@ function changePasswordForm($userId = null){
 				if(!in_array('email', $methods)){
 					?>
 					<form method='post'>
-						<input type='hidden' name='user-id' value='<?php echo $userId;?>'>
-						<input type='hidden' name='wp-2fa-nonce' value='<?php echo $nonce;?>'>
+						<input type='hidden' class='no-reset' name='user-id' value='<?php echo $userId;?>'>
+						<input type='hidden' class='no-reset' name='wp-2fa-nonce' value='<?php echo $nonce;?>'>
 
 						Use the button below to change the 2fa factor for <?php echo $name;?> to e-mail<br>
 						<input type='submit' name='action' value='Change to e-mail' class='button small'>
@@ -103,8 +103,8 @@ function changePasswordForm($userId = null){
 				?>
 				<br>
 				<form method='post'>
-					<input type='hidden' name='user-id' value='<?php echo $userId;?>'>
-					<input type='hidden' name='wp-2fa-nonce' value='<?php echo $nonce;?>'>
+					<input type='hidden' class='no-reset' name='user-id' value='<?php echo $userId;?>'>
+					<input type='hidden' class='no-reset' name='wp-2fa-nonce' value='<?php echo $nonce;?>'>
 
 					Use the button below to turn off Two Factor Authentication for <?php echo $name;?><br>
 					<input type='submit' name='action' value='Reset 2FA' class='button small'>
