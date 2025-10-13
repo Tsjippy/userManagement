@@ -4,6 +4,15 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+### Updated
+
+## [8.2.5] - 2025-10-13
+
+
+### Changed
 - classnames
 - data attribute names
 - dataset values
@@ -11,8 +20,6 @@
 ### Fixed
 - bugs
 - rest api call
-
-### Updated
 
 ## [8.2.4] - 2025-10-02
 
