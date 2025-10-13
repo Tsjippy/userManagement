@@ -77,7 +77,7 @@ function restApiInit() {
 			'callback' 				=> 	__NAMESPACE__.'\createUserAccount',
 			'permission_callback' 	=> '__return_true',
 			'args'					=> array(
-				'first_name' => array(
+				'first-name' => array(
 					'required'	=> true
                 ),
                 'last-name'	 => array(
