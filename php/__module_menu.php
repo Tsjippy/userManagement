@@ -22,7 +22,7 @@ function moduleDescription($description, $moduleSlug){
 		$links[]	= "<a href='$url'>Edit users</a><br>";
 	}
 
-	$url		= SIM\ADMIN\getDefaultPageLink($moduleSlug, 'account_create_page');
+	$url		= SIM\ADMIN\getDefaultPageLink($moduleSlug, 'account-create-page');
 	if(!empty($url)){
 		$links[]	= "<a href='$url'>Create user accounts</a><br>";
 	}
@@ -176,7 +176,7 @@ function moduleUpdated($options, $oldOptions){
 	$options	= SIM\ADMIN\createDefaultPage($options, 'user-edit-page', 'Edit users', '[user-info]', $oldOptions);
 
 	// Create user create page
-	$options	= SIM\ADMIN\createDefaultPage($options, 'account_create_page', 'Add user account', '[create_user_account]', $oldOptions);
+	$options	= SIM\ADMIN\createDefaultPage($options, 'account-create-page', 'Add user account', '[create_user_account]', $oldOptions);
 
 	// Create pending users page
 	$options	= SIM\ADMIN\createDefaultPage($options, 'pending-users-page', 'Pending user accounts', '[pending_user]', $oldOptions);
@@ -193,7 +193,7 @@ function postStates( $states, $post ) {
 		$states[] = __('Account page');
 	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'user-edit-page', false)) ) {
 		$states[] = __('User edit page');
-	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'account_create_page', false))) {
+	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'account-create-page', false))) {
 		$states[] = __('Account create page');
 	}elseif(in_array($post->ID, SIM\getModuleOption(MODULE_SLUG, 'pending-users-page', false))) {
 		$states[] = __('Pending users page');
@@ -214,8 +214,8 @@ function moduleDeActivated($options){
 		$removePages	= array_merge($removePages, $options['user-edit-page']);
 	}
 
-	if(is_array($options['account_create_page'])){
-		$removePages	= array_merge($removePages, $options['account_create_page']);
+	if(is_array($options['account-create-page'])){
+		$removePages	= array_merge($removePages, $options['account-create-page']);
 	}
 
 	if(is_array($options['pending-users-page'])){
