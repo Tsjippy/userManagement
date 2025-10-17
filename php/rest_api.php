@@ -166,7 +166,7 @@ function getUserPageTab($wpRestRequest){
 		case 'location':
 			$html	= do_shortcode("[formbuilder formname=user_location user-id='$userId']");
 			break;
-		case 'profile_picture':
+		case 'profile-picture':
 			$html	= do_shortcode("[formbuilder formname=profile_picture user-id='$userId']");
 			break;
 		case 'security':
@@ -177,11 +177,11 @@ function getUserPageTab($wpRestRequest){
 			break;
 		default:
 			// check if tabname has a number
-			$childId	= explode('_', $params['tabname']);
+			$childId	= explode('-', $params['tabname']);
 			if($childId[0] == 'child' && isset($childId[1]) && is_numeric($childId[1])){
 				$html	= showChildrenFields($childId[1]);
 			}else{
-				$html	= showDashboard($userId, $admin);
+				$html	= "<div class='error'>Something went wrong, you should never see this</div>";
 			}
 	}
 

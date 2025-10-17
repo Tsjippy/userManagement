@@ -118,7 +118,7 @@ function userInfoPage($atts){
 			if(!isset($_GET['main-tab']) || $_GET['main-tab'] == 'dashboard' ){
 				$html	.= showDashboard($userId, $admin);
 			}else{
-				$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
+				$html	.= "<div class='loader-wrapper loading hidden'></div>";
 			}
 		$html	.= '</div>';
 	}
@@ -145,7 +145,7 @@ function userInfoPage($atts){
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'family'){
 					$html	.= do_shortcode('[formbuilder formname=user_family]');
 				}else{
-					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
+					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 				}
 				
 			$html .= '</div>';
@@ -164,7 +164,7 @@ function userInfoPage($atts){
 			if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'generic-info'){
 				$html	.= getGenericsTab($userId);
 			}else{
-				$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
+				$html	.= "<div class='loader-wrapper loading hidden'></div>";
 			}
 
 		$html	.= "</div>";
@@ -192,7 +192,7 @@ function userInfoPage($atts){
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'location-info'){
 					$html	.= do_shortcode('[formbuilder formname=user_location]');
 				}else{
-					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
+					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 				}
 
 			$html .= '</div>';
@@ -229,7 +229,7 @@ function userInfoPage($atts){
 						$html	.= do_shortcode('[formbuilder formname=profile_picture]');
 					}
 				}else{
-					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
+					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 				}
 
 			$html .= '</div>';
@@ -288,7 +288,7 @@ function userInfoPage($atts){
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == "security-info"){
 					$html	.= do_shortcode('[formbuilder formname=security_questions]');
 				}else{
-					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
+					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 				}
 
 			$html .= '</div>';
@@ -325,7 +325,7 @@ function userInfoPage($atts){
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'medical-info'){
 					$html	.= getMedicalTab($userId);
 				}else{
-					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
+					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 				}
 
 			$html	.= "</div>";
@@ -351,7 +351,7 @@ function userInfoPage($atts){
 				//Content
 				$html	.= "<div id='child-info-$childId' class='tabcontent hidden'>";
 
-					$html	.= "<div class='loader-wrapper loading hidden'></div>".SIM\LOADERIMAGE;
+					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 
 				$html .= '</div>';
 			}
