@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- load user pages over ajax
 
 ### Updated
 
