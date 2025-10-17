@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- load user pages over ajax
 
 ### Updated
+
+## [8.2.6] - 2025-10-17
+
+
+### Fixed
+- load user pages over ajax
 
 ## [8.2.5] - 2025-10-13
 
