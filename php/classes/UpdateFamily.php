@@ -15,7 +15,7 @@ class UpdateFamily{
         $this->family           = $family;
 
         if(is_array($this->family)){
-            SIM\cleanUpNestedArray($this->family);
+            $this->family   = SIM\cleanUpNestedArray($this->family);
         }
 
         $this->oldFamily        = $oldFamily;

@@ -350,7 +350,7 @@ function checkDetailsMail(){
 		** PHONENUMBERS
  		*/
 		$phonenumbers = (array)get_user_meta($user->ID, 'phonenumbers', true);
-		SIM\cleanUpNestedArray($phonenumbers);
+		array_filter($phonenumbers);
 		$title	= 'Phonenumber';
 		if(count($phonenumbers)>1){
 			$title .= 's';
@@ -398,7 +398,7 @@ function checkDetailsMail(){
 		$message .= "<a href='{$baseUrl}generic-info' $styleString><b>$title</b></a><br>";
 
 		$message .= "<table>";
-			SIM\cleanUpNestedArray($userMinistries);
+			array_filter($userMinistries);
 			if(empty($userMinistries)){
 				$message .= "<tr>";
 					$message .= "<td>";
@@ -426,7 +426,7 @@ function checkDetailsMail(){
  		*/
 		$message	.= "<a href='{$baseUrl}location' $styleString><b>Location</b></a><br>";
 		$location	= (array)get_user_meta($user->ID, 'location', true);
-		SIM\cleanUpNestedArray($location);
+		array_filter($location);
 		if(empty($location['address'])){
 			$location = "No location provided";
 		}else{
