@@ -4,13 +4,20 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+### Updated
+
+## [8.2.8] - 2025-10-30
+
+
+### Changed
 - use new family class
 - include partner children as potential children
 
 ### Fixed
 - dashboard warnings
-
-### Updated
 
 ## [8.2.7] - 2025-10-20
 
