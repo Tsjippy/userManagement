@@ -5,6 +5,7 @@
 
 ### Changed
 - use new family class
+- include partner children as potential children
 
 ### Fixed
 
