@@ -8,6 +8,7 @@
 - include partner children as potential children
 
 ### Fixed
+- dashboard warnings
 
 ### Updated
 
