@@ -30,17 +30,14 @@ class DashboardWarnings{
         }
         
         //Check for children
-        $family = get_user_meta($this->userId, "family", true);
+        $family = new SIM\FAMILY\Family();
 
-        //User has children
-        if (isset($family["children"])){
-            foreach($family["children"] as $child){
-                $result = vaccinationReminders($child);
-                if (!empty($result)){
-                    $this->reminderCount++;
-                    $userdata 		        = get_userdata($child);
-                    $this->reminderHtml	    .= str_replace("Your", $userdata->first_name."'s", $result);
-                }
+        foreach($family->getChildren($this->userId) as $child){
+            $result = vaccinationReminders($child);
+            if (!empty($result)){
+                $this->reminderCount++;
+                $userdata 		        = get_userdata($child);
+                $this->reminderHtml	    .= str_replace("Your", $userdata->first_name."'s", $result);
             }
         }
     }

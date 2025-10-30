@@ -135,9 +135,9 @@ function restApiInit() {
 }
 
 function getUserPageTab($wpRestRequest){
-	$params	= $wpRestRequest->get_params();
+	$params				= $wpRestRequest->get_params();
 
-	$userId	= $params['user-id'];
+	$userId				= $params['user-id'];
 
 	$genericInfoRoles 	= array_merge(['usermanagement'], ["medicalinfo"], ['administrator']);
 	$userSelectRoles	= apply_filters('sim_user_page_dropdown', $genericInfoRoles);

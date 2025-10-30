@@ -424,13 +424,13 @@ function checkDetailsMail(){
 			}
 
 			$weddingDate	= $family->getWeddingDate($user->ID);
-			if(empty($family['partner'])){
+			if(!$partner){
 				$partner 		= 'You have no spouse';
 			}else{
 				$partner = $partner->display_name;
 
 				if($weddingDate){
-					$text	= date('d F Y', strtotime($family['weddingdate']));
+					$text	= date('d F Y', strtotime($weddingDate));
 				}else{
 					$text	= "No weddingdate provided";
 				}
@@ -452,7 +452,7 @@ function checkDetailsMail(){
 						$message .= "Family picture:";
 					$message .= "</td>";
 					$message .= "<td>";
-						$message .= "<a href='{$baseUrl}family#family[picture]' $styleString>$picture</a>";
+						$message .= "<a href='{$baseUrl}family#family_picture' $styleString>$picture</a>";
 					$message .= "</td>";
 				$message .= "</tr>";
 
@@ -461,20 +461,20 @@ function checkDetailsMail(){
 						$message .= "Spouse:";
 					$message .= "</td>";
 					$message .= "<td>";
-						$message .= "<a href='{$baseUrl}family#family[partner]' $styleString>$partner</a>";
+						$message .= "<a href='{$baseUrl}family#partner' $styleString>$partner</a>";
 					$message .= "</td>";
 				$message .= "</tr>";
 
 				$message .= $weddingDateHtml;
 
-				foreach($family['children'] as $key=>$child){
-					$nr=$key+1;
+				foreach($children as $key => $child){
+					$nr	= $key + 1;
 					$message .= "<tr>";
 						$message .= "<td>";
 							$message .= "Child $nr:";
 						$message .= "</td>";
 						$message .= "<td>";
-							$message .= "<a href='{$baseUrl}family#family[children][$key]' $styleString>".get_userdata($child)->display_name."</a>";
+							$message .= "<a href='{$baseUrl}family#children[$key]' $styleString>".get_userdata($child)->display_name."</a>";
 						$message .= "</td>";
 					$message .= "</tr>";
 				}

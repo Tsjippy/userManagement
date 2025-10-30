@@ -344,19 +344,18 @@ function userInfoPage($atts){
 		CHILDREN TABS
 	*/
 	if($showCurrentUserData){
-		if(is_array($family) && @is_array($family['children'])){
-			foreach($family['children'] as $childId){
-				$firstName = get_userdata($childId)->first_name;
-				//Add tab button
-				$tabs[]	= "<li class='tablink' id='show-child-info-$childId' data-target='child-info-$childId'>$firstName</li>";
-				
-				//Content
-				$html	.= "<div id='child-info-$childId' class='tabcontent hidden'>";
+		foreach($family->getChildren($user) as $childId){
+			$firstName = get_userdata($childId)->first_name;
+			
+			//Add tab button
+			$tabs[]	= "<li class='tablink' id='show-child-info-$childId' data-target='child-info-$childId'>$firstName</li>";
+			
+			//Content
+			$html	.= "<div id='child-info-$childId' class='tabcontent hidden'>";
 
-					$html	.= "<div class='loader-wrapper loading hidden'></div>";
+				$html	.= "<div class='loader-wrapper loading hidden'></div>";
 
-				$html .= '</div>';
-			}
+			$html .= '</div>';
 		}
 	}
 

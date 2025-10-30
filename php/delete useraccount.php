@@ -63,6 +63,7 @@ function askConfirmation($userdata, $nonceString, $family){
 
 function removeUserAccount($nonceString, $family, $userdata){
 	$html 	= '';
+	$family = new SIM\FAMILY\Family();
 
 	if(!isset($_GET[$nonceString]) || !wp_create_nonce($_GET[$nonceString],$nonceString)){
 		$html .='<div class="error">Invalid nonce! Refresh the page</div>';
@@ -70,11 +71,8 @@ function removeUserAccount($nonceString, $family, $userdata){
 		$deletedName = $userdata->display_name;
 		if(isset($_GET["family"]) && $_GET["family"] == "true" && is_array($family) && !empty($family)){
 			$deletedName .= " and all the family";
-			if (isset($family["children"])){
-				$family = array_merge($family["children"], $family);
-				unset($family["children"]);
-			}
-			foreach($family as $relative){
+
+			foreach($family->getFamily($userdata->ID, true) as $relative){
 				//Remove user account
 				wp_delete_user($relative, 1);
 			}
