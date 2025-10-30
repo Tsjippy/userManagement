@@ -2,6 +2,8 @@
 namespace SIM\USERMANAGEMENT;
 use SIM;
 
+
+// Adds userdata to the user metadata
 add_filter('sim_forms_load_userdata', __NAMESPACE__.'\loadUserData', 10, 2);
 function loadUserData($usermeta,$userId){
 	$userdata	= (array)get_userdata($userId)->data;
@@ -21,12 +23,12 @@ function beforeSavingData($formResults, $object){
 	}
 
 	// check if childrens age is correct
-	$family	= SIM\getUserFamily($object->userId);
+	$children	= get_user_meta($object->userId, 'children');
 	
-	if(!empty($family['children'])){
+	if(!empty($children)){
 		$ownAge		= strtotime(get_user_meta($object->userId, 'birthday', true));
 
-		foreach($family['children']	as $child){
+		foreach($children as $child){
 			$ageDiff	= strtotime(get_user_meta($child, 'birthday', true)) - $ownAge;
 
 			if($ageDiff / YEAR_IN_SECONDS < 14){

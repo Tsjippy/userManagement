@@ -5,6 +5,8 @@ use SIM;
 // edit users dropdown
 add_action('sim_user_description', __NAMESPACE__.'\userDescription');
 function userDescription($user){
+	$family	= new SIM\FAMILY\Family();
+
     //Add a useraccount edit button if the user has the usermanagement role
 	if (in_array('usermanagement', wp_get_current_user()->roles)){
         $url	= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user-edit-page');
@@ -15,14 +17,14 @@ function userDescription($user){
 		$url .= '/?user-id=';
 		
 		$html = "<div class='flex edit-useraccounts'><a href='$url$user->ID' class='button sim'>Edit useraccount for ".$user->first_name."</a>";
-        $partner    = SIM\hasPartner($user->ID, true);
+        $partner    = $family->getPartner($user->ID, true);
 		if($partner){
 			$html .= "<a  href='$url$partner->ID' class='button sim'>Edit useraccount for $partner->first_name</a>";
 		}
 
-        $family = (array)get_user_meta( $user->ID, 'family', true );
-		if(isset($family['children'])){
-			foreach($family['children'] as $child){
+		$children	= $family->getChildren($user);
+		if($children){
+			foreach($children as $child){
 				$html .= "<a href='$url$child' class='button sim'>Edit useraccount for ".get_userdata($child)->first_name."</a>";
 			}
 		}
@@ -57,6 +59,7 @@ function userInfoPage($atts){
 	$showCurrentUserData = $a['currentuser'];
 	
 	//Variables
+	$family				= new SIM\FAMILY\Family();
 	$medicalRoles		= ["medicalinfo"];
 	$genericInfoRoles 	= array_merge(['usermanagement'], $medicalRoles, ['administrator']);
 	$user 				= wp_get_current_user();
@@ -223,7 +226,7 @@ function userInfoPage($atts){
 			$html	.= '<div id="profile-picture-info" class="tabcontent hidden">';
 
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'profile_picture'){
-					if(SIM\isChild($userId)){
+					if($family->isChild($userId)){
 						$html	.= do_shortcode("[formbuilder formname=profile_picture user-id='$userId']");
 					}else{
 						$html	.= do_shortcode('[formbuilder formname=profile_picture]');
@@ -341,7 +344,6 @@ function userInfoPage($atts){
 		CHILDREN TABS
 	*/
 	if($showCurrentUserData){
-		$family = get_user_meta($userId, 'family', true);
 		if(is_array($family) && @is_array($family['children'])){
 			foreach($family['children'] as $childId){
 				$firstName = get_userdata($childId)->first_name;
@@ -384,6 +386,7 @@ function userInfoPage($atts){
  * @return	string					The html
  */
 function getGenericsTab($userId){
+	$family	= new SIM\FAMILY\Family();
 	
 	$accountValidity 	= get_user_meta( $userId, 'account_validity',true);
 
@@ -424,7 +427,7 @@ function getGenericsTab($userId){
 	$form	= apply_filters('sim-generics-form', '', $userId);
 
 	if(empty($form)){
-		if(SIM\isChild($userId)){
+		if($family->isChild($userId)){
 			$html	.= do_shortcode("[formbuilder formname=child_generic user-id=$userId]");
 		}else{
 			$html	.= do_shortcode("[formbuilder formname=user_generics user-id='$userId']");
@@ -437,9 +440,11 @@ function getGenericsTab($userId){
 }
 
 function getMedicalTab($userId){
+	$family	= new SIM\FAMILY\Family();
+
 	ob_start();
 	
-	if(SIM\isChild($userId)){
+	if($family->isChild($userId)){
 		echo do_shortcode("[formbuilder formname=user_medical user-id=$userId]");
 	}else{
 		echo do_shortcode('[formbuilder formname=user_medical]');

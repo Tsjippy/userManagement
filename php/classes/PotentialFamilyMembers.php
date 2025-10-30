@@ -17,7 +17,8 @@ class PotentialFamilyMembers{
         $this->userId               = $userId;
         $this->birthday	            = get_user_meta( $userId, 'birthday', true );
         $this->gender		        = get_user_meta( $userId, 'gender', true );
-        $this->family		        = (array)SIM\familyFlatArray($userId);
+        $family                     = new SIM\FAMILY\Family();
+        $this->family		        = $family->getFamily($userId, true);
         $this->potentialSpouses	    = [];
         $this->potentialFathers	    = [];
         $this->potentialMothers	    = [];
@@ -94,9 +95,11 @@ class PotentialFamilyMembers{
      * Get potential spouses
      */
 	public function potentialSpouses(){
+        $family = new SIM\FAMILY\Family();
+
         foreach($this->users as $user){
             //Check if current processing user already has a spouse
-			$spouse = SIM\hasPartner($user->ID);
+			$spouse = $family->getPartner($user->ID);
 
 			if(
 				$spouse == $this->userId				    ||	// This is our spouse
@@ -126,11 +129,10 @@ class PotentialFamilyMembers{
      * Get potential children
      */
 	public function potentialChildren(){
+        $family                     = new SIM\FAMILY\Family();
+
         foreach($this->users as $user){
-			$parents 		= SIM\getParents($user->ID, true);
-            if(!$parents){
-                $parents    = [];
-            }
+			$parents 		= $family->getParents($user->ID, true);
 			
 			if(
 				in_array($this->userId, $parents)       || // is the current users child

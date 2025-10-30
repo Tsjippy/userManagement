@@ -42,10 +42,7 @@ function birthdayCheck(){
 		$userId 	= $user->ID;
 		$firstName 	= $user->first_name;
 
-		$family = get_user_meta( $userId, 'family', true );
-		if ($family == ""){
-			$family = [];
-		}
+		$family = new SIM\FAMILY\Family();
 
 		//Send birthday wish to the user
 		add_action(
@@ -55,24 +52,17 @@ function birthdayCheck(){
 		);
 
 		//Send to parents
-		if (isset($family["father"]) || isset($family["mother"])){
+		if ($family->isChild($userId)){
 			$childTitle = SIM\getChildTitle($user->ID);
 
 			$message = "Congratulations with the birthday of your $childTitle ".get_userdata($user->ID)->first_name;
 		}
 
-		if (isset($family["father"])){
+		foreach($family->getParents($userId) as $parent){
 			add_action(
 				'sim-user-management-birthday-message',
-				"Hi ".get_userdata($family["father"])->first_name.",\n$message",
-				$family["father"]
-			);
-		}
-		if (isset($family["mother"])){
-			add_action(
-				'sim-user-management-birthday-message',
-				"Hi ".get_userdata($family["mother"])->first_name.",\n$message",
-				$family["mother"]
+				"Hi ".get_userdata($parent)->first_name.",\n$message",
+				$parent
 			);
 		}
 	}
@@ -82,6 +72,8 @@ function birthdayCheck(){
  * loop over all users and scan for expiry vaccinations
  */
 function vaccinationReminder(){
+	$family = new SIM\FAMILY\Family();
+
 	//Change the user to the adminaccount otherwise get_users will not work
 	wp_set_current_user(1);
 
@@ -96,7 +88,7 @@ function vaccinationReminder(){
 		if (!empty($reminderHtml)){
 			$userdata = get_userdata($user->ID);
 			if($userdata != null){
-				$parents 	= SIM\getParents($user->ID);
+				$parents 	= $family->getParents($user->ID);
 				$recipients = '';
 
 				//Is child
@@ -242,6 +234,9 @@ function checkExpiryDate($date, $expiryName){
  */
 function checkDetailsMail(){
 	wp_set_current_user(1);
+
+	$family 	= new SIM\FAMILY\Family();
+
 	$subject	= 'Please review your website profile';
 
 	//Retrieve all users
@@ -313,36 +308,7 @@ function checkDetailsMail(){
 				$message .= "</td>";
 			$message .= "</tr>";
 
-			$visaInfo = get_user_meta( $user->ID, 'visa_info', true );
-			if(!isset($visaInfo['permit-type']) || $visaInfo['permit-type'] == 'greencard'){
-				$sendingOffice = get_user_meta($user->ID, 'sending_office', true);
-				if(empty($sendingOffice)){
-					$sendingOffice = 'No sending office specified';
-				}
-				$message .= "<tr>";
-					$message .= "<td>";
-						$message .= "Sending office:";
-					$message .= "</td>";
-					$message .= "<td>";
-						$message .= "<a href='{$baseUrl}generic-info#sending_office' $styleString>$sendingOffice</a>";
-					$message .= "</td>";
-				$message .= "</tr>";
-
-				$arrivalDate = get_user_meta($user->ID, 'arrival_date', true);
-				if(empty($arrivalDate)){
-					$arrivalDate = 'No arrival date specified';
-				}else{
-					$arrivalDate = date('d F Y', strtotime($arrivalDate));
-				}
-				$message .= "<tr>";
-					$message .= "<td>";
-						$message .= "Arrival date:";
-					$message .= "</td>";
-					$message .= "<td>";
-						$message .= "<a href='{$baseUrl}generic-info#arrivalDate' $styleString>$arrivalDate</a>";
-					$message .= "</td>";
-				$message .= "</tr>";
-			}
+			$message	= apply_filters('sim-usermanagement-details-reminder-html', $message, $user, $baseUrl, $styleString);
 		$message .= "</table>";
 		$message .= "<br>";
 
@@ -445,35 +411,38 @@ function checkDetailsMail(){
 		/*
 		** FAMILY
  		*/
-		$family = get_user_meta( $user->ID, 'family', true );
-		if(!empty($family)){
-			if(empty($family['picture'])){
-				$picture	= "You have not uploaded a picture";
-			}else{
-				$url		= wp_get_attachment_url($family['picture'][0]);
+		$partner	= $family->getPartner($user->ID, true);
+		$children	= $family->getChildren($user->ID);
+		$siblings	= $family->getSiblings($user->ID);
+		if($partner || $children || $siblings){
+			$picture	= $family->getFamilyMeta($partner, 'picture');
+			if($picture){
+				$url		= wp_get_attachment_url($picture);
 				$picture	= "<img src='$url' width=100 height=100>";
+			}else{
+				$picture	= "You have not uploaded a picture";
 			}
 
-			$weddingDate	= '';
+			$weddingDate	= $family->getWeddingDate($user->ID);
 			if(empty($family['partner'])){
 				$partner 		= 'You have no spouse';
 			}else{
-				$partner = get_userdata($family['partner'])->display_name;
+				$partner = $partner->display_name;
 
-				if(empty($family['weddingdate'])){
-					$text	= "No weddingdate provided";
-				}else{
+				if($weddingDate){
 					$text	= date('d F Y', strtotime($family['weddingdate']));
+				}else{
+					$text	= "No weddingdate provided";
 				}
 
-				$weddingDate = "<tr>";
-					$weddingDate .= "<td>";
-						$weddingDate .= "Wedding date:";
-					$weddingDate .= "</td>";
-					$weddingDate .= "<td>";
-						$weddingDate .= "<a href='{$baseUrl}family#family[weddingdate]' $styleString>$text</a>";
-					$weddingDate .= "</td>";
-				$weddingDate .= "</tr>";
+				$weddingDateHtml = "<tr>";
+					$weddingDateHtml .= "<td>";
+						$weddingDateHtml .= "Wedding date:";
+					$weddingDateHtml .= "</td>";
+					$weddingDateHtml .= "<td>";
+						$weddingDateHtml .= "<a href='{$baseUrl}family#weddingdate' $styleString>$text</a>";
+					$weddingDateHtml .= "</td>";
+				$weddingDateHtml .= "</tr>";
 			}
 
 			$message .= "<a href='{$baseUrl}family' $styleString><b>Family details</b></a><br>";
@@ -496,7 +465,7 @@ function checkDetailsMail(){
 					$message .= "</td>";
 				$message .= "</tr>";
 
-				$message .= $weddingDate;
+				$message .= $weddingDateHtml;
 
 				foreach($family['children'] as $key=>$child){
 					$nr=$key+1;
