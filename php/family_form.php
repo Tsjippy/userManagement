@@ -20,7 +20,7 @@ function addMultiDefault($defaultArrayValues, $userId, $formName){
 	return $defaultArrayValues;
 }
 
-//Save family
+//Save family picture
 add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingFormData', 10, 2);
 function beforeSavingFormData($formResults, $object){
 	if($object->formData->name != 'user_family'){
@@ -31,75 +31,14 @@ function beforeSavingFormData($formResults, $object){
 
 	$family = new SIM\FAMILY\Family();
 
-	// First update the partner
-	$newPartner	= sanitize_text_field($_POST['partner']);
-	$oldPartner	= $family->getPartner($userId);
-	if($newPartner != $oldPartner){
-		// remove old relationship
-		$family->removeRelationShip($userId, $oldPartner);
-
-		// Add new one
-		$family->storeRelationship($userId, $newPartner, 'partner');
-	}
-
-	// Then the weddingdate
-	$newDate	= sanitize_text_field($_POST['weddingdate']);
-	$oldDate	= $family->getWeddingDate($userId);
-	if($newDate != $oldDate){
-		$family->updateWeddingDate($userId,  $newDate);
-
-		do_action('sim-family-after-weddingdate-update', $userId, $oldDate, $newDate);
-	}
-
 	// Family Picture
 	$newPicture	= sanitize_text_field($_POST['family_picture']);
 	$oldPicture	= $family->getFamilyMeta($userId, 'family_picture');
 	if($newPicture != $oldPicture){
-		$family->updateFamilyMeta($userId, 'family_picture', $newPicture);
-
 		// Do not show in picture gallery
 		update_post_meta($newPicture, 'gallery_visibility', 'hide' );
 
 		do_action('sim_update_family_picture', $userId, $newPicture);
-	}
-
-	// Children
-	$prevChildren	= $family->getChildren($userId);
-	$newChildren	= $_POST['children'];
-	$remove			= array_diff($prevChildren, $newChildren);
-	$add			= array_diff($newChildren, $prevChildren);
-
-	foreach($add as $child){
-		// Add new one
-		$family->storeRelationship($userId, $child, 'child');
-	}
-
-	foreach($remove as $child){
-		// remove old relationship
-		$family->removeRelationShip($userId, $child);
-	}
-
-	// Siblings
-	$prevSiblings	= $family->getSiblings($userId);
-	$newSiblings	= $_POST['siblings'];
-	$remove			= array_diff($prevSiblings, $newSiblings);
-	$add			= array_diff($newSiblings, $prevSiblings);
-
-	foreach($add as $sibling){
-		// Add new one
-		$family->storeRelationship($userId, $sibling, 'sibling');
-	}
-
-	foreach($remove as $sibling){
-		// remove old relationship
-		$family->removeRelationShip($userId, $sibling);
-	}
-
-	// Family Name
-	$newName	= sanitize_text_field($_POST['family_name']);
-	$oldName	= $family->getFamilyMeta($userId, 'family_name');
-	if($newName != $oldName){
-		$family->updateFamilyMeta($userId, 'family_name', $newName);
 	}
 
 	return $formResults;

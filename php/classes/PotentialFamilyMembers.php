@@ -4,6 +4,7 @@ use SIM;
 
 class PotentialFamilyMembers{
     public $userId;
+    public $partner;
     public $birthday;
     public $gender;
     public $family;
@@ -18,6 +19,7 @@ class PotentialFamilyMembers{
         $this->birthday	            = get_user_meta( $userId, 'birthday', true );
         $this->gender		        = get_user_meta( $userId, 'gender', true );
         $family                     = new SIM\FAMILY\Family();
+        $this->partner              = $family->getPartner($userId);
         $this->family		        = $family->getFamily($userId, true);
         $this->potentialSpouses	    = [];
         $this->potentialFathers	    = [];
@@ -35,12 +37,13 @@ class PotentialFamilyMembers{
         //Get the id and the displayname of all users
         $this->users 					= get_users(
             array(
-                'fields' 	=> array( 'ID','display_name' ) ,
+                'fields' 	=> array( 'ID', 'display_name' ) ,
                 'orderby'	=> 'meta_value',
                 'meta_key'	=> 'last_name',
                 'exclude'   =>  [$this->userId]
             )
         );
+
         $existsArray = array();
 
         //Loop over all users to find dublicate displaynames
@@ -136,6 +139,7 @@ class PotentialFamilyMembers{
 			
 			if(
 				in_array($this->userId, $parents)       || // is the current users child
+                in_array($this->partner, $parents)       || // is the current user partner child
 				(
                     empty($parents)				        &&  // is not a child
                     !in_array($user->ID, $this->family) &&  // is not family already
