@@ -1,4 +1,4 @@
-import { addStyles } from './../../../plugins/sim-plugin/includes/js/imports.js';
+import { addStyles } from '../../../plugins/sim-plugin/includes/js/partials/load_assets.js';
 
 async function loadTab(tab){
 	let formData    = new FormData();
