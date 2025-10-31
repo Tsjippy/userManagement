@@ -4,12 +4,19 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+### Updated
+
+## [8.2.9] - 2025-10-31
+
+
+### Changed
 - render loader image using js
 
 ### Fixed
 - getting family picture
-
-### Updated
 
 ## [8.2.8] - 2025-10-30
 
