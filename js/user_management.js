@@ -50,7 +50,11 @@ document.addEventListener('click', ev=>{
     }else if(target.name == 'adduseraccount'){
 		ev.preventDefault();
 		createUserAccount(target);
+	}else{
+		return;
 	}
+
+	ev.stopImmediatePropagation();
 });
 
 console.log('user management js loaded');
