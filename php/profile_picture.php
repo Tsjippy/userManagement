@@ -9,18 +9,18 @@ function init(){
 
 
 add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingPictureFormData', 10, 2);
-function beforeSavingPictureFormData($formResults, $object){
+function beforeSavingPictureFormData($submission, $object){
 	if($object->formData->name != 'profile_picture'){
-		return $formResults;
+		return $submission;
 	}
 	
 	// Hide profile picture by default from media galery
-	$pictureId	=  $formResults['profile_picture'][0];
+	$pictureId	=  $submission->profile_picture[0];
 	if(is_numeric($pictureId)){
 		update_post_meta($pictureId, 'gallery_visibility', 'hide' );
 	}
 
-	return $formResults;
+	return $submission;
 }
 
 /**

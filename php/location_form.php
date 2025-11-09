@@ -4,9 +4,9 @@ use SIM;
 
 //create birthday and anniversary events
 add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingLocationFormData', 10, 2);
-function beforeSavingLocationFormData($formResults, $object){
+function beforeSavingLocationFormData($submission, $object){
 	if($object->formData->name != 'user_location'){
-		return $formResults;
+		return $submission;
 	}
 	
 	//Get the old values from the db
@@ -31,7 +31,8 @@ function beforeSavingLocationFormData($formResults, $object){
 		
 		$location['address'] = sanitize_text_field($location['address']);
 		
-		SIM\updateFamilyMeta($object->userId, "location", $location);
+		$family	= new SIM\FAMILY\Family();
+		$family->updateFamilyMeta($object->userId, "location", $location);
 
 		do_action('sim_location_update', $object->userId, $location);
 		
@@ -44,5 +45,5 @@ function beforeSavingLocationFormData($formResults, $object){
 		do_action('sim_location_removal', $object->userId);
 	}
 	
-	return $formResults;
+	return $submission;
 }

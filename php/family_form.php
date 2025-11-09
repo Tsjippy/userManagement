@@ -22,9 +22,9 @@ function addMultiDefault($defaultArrayValues, $userId, $formName){
 
 //Save family picture
 add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingFormData', 10, 2);
-function beforeSavingFormData($formResults, $object){
+function beforeSavingFormData($submission, $object){
 	if($object->formData->name != 'user_family'){
-		return $formResults;
+		return $submission;
 	}
 
 	$userId	= $object->userId;
@@ -41,7 +41,7 @@ function beforeSavingFormData($formResults, $object){
 		do_action('sim_update_family_picture', $userId, $newPicture);
 	}
 
-	return $formResults;
+	return $submission;
 }
 
 // add a family member modal

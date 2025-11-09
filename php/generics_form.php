@@ -17,9 +17,9 @@ function loadUserData($usermeta,$userId){
 
 // phonenumbers and more
 add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingData', 10, 2);
-function beforeSavingData($formResults, $object){
+function beforeSavingData($submission, $object){
 	if($object->formData->name != 'user_generics'){
-		return $formResults;
+		return $submission;
 	}
 
 	// check if childrens age is correct
@@ -45,22 +45,22 @@ function beforeSavingData($formResults, $object){
 		// Make sure the phonenumber is in the right format
 		# = should be +
 		if($changedNumber[0] == '='){
-			$changedNumber = $formResults['phonenumbers'][$key]	= str_replace('=', '+', $changedNumber);
+			$changedNumber = $submission->phonenumbers[$key]	= str_replace('=', '+', $changedNumber);
 		}
 
 		# 00 should be +
 		if(substr($changedNumber, 0, 2) == '00'){
-			$changedNumber = $formResults['phonenumbers'][$key]	= '+'.substr($changedNumber, 2);
+			$changedNumber = $submission->phonenumbers[$key]	= '+'.substr($changedNumber, 2);
 		}
 
 		# 0 should be +234
 		if($changedNumber[0] == '0'){
-			$changedNumber = $formResults['phonenumbers'][$key]	= '+234'.substr($changedNumber, 1);
+			$changedNumber = $submission->phonenumbers[$key]	= '+234'.substr($changedNumber, 1);
 		}
 
 		# Should start with + by now
 		if($changedNumber[0] != '+'){
-			$changedNumber = $formResults['phonenumbers'][$key]	= '+234'.$changedNumber;
+			$changedNumber = $submission->phonenumbers[$key]	= '+234'.$changedNumber;
 		}
 
 		do_action('sim-phonenumber-updated', $changedNumber, $object->userId);
@@ -71,7 +71,7 @@ function beforeSavingData($formResults, $object){
 		update_user_meta($object->userId, 'phone-last-changed', time());
 	}
 	
-	return $formResults;
+	return $submission;
 }
 
 //Add ministry modal
