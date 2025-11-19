@@ -189,7 +189,7 @@ function displayMinistryPositions($userId){
 						foreach ($ministries as $pageId=>$ministry) {
 							//Check which option should be a checked ministry
 							if (!empty($userMinistries[$pageId])){
-								$checked	= 'checked';
+								$checked	= 'checked="checked"';
 								$class		= '';
 								$position	= $userMinistries[$pageId];
 							}else{

@@ -1,4 +1,4 @@
-?php
+<?php
 namespace SIM\SIGNAL;
 use SIM;
 
@@ -11,7 +11,7 @@ function addResponse($response, $message, $source, $users, $name, $signal){
     $lowerMessage = strtolower($message);
     
     if(str_starts_with($lowerMessage, 'update profile picture')){
-        $response['message']    = checkPrayerRequestToUpdate($message, $users, $signal);
+        $response['message']    = 12;//checkPrayerRequestToUpdate($message, $users, $signal);
     }
 
     return $response;
