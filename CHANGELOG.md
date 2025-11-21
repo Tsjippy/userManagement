@@ -4,12 +4,19 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+### Updated
+
+## [8.3.1] - 2025-11-21
+
+
+### Changed
 - formresults to submission
 
 ### Fixed
 - adhere to html standards
-
-### Updated
 
 ## [8.3.0] - 2025-11-03
 
