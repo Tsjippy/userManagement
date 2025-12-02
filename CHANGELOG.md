@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- only add new method if needed
 
 ### Fixed
 
 ### Updated
+
+## [8.3.2] - 2025-12-02
+
+
+### Changed
+- only add new method if needed
 
 ## [8.3.1] - 2025-11-21
 
