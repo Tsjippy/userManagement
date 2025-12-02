@@ -46,7 +46,9 @@ function changePasswordForm($userId = null){
 			SIM\LOGIN\reset2fa($userId);
 			echo "<div class='success'>Succesfully turned off 2fa for $name</div>";
 		}elseif($_REQUEST['action'] == 'Change to e-mail'){
-			add_user_meta($userId, '2fa_methods', 'email');
+			SIM\LOGIN\addMethod('email', $user->ID);
+
+			delete_user_meta($user->ID, "2fa_methods", 'authenticator');
 			echo "<div class='success'>Succesfully changed the 2fa factor for $name to e-mail</div>";
 		}
 
