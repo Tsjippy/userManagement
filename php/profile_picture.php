@@ -8,7 +8,7 @@ function init(){
 }
 
 
-add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingPictureFormData', 10, 2);
+add_filter('sim_before_inserting_formdata', __NAMESPACE__.'\beforeSavingPictureFormData', 10, 2);
 function beforeSavingPictureFormData($submission, $object){
 	if($object->formData->name != 'profile_picture'){
 		return $submission;

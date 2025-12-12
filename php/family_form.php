@@ -21,7 +21,7 @@ function addMultiDefault($defaultArrayValues, $userId, $formName){
 }
 
 //Save family picture
-add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingFormData', 10, 2);
+add_filter('sim_before_inserting_formdata', __NAMESPACE__.'\beforeSavingFormData', 10, 2);
 function beforeSavingFormData($submission, $object){
 	if($object->formData->name != 'user_family'){
 		return $submission;

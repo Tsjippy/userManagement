@@ -16,7 +16,7 @@ function loadUserData($usermeta,$userId){
 }
 
 // phonenumbers and more
-add_filter('sim_before_saving_formdata', __NAMESPACE__.'\beforeSavingData', 10, 2);
+add_filter('sim_before_inserting_formdata', __NAMESPACE__.'\beforeSavingData', 10, 2);
 function beforeSavingData($submission, $object){
 	if($object->formData->name != 'user_generics'){
 		return $submission;
