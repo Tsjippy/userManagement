@@ -15,7 +15,9 @@ function beforePdfText($cellText, $pdf){
             // available space at the left
             $remaining  = (30 - $length) / 2;
 
-            $cellText = str_repeat(" ", ceil((6 - $remaining) / 0.392285)).$cellText; // each space is 0.78457 units
+            $prepend    = str_repeat(" ", max(0, ceil((6 - $remaining) / 0.392285)));
+
+            $cellText = $prepend.$cellText; // each space is 0.78457 units
         }
     }
 

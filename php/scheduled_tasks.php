@@ -7,7 +7,7 @@ function taskInit(){
 	//add action for use in scheduled task
 	add_action( 'birthday_check_action', __NAMESPACE__.'\birthdayCheck' );
     add_action( 'vaccination_reminder_action', __NAMESPACE__.'\vaccinationReminder' );
-    add_action( 'check-details-mail_action', __NAMESPACE__.'\checkDetailsMail' );
+    add_action( 'check_details_mail_action', __NAMESPACE__.'\checkDetailsMail' );
     add_action( 'account_expiry_check_action', __NAMESPACE__.'\accountExpiryCheck' );
 	add_action( 'check_last_login_date_action', __NAMESPACE__.'\checkLastLoginDate' );
 }
@@ -20,7 +20,7 @@ function scheduleTasks(){
 
 	$freq	= SIM\getModuleOption(MODULE_SLUG, 'check-details-mail-freq');
 	if($freq){
-		SIM\scheduleTask('check-details-mail_action', $freq);
+		SIM\scheduleTask('check_details_mail_action', $freq);
 	}
 }
 
