@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- image in pdf
 
 ### Updated
 
