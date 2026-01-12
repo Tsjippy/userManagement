@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- image in pdf
 
 ### Updated
+
+## [8.3.4] - 2026-01-12
+
+
+### Fixed
+- image in pdf
 
 ## [8.3.3] - 2025-12-12
 
