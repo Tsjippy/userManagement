@@ -86,8 +86,8 @@ function moduleOptions($optionsHtml, $settings){
 	return ob_get_clean().$optionsHtml;
 }
 
-add_filter('sim_email_usermanagement_settings', __NAMESPACE__.'\emailSettings', 10, 2);
-function emailSettings($html, $settings){
+add_filter('sim_email_usermanagement_settings', __NAMESPACE__.'\emailSettings');
+function emailSettings($html){
 	ob_start();
 	?>
 	<h4>E-mail to people who's account is just approved</h4>
@@ -95,7 +95,7 @@ function emailSettings($html, $settings){
 	<?php
 	$accountApproveddMail    = new AccountApproveddMail(wp_get_current_user());
 	$accountApproveddMail->printPlaceholders();
-	$accountApproveddMail->printInputs($settings);
+	$accountApproveddMail->printInputs();
 	?>
 	<br>
 	<br>
@@ -105,7 +105,7 @@ function emailSettings($html, $settings){
 	<?php
 	$accountCreatedMail    = new AccountCreatedMail(wp_get_current_user());
 	$accountCreatedMail->printPlaceholders();
-	$accountCreatedMail->printInputs($settings);
+	$accountCreatedMail->printInputs();
 	?>
 	<br>
 	<br>
@@ -115,7 +115,7 @@ function emailSettings($html, $settings){
 	<?php
 	$accountExpiryMail    = new AccountExpiryMail(wp_get_current_user());
 	$accountExpiryMail->printPlaceholders();
-	$accountExpiryMail->printInputs($settings);
+	$accountExpiryMail->printInputs();
 	?>
 	<br>
 	<br>
@@ -125,7 +125,7 @@ function emailSettings($html, $settings){
 	<?php
 	$accountRemoveMail    = new AccountRemoveMail(wp_get_current_user());
 	$accountRemoveMail->printPlaceholders();
-	$accountRemoveMail->printInputs($settings);
+	$accountRemoveMail->printInputs();
 	?>
 	<br>
 	<br>
@@ -135,7 +135,7 @@ function emailSettings($html, $settings){
 	<?php
 	$weMissYouMail    = new WeMissYouMail(wp_get_current_user());
 	$weMissYouMail->printPlaceholders();
-	$weMissYouMail->printInputs($settings);
+	$weMissYouMail->printInputs();
 	?>
 	<br>
 	<br>
@@ -145,7 +145,7 @@ function emailSettings($html, $settings){
 	<?php
 	$vaccinationWarningMail    = new AdultVaccinationWarningMail(wp_get_current_user());
 	$vaccinationWarningMail->printPlaceholders();
-	$vaccinationWarningMail->printInputs($settings);
+	$vaccinationWarningMail->printInputs();
     ?>
 	<br>
 	<br>
@@ -155,7 +155,7 @@ function emailSettings($html, $settings){
 	<?php
 	$vaccinationWarningMail    = new ChildVaccinationWarningMail(wp_get_current_user());
 	$vaccinationWarningMail->printPlaceholders();
-	$vaccinationWarningMail->printInputs($settings);
+	$vaccinationWarningMail->printInputs();
 
 	return $html.ob_get_clean();
 }
