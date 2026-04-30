@@ -52,6 +52,8 @@ register_activation_hook( __FILE__, function(){
 	// Create pending users page
 	$settings['pending-users-page'] 	= TSJIPPY\ADMIN\createDefaultPage('Pending user accounts', '[pending_user]');
 
+	update_option('tsjippy_'.PLUGINSLUG.'_settings', $settings);
+
 	/** 
 	 * Import the forms
 	 */
