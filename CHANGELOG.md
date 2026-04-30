@@ -9,6 +9,7 @@
 - updated forms imports
 
 ### Fixed
+- store auto pages in settings
 
 ### Updated
 
