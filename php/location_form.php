@@ -1,11 +1,11 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 //create birthday and anniversary events
-add_filter('sim_before_inserting_formdata', __NAMESPACE__.'\beforeSavingLocationFormData', 10, 2);
+add_filter('tsjippy_before_inserting_formdata', __NAMESPACE__.'\beforeSavingLocationFormData', 10, 2);
 function beforeSavingLocationFormData($submission, $object){
-	if($object->formData->name != 'user_location'){
+	if($object->formData->slug != 'user_location'){
 		return $submission;
 	}
 	
@@ -31,18 +31,18 @@ function beforeSavingLocationFormData($submission, $object){
 		
 		$location['address'] = sanitize_text_field($location['address']);
 		
-		$family	= new SIM\FAMILY\Family();
+		$family	= new TSJIPPY\FAMILY\Family();
 		$family->updateFamilyMeta($object->userId, "location", $location);
 
-		do_action('sim_location_update', $object->userId, $location);
+		do_action('tsjippy_location_update', $object->userId, $location);
 		
-		SIM\printArray("Saved location for user id $object->userId");
+		TSJIPPY\printArray("Saved location for user id $object->userId");
 	}elseif(isset($_POST["location"]) && (empty($location['latitude']) || empty($location['longitude']))){
 		//Remove location from db if empty
 		delete_user_meta( $object->userId, 'location');
-		SIM\printArray("Deleted location for user id $object->userId");
+		TSJIPPY\printArray("Deleted location for user id $object->userId");
 
-		do_action('sim_location_removal', $object->userId);
+		do_action('tsjippy_location_removal', $object->userId);
 	}
 	
 	return $submission;

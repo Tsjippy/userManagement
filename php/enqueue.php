@@ -1,12 +1,12 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__.'\loadAssets', 99);
 function loadAssets(){
-    wp_register_style( 'sim_useraccount', SIM\pathToUrl(MODULE_PATH.'css/account.min.css'), array(), MODULE_VERSION);
+    wp_register_style( 'tsjippy_useraccount', TSJIPPY\pathToUrl(PLUGINPATH.'css/account.min.css'), array(), PLUGINVERSION);
 
-    wp_register_script( 'sim_user_management', SIM\pathToUrl(MODULE_PATH.'js/user_management.min.js'), array('sim_formsubmit_script'), MODULE_VERSION, true);
+    wp_register_script( 'tsjippy_user_management', TSJIPPY\pathToUrl(PLUGINPATH.'js/user_management.min.js'), array('tsjippy_formsubmit_script'), PLUGINVERSION, true);
 
-    wp_register_script( 'sim_userpage', SIM\pathToUrl(MODULE_PATH.'js/userpage.min.js'), array(), MODULE_VERSION, true);
+    wp_register_script( 'tsjippy_userpage', TSJIPPY\pathToUrl(PLUGINPATH.'js/userpage.min.js'), array(), PLUGINVERSION, true);
 }

@@ -11,7 +11,7 @@ const Edit = () => {
 		() => {
 			async function getHTML(){
 				setHtml( < Spinner /> );
-				const response = await apiFetch({path: sim.restApiPrefix+'/usermanagement/show_reminders'});
+				const response = await apiFetch({path: restApiPrefix+'/usermanagement/show_reminders'});
 				setHtml( response );
 			}
 			getHTML();

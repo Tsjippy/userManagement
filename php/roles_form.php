@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 /**
  * Creates the form to edit a users roles
  *
@@ -11,7 +11,7 @@ use SIM;
 function displayRoles($userId=''){
 	global $wp_roles;
 
-	wp_enqueue_script( 'sim_user_management');
+	wp_enqueue_script( 'tsjippy_user_management');
 
 	$roles	= [];
 
@@ -80,12 +80,12 @@ function displayRoles($userId=''){
 					<div class="infobox">
 						<div class="info-icon-wrapper">
 							<p class="info-icon">
-								<img draggable="false" role="img" class="emoji" alt="ℹ" loading='lazy' src="<?php echo SIM\PICTURESURL;?>/info.png">
+								<img draggable="false" role="img" class="emoji" alt="ℹ" loading='lazy' src="<?php echo TSJIPPY\PICTURESURL;?>/info.png">
 							</p>
 						</div>
 						<span class="info-text">
 							<?php
-							echo $roleName.' - <i>'.apply_filters('sim_role_description', '', $key).'</i>';
+							echo $roleName.' - <i>'.apply_filters('tsjippy_role_description', '', $key).'</i>';
 							?>
 						</span>
 					</div>
@@ -121,7 +121,7 @@ function displayRoles($userId=''){
 						<td style='border: none;'>
 							<i>
 								<?php
-								echo apply_filters('sim_role_description', '', $key);
+								echo apply_filters('tsjippy_role_description', '', $key);
 								?>
 							</i>
 						</td>

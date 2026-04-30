@@ -1,9 +1,9 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 //Add availbale partners as default
-add_filter( 'sim_add_form_multi_defaults', __NAMESPACE__.'\addMultiDefault', 10, 3);
+add_filter( 'tsjippy_add_form_multi_defaults', __NAMESPACE__.'\addMultiDefault', 10, 3);
 function addMultiDefault($defaultArrayValues, $userId, $formName){
 	if($formName != 'user_family'){
 		return $defaultArrayValues;
@@ -21,15 +21,15 @@ function addMultiDefault($defaultArrayValues, $userId, $formName){
 }
 
 //Save family picture
-add_filter('sim_before_inserting_formdata', __NAMESPACE__.'\beforeSavingFormData', 10, 2);
+add_filter('tsjippy_before_inserting_formdata', __NAMESPACE__.'\beforeSavingFormData', 10, 2);
 function beforeSavingFormData($submission, $object){
-	if($object->formData->name != 'user_family'){
+	if($object->formData->slug != 'user_family'){
 		return $submission;
 	}
 
 	$userId	= $object->userId;
 
-	$family = new SIM\FAMILY\Family();
+	$family = new TSJIPPY\FAMILY\Family();
 
 	// Family Picture
 	$newPicture	= sanitize_text_field($_POST['family_picture']);
@@ -38,14 +38,14 @@ function beforeSavingFormData($submission, $object){
 		// Do not show in picture gallery
 		update_post_meta($newPicture, 'gallery_visibility', 'hide' );
 
-		do_action('sim_update_family_picture', $userId, $newPicture);
+		do_action('tsjippy_update_family_picture', $userId, $newPicture);
 	}
 
 	return $submission;
 }
 
 // add a family member modal
-add_filter('sim_before_form', __NAMESPACE__.'\beforeForm', 10, 2);
+add_filter('tsjippy_before_form', __NAMESPACE__.'\beforeForm', 10, 2);
 function beforeForm($html, $formName){
 	if($formName != 'user_family'){
 		return $html;
@@ -81,7 +81,7 @@ function beforeForm($html, $formName){
 					<input type="email"  class='wide' name="email">
 				</label>
 				
-				<?php echo SIM\addSaveButton('adduseraccount', 'Add family member');?>
+				<?php echo TSJIPPY\addSaveButton('adduseraccount', 'Add family member');?>
 			</form>
 		</div>
 	</div>

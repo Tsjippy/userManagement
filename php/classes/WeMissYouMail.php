@@ -1,7 +1,7 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
-use SIM\ADMIN;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
+use TSJIPPY\ADMIN;
 
 
 class WeMissYouMail extends ADMIN\MailSetting{
@@ -11,7 +11,7 @@ class WeMissYouMail extends ADMIN\MailSetting{
 
     public function __construct($user, $lastLogin='') {
         // call parent constructor
-		parent::__construct('miss_you', MODULE_SLUG);
+		parent::__construct('miss_you', PLUGINSLUG);
 
         $this->addUser($user);
 

@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 //Add link to the user menu to resend the confirmation e-mail
 add_filter( 'user_row_actions', __NAMESPACE__.'\userRowActions', 10, 2 );
@@ -15,7 +15,7 @@ function adminMenu() {
 	if(!empty($_GET['send_activation_email']) && is_numeric($_GET['send_activation_email'] )){
 		$userId    = $_GET['send_activation_email'];
 		$email = get_userdata($userId )->user_email;
-		SIM\printArray("Sending welcome email to $email");
+		TSJIPPY\printArray("Sending welcome email to $email");
 		wp_new_user_notification($userId, null, 'user');
 	}
 }
@@ -35,7 +35,7 @@ function notificationEmail($args, $user){
 
 	$validTillString	= date($format, $validTill);
 
-	$pageUrl	= get_permalink(SIM\getModuleOption('login', 'password-reset-page')[0]);
+	$pageUrl	= get_permalink(TSJIPPY\LOGIN\SETTINGS['password-reset-page'] ?? [] [0]);
 	$url		= "$pageUrl?key=$key&login=$user->user_login";
 
 	if(get_user_meta($user->ID, 'disabled', true) == 'pending'){

@@ -1,8 +1,8 @@
 <?php
-namespace SIM\SIGNAL;
-use SIM;
+namespace TSJIPPY\SIGNAL;
+use TSJIPPY;
 
-add_filter('sim-signal-daemon-response', __NAMESPACE__.'\addResponse', 10, 6);
+add_filter('tsjippy-signal-daemon-response', __NAMESPACE__.'\addResponse', 10, 6);
 function addResponse($response, $message, $source, $users, $name, $signal){
     if($response['message'] != 'I have no clue, do you know?'){
         return $response;

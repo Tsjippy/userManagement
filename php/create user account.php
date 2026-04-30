@@ -1,18 +1,18 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 //Shortcode for adding user accounts
 add_shortcode('create_user_account', __NAMESPACE__.'\createUserAccountForm');
 function createUserAccountForm(){
-	wp_enqueue_script( 'sim_user_management');
+	wp_enqueue_script( 'tsjippy_user_management');
 
 	$user = wp_get_current_user();
 	if ( in_array('usermanagement', $user->roles)){
 		ob_start();
 		?>
 		<div class="tabcontent">
-			<form class='sim-form' data-reset="true">
+			<form class='tsjippy-form' data-reset="true">
 				<p>Please fill in the form to create an user account</p>
 				
 				<label>
@@ -43,9 +43,9 @@ function createUserAccountForm(){
 					<option value="unlimited">Always</option>
 				</select>
 				<?php
-				do_action('sim_after_user_create_form');
+				do_action('tsjippy_after_user_create_form');
 				
-				echo SIM\addSaveButton('adduseraccount', 'Add user account');
+				echo TSJIPPY\addSaveButton('adduseraccount', 'Add user account');
 				?>
 			</form>
 		</div>
@@ -95,7 +95,7 @@ function pendingUsers(){
 			delete_user_meta( $UserId, 'disabled');
 
 			// run account update hook
-			do_action('sim_approved_user', $userId);
+			do_action('tsjippy_approved_user', $userId);
 			
 			echo '<div class="success">Useraccount succesfully activated</div>';
 		}

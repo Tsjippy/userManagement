@@ -1,7 +1,7 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
-use SIM\ADMIN;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
+use TSJIPPY\ADMIN;
 
 class AccountRemoveMail extends ADMIN\MailSetting{
 
@@ -9,11 +9,11 @@ class AccountRemoveMail extends ADMIN\MailSetting{
 
     public function __construct($user) {
         // call parent constructor
-		parent::__construct('account_removal', MODULE_SLUG);
+		parent::__construct('account_removal', PLUGINSLUG);
 
         $this->addUser($user);
 
-        $this->replaceArray['%account_page%']    = SIM\ADMIN\getDefaultPageLink($this->moduleSlug, 'account_page');
+        $this->replaceArray['%account_page%']    = TSJIPPY\ADMIN\getDefaultPageLink($this->moduleSlug, 'account_page');
 
         $this->defaultSubject    = 'Your account on %site_name% has been deleted';
 

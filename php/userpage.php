@@ -1,15 +1,15 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 // edit users dropdown
-add_action('sim_user_description', __NAMESPACE__.'\userDescription');
+add_action('tsjippy_user_description', __NAMESPACE__.'\userDescription');
 function userDescription($user){
-	$family	= new SIM\FAMILY\Family();
+	$family	= new TSJIPPY\FAMILY\Family();
 
     //Add a useraccount edit button if the user has the usermanagement role
 	if (in_array('usermanagement', wp_get_current_user()->roles)){
-        $url	= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user-edit-page');
+        $url	= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'user-edit-page');
         if(!$url){
 			return;
 		}
@@ -38,18 +38,18 @@ function userDescription($user){
 add_shortcode("user-info", __NAMESPACE__.'\userInfoPage');
 function userInfoPage($atts){
 	if(!is_user_logged_in()){
-		if(function_exists('SIM\LOGIN\loginModal')){
-			SIM\LOGIN\loginModal("You do not have permission to see this, sorry.");
+		if(function_exists('TSJIPPY\LOGIN\loginModal')){
+			TSJIPPY\LOGIN\loginModal("You do not have permission to see this, sorry.");
 			return'';
 		}
 
 		return "<p>You do not have permission to see this, sorry.</p>";
 	}
 
-	wp_enqueue_style('sim_forms_style');
-	wp_enqueue_style('sim_useraccount');
+	wp_enqueue_style('tsjippy_forms_style');
+	wp_enqueue_style('tsjippy_useraccount');
 	
-	wp_enqueue_script( 'sim_userpage' );
+	wp_enqueue_script( 'tsjippy_userpage' );
 	
 	$a = shortcode_atts( array(
 		'currentuser' 	=> false,
@@ -59,7 +59,7 @@ function userInfoPage($atts){
 	$showCurrentUserData = $a['currentuser'];
 	
 	//Variables
-	$family				= new SIM\FAMILY\Family();
+	$family				= new TSJIPPY\FAMILY\Family();
 	$medicalRoles		= ["medicalinfo"];
 	$genericInfoRoles 	= array_merge(['usermanagement'], $medicalRoles, ['administrator']);
 	$user 				= wp_get_current_user();
@@ -67,8 +67,8 @@ function userInfoPage($atts){
 	$tabs				= [];
 	$html				= '';
 	$userAge 			= 19;
-	$availableForms		= (array)SIM\getModuleOption(MODULE_SLUG, 'enabled-forms');
-	$userSelectRoles	= apply_filters('sim_user_page_dropdown', $genericInfoRoles);
+	$availableForms		= (array)SETTINGS['enabled-forms'] ?? [];
+	$userSelectRoles	= apply_filters('tsjippy_user_page_dropdown', $genericInfoRoles);
 
 	//Showing data for current user
 	if($showCurrentUserData){
@@ -89,7 +89,7 @@ function userInfoPage($atts){
 		if($user){
 			$userId = $_GET["user-id"];
 		}else{
-			return SIM\userSelect("Select an user to show the data of:", false, false, '', 'user-selection', [], '', []);
+			return TSJIPPY\userSelect("Select an user to show the data of:", false, false, '', 'user-selection', [], '', []);
 		}
 
 		$userBirthday = get_user_meta($userId, "birthday", true);
@@ -136,7 +136,7 @@ function userInfoPage($atts){
 		) &&
 		in_array('family', $availableForms)							// and the family form is enabled
 	){
-		$shouldShow	= apply_filters('sim-should-show-family-form', true, $userId);
+		$shouldShow	= apply_filters('tsjippy-should-show-family-form', true, $userId);
 
 		if($shouldShow && $userAge > 18){
 			//Tab button
@@ -183,7 +183,7 @@ function userInfoPage($atts){
 		) &&
 		in_array('location', $availableForms)
 	){
-		$shouldShow	= apply_filters('sim-should-show-location-form', true, $userId);
+		$shouldShow	= apply_filters('tsjippy-should-show-location-form', true, $userId);
 
 		if($shouldShow){
 			//Add tab button
@@ -216,7 +216,7 @@ function userInfoPage($atts){
 		PROFILE PICTURE Info
 	*/
 	if((in_array('usermanagement', $userRoles ) || $showCurrentUserData) && in_array('profile picture', $availableForms)){
-		$shouldShow	= apply_filters('sim-should-show-picture-form', true, $userId);
+		$shouldShow	= apply_filters('tsjippy-should-show-picture-form', true, $userId);
 
 		if($shouldShow){
 			//Add tab button
@@ -260,7 +260,7 @@ function userInfoPage($atts){
 				<?php
 				echo displayRoles($userId);
 				
-				echo SIM\addSaveButton('updateroles', 'Update roles');
+				echo TSJIPPY\addSaveButton('updateroles', 'Update roles');
 				?>
 			</form>
 		</div>
@@ -279,7 +279,7 @@ function userInfoPage($atts){
 		) &&
 		in_array('security', $availableForms)
 	){
-		$shouldShow	= apply_filters('sim-should-show-security-form', true, $userId);
+		$shouldShow	= apply_filters('tsjippy-should-show-security-form', true, $userId);
 
 		if($shouldShow){
 			//Tab button
@@ -308,7 +308,7 @@ function userInfoPage($atts){
 		) &&
 		in_array('vaccinations', $availableForms)
 	){
-		$shouldShow	= apply_filters('sim-should-show-vaccination-form', true, $userId);
+		$shouldShow	= apply_filters('tsjippy-should-show-vaccination-form', true, $userId);
 
 		if($shouldShow){
 			if($showCurrentUserData){
@@ -336,7 +336,7 @@ function userInfoPage($atts){
 	}
 
 	//  Add filter to add extra pages, children tabs should always be last
-	$filteredHtml	= apply_filters('sim_user_info_page', ['tabs'=>$tabs, 'html'=>$html], $showCurrentUserData, $user, $userAge);
+	$filteredHtml	= apply_filters('tsjippy_user_info_page', ['tabs'=>$tabs, 'html'=>$html], $showCurrentUserData, $user, $userAge);
 	$tabs		 	= $filteredHtml['tabs'];
 	$html	 		= $filteredHtml['html'];
 	
@@ -385,7 +385,7 @@ function userInfoPage($atts){
  * @return	string					The html
  */
 function getGenericsTab($userId){
-	$family	= new SIM\FAMILY\Family();
+	$family	= new TSJIPPY\FAMILY\Family();
 	
 	$accountValidity 	= get_user_meta( $userId, 'account_validity',true);
 
@@ -401,7 +401,7 @@ function getGenericsTab($userId){
 		
 		$html	.= "<div id='validity-warning' style='border: 3px solid #bd2919; padding: 10px;'>";
 			if(array_intersect($genericInfoRoles, $userRoles )){
-				wp_enqueue_script( 'sim_user_management');
+				wp_enqueue_script( 'tsjippy_user_management');
 				
 				$html	.= "<form>";
 					$html	.= "<input type='hidden' class='no-reset' name='user-id' value='$userId'>";
@@ -413,7 +413,7 @@ function getGenericsTab($userId){
 					$html	.= "<input type='checkbox' name='unlimited' value='unlimited' style='width:auto; display: initial; padding:0px; margin:0px;'>";
 					$html	.= "<label for='unlimited'> Check if the useraccount should never expire.</label>";
 					$html	.= "<br>";
-					$html	.= SIM\addSaveButton('extend_validity', 'Change validity');
+					$html	.= TSJIPPY\addSaveButton('extend_validity', 'Change validity');
 				$html	.= "</form>";
 			}else{
 				$html	.= "<p>";
@@ -423,7 +423,7 @@ function getGenericsTab($userId){
 		$html	.= "</div>";
 	}
 
-	$form	= apply_filters('sim-generics-form', '', $userId);
+	$form	= apply_filters('tsjippy-generics-form', '', $userId);
 
 	if(empty($form)){
 		if($family->isChild($userId)){
@@ -439,7 +439,7 @@ function getGenericsTab($userId){
 }
 
 function getMedicalTab($userId){
-	$family	= new SIM\FAMILY\Family();
+	$family	= new TSJIPPY\FAMILY\Family();
 
 	ob_start();
 	

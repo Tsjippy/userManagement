@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 //Delete user shortcode
 add_shortcode( 'delete_user', __NAMESPACE__.'\deleteUser');
@@ -35,7 +35,7 @@ function deleteUser(){
 		}
 	}
 	
-	$html .= SIM\userSelect("Select an user to delete from the website:");
+	$html .= TSJIPPY\userSelect("Select an user to delete from the website:");
 	
 	return $html;
 }
@@ -63,7 +63,7 @@ function askConfirmation($userdata, $nonceString, $family){
 
 function removeUserAccount($nonceString, $family, $userdata){
 	$html 	= '';
-	$family = new SIM\FAMILY\Family();
+	$family = new TSJIPPY\FAMILY\Family();
 
 	if(!isset($_GET[$nonceString]) || !wp_create_nonce($_GET[$nonceString],$nonceString)){
 		$html .='<div class="error">Invalid nonce! Refresh the page</div>';

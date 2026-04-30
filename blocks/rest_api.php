@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 add_action( 'rest_api_init', __NAMESPACE__.'\blockRestApiInit');
 function blockRestApiInit() {

@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 add_action('init', __NAMESPACE__.'\init');
 function init(){
@@ -8,9 +8,9 @@ function init(){
 }
 
 
-add_filter('sim_before_inserting_formdata', __NAMESPACE__.'\beforeSavingPictureFormData', 10, 2);
+add_filter('tsjippy_before_inserting_formdata', __NAMESPACE__.'\beforeSavingPictureFormData', 10, 2);
 function beforeSavingPictureFormData($submission, $object){
-	if($object->formData->name != 'profile_picture'){
+	if($object->formData->slug != 'profile_picture'){
 		return $submission;
 	}
 	
@@ -88,7 +88,7 @@ function getAvatar( $avatar, $idOrEmail, $size, $default, $alt ) {
 		//Get profile picture id from db
 		$url = getProfilePictureUrl($user->ID);
 		if ( empty($url )){
-			$url = SIM\pathToUrl(MODULE_PATH.'pictures/usericon.png');
+			$url = TSJIPPY\pathToUrl(PLUGINPATH.'pictures/usericon.png');
 		}
 		$avatar = "<img alt='$alt' src='$url' loading='lazy' class='avatar avatar-{$size} photo' height='$size' width='$size' />";
     }

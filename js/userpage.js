@@ -7,7 +7,7 @@ async function loadTab(tab){
 	if(params.get('user-id') != null){
 		formData.append('user-id', params.get('user-id'));
 	}else{
-    	formData.append('user-id', sim.userId);
+    	formData.append('user-id', userId);
 	}
 
 	formData.append('tabname', tab.id.replace('-info', ''));

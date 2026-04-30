@@ -1,7 +1,7 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
-use SIM\ADMIN;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
+use TSJIPPY\ADMIN;
 
 class AccountExpiryMail extends ADMIN\MailSetting{
 
@@ -9,7 +9,7 @@ class AccountExpiryMail extends ADMIN\MailSetting{
 
     public function __construct($user) {
         // call parent constructor
-		parent::__construct('account_expiry', MODULE_SLUG);
+		parent::__construct('account_expiry', PLUGINSLUG);
 
         $this->addUser($user);
         

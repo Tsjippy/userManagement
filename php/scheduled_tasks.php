@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 add_action('init', __NAMESPACE__.'\taskInit');
 function taskInit(){
@@ -13,14 +13,14 @@ function taskInit(){
 }
 
 function scheduleTasks(){
-    SIM\scheduleTask('birthday_check_action', 'daily');
-    SIM\scheduleTask('account_expiry_check_action', 'daily');
-    SIM\scheduleTask('vaccination_reminder_action', 'monthly');
-	SIM\scheduleTask('check_last_login_date_action', 'monthly');
+    TSJIPPY\scheduleTask('birthday_check_action', 'daily');
+    TSJIPPY\scheduleTask('account_expiry_check_action', 'daily');
+    TSJIPPY\scheduleTask('vaccination_reminder_action', 'monthly');
+	TSJIPPY\scheduleTask('check_last_login_date_action', 'monthly');
 
-	$freq	= SIM\getModuleOption(MODULE_SLUG, 'check-details-mail-freq');
+	$freq	= SETTINGS['check-details-mail-freq'] ?? false;
 	if($freq){
-		SIM\scheduleTask('check_details_mail_action', $freq);
+		TSJIPPY\scheduleTask('check_details_mail_action', $freq);
 	}
 }
 
@@ -42,25 +42,25 @@ function birthdayCheck(){
 		$userId 	= $user->ID;
 		$firstName 	= $user->first_name;
 
-		$family = new SIM\FAMILY\Family();
+		$family = new TSJIPPY\FAMILY\Family();
 
 		//Send birthday wish to the user
 		add_action(
-			'sim-user-management-birthday-message',
+			'tsjippy-user-management-birthday-message',
 			"Hi $firstName,\nCongratulations with your birthday!", 
 			$userId
 		);
 
 		//Send to parents
 		if ($family->isChild($userId)){
-			$childTitle = SIM\getChildTitle($user->ID);
+			$childTitle = TSJIPPY\getChildTitle($user->ID);
 
 			$message = "Congratulations with the birthday of your $childTitle ".get_userdata($user->ID)->first_name;
 		}
 
 		foreach($family->getParents($userId) as $parent){
 			add_action(
-				'sim-user-management-birthday-message',
+				'tsjippy-user-management-birthday-message',
 				"Hi ".get_userdata($parent)->first_name.",\n$message",
 				$parent
 			);
@@ -72,7 +72,7 @@ function birthdayCheck(){
  * loop over all users and scan for expiry vaccinations
  */
 function vaccinationReminder(){
-	$family = new SIM\FAMILY\Family();
+	$family = new TSJIPPY\FAMILY\Family();
 
 	//Change the user to the adminaccount otherwise get_users will not work
 	wp_set_current_user(1);
@@ -188,7 +188,7 @@ function vaccinationReminders($userId){
  * @return	string					Html listing all vaccination who are expired
  */
 function checkExpiryDate($date, $expiryName){
-	$vaccinationWarningTime	= SIM\getModuleOption(MODULE_SLUG, 'vaccination-warning-time');
+	$vaccinationWarningTime	= SETTINGS['vaccination-warning-time'] ?? false;
 	if ($vaccinationWarningTime && !empty($date)){
 		$reminderHtml 	= "";
 
@@ -235,17 +235,17 @@ function checkExpiryDate($date, $expiryName){
 function checkDetailsMail(){
 	wp_set_current_user(1);
 
-	$family 	= new SIM\FAMILY\Family();
+	$family 	= new TSJIPPY\FAMILY\Family();
 
 	$subject	= 'Please review your website profile';
 
 	//Retrieve all users
-	$users 			= SIM\getUserAccounts(false, true);
+	$users 			= TSJIPPY\getUserAccounts(false, true);
 
-	$accountPageUrl	= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'account_page');
+	$accountPageUrl	= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'account_page');
 
 	if(empty($accountPageUrl)){
-		SIM\printArray('No account page defined');
+		TSJIPPY\printArray('No account page defined');
 		return;
 	}
 	$baseUrl		= "$accountPageUrl?main-tab=";
@@ -308,7 +308,7 @@ function checkDetailsMail(){
 				$message .= "</td>";
 			$message .= "</tr>";
 
-			$message	= apply_filters('sim-usermanagement-details-reminder-html', $message, $user, $baseUrl, $styleString);
+			$message	= apply_filters('tsjippy-usermanagement-details-reminder-html', $message, $user, $baseUrl, $styleString);
 		$message .= "</table>";
 		$message .= "<br>";
 
@@ -568,7 +568,7 @@ function accountExpiryCheck(){
 		}
 
 		//Delete the account
-		SIM\printArray("Deleting user with id $user->ID and name $user->display_name as it was a temporary account.");
+		TSJIPPY\printArray("Deleting user with id $user->ID and name $user->display_name as it was a temporary account.");
 		wp_delete_user($user->ID);
 	}
 }
@@ -579,7 +579,7 @@ function accountExpiryCheck(){
 function checkLastLoginDate(){
 	wp_set_current_user(1);
 
-	$users = SIM\getUserAccounts();
+	$users = TSJIPPY\getUserAccounts();
 	foreach($users as $user){
 		$lastLogin				= get_user_meta( $user->ID, 'last_login_date',true);
 
@@ -598,7 +598,7 @@ function checkLastLoginDate(){
 				return $key;
 			}
 
-			$pageUrl	 = get_permalink(SIM\getModuleOption('login', 'password-reset-page')[0]);
+			$pageUrl	 = get_permalink(TSJIPPY\LOGIN\SETTINGS['password-reset-page'] [0]);
 			$url		 = "$pageUrl?key=$key&login=$user->user_login";
 
 			$mail = new AccountCreatedMail($user, $url);

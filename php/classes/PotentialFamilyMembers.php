@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 class PotentialFamilyMembers{
     public $userId;
@@ -18,7 +18,7 @@ class PotentialFamilyMembers{
         $this->userId               = $userId;
         $this->birthday	            = get_user_meta( $userId, 'birthday', true );
         $this->gender		        = get_user_meta( $userId, 'gender', true );
-        $family                     = new SIM\FAMILY\Family();
+        $family                     = new TSJIPPY\FAMILY\Family();
         $this->partner              = $family->getPartner($userId);
         $this->family		        = $family->getFamily($userId, true);
         $this->potentialSpouses	    = [];
@@ -98,7 +98,7 @@ class PotentialFamilyMembers{
      * Get potential spouses
      */
 	public function potentialSpouses(){
-        $family = new SIM\FAMILY\Family();
+        $family = new TSJIPPY\FAMILY\Family();
 
         foreach($this->users as $user){
             //Check if current processing user already has a spouse
@@ -132,7 +132,7 @@ class PotentialFamilyMembers{
      * Get potential children
      */
 	public function potentialChildren(){
-        $family                     = new SIM\FAMILY\Family();
+        $family                     = new TSJIPPY\FAMILY\Family();
 
         foreach($this->users as $user){
 			$parents 		= $family->getParents($user->ID, true);

@@ -1,7 +1,7 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
-use SIM\ADMIN;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
+use TSJIPPY\ADMIN;
 
 class AccountCreatedMail extends ADMIN\MailSetting{
 
@@ -10,7 +10,7 @@ class AccountCreatedMail extends ADMIN\MailSetting{
 
     public function __construct($user, $loginUrl='', $validTill='') {
         // call parent constructor
-		parent::__construct('account_created', MODULE_SLUG);
+		parent::__construct('account_created', PLUGINSLUG);
 
         $this->addUser($user);
 

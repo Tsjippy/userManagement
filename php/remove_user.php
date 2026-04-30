@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 // Send message about deletion
 add_action('delete_user', __NAMESPACE__.'\userDeleted');
@@ -12,7 +12,7 @@ function userDeleted($userId){
 	if(is_numeric($attachmentId)){
 		//Remove profile picture
 		wp_delete_attachment($attachmentId, true);
-		SIM\printArray("Removed profile picture for user $displayname");
+		TSJIPPY\printArray("Removed profile picture for user $displayname");
 	}
 
 	//Send e-mail

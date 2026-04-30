@@ -1,8 +1,8 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
-add_filter('sim_before_pdf_text', __NAMESPACE__.'\beforePdfText', 10, 3);
+add_filter('tsjippy_before_pdf_text', __NAMESPACE__.'\beforePdfText', 10, 3);
 function beforePdfText($cellText, $pdf){
     //text contains a filepath
     if(is_array($cellText) && isset($cellText['picture'])){
@@ -24,7 +24,7 @@ function beforePdfText($cellText, $pdf){
     return $cellText;
 }
 
-add_action('sim_after_pdf_text', __NAMESPACE__.'\afterPdfText', 10, 6);
+add_action('tsjippy_after_pdf_text', __NAMESPACE__.'\afterPdfText', 10, 6);
 function afterPdfText($cellText, $pdf, $x, $y, $cellWidth, $reset){
     if(is_array($cellText) && isset($cellText['picture'])){
         $filePath	= $cellText['picture'];

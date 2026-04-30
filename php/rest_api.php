@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 use WP_User;
 
 add_action( 'rest_api_init', __NAMESPACE__.'\restApiInit');
@@ -140,7 +140,7 @@ function getUserPageTab($wpRestRequest){
 	$userId				= $params['user-id'];
 
 	$genericInfoRoles 	= array_merge(['usermanagement'], ["medicalinfo"], ['administrator']);
-	$userSelectRoles	= apply_filters('sim_user_page_dropdown', $genericInfoRoles);
+	$userSelectRoles	= apply_filters('tsjippy_user_page_dropdown', $genericInfoRoles);
 	$user 				= wp_get_current_user();
 	$userRoles 			= $user->roles;
 
@@ -244,7 +244,7 @@ function addMinistry(){
     //Store the ministry location
     if ($postId != 0){
         //Add the location to the page
-        do_action('sim_ministry_added', [$ministryCatId], $postId);
+        do_action('tsjippy_ministry_added', [$ministryCatId], $postId);
     }
 
     $url = get_permalink($postId);
@@ -284,7 +284,7 @@ function updateRoles($userId='', $newRoles=[]){
         return "Nothing to update";
     }
 
-	SIM\saveExtraUserRoles($userId, $newRoles);
+	TSJIPPY\saveExtraUserRoles($userId, $newRoles);
 
     return "Updated roles succesfully";
 }
@@ -304,7 +304,7 @@ function createUserAccount(){
 	$firstName	= ucfirst(sanitize_text_field($_POST["first-name"]));
 	
 	if (empty($_POST["email"])){
-		$username = SIM\getAvailableUsername($firstName, $lastName);
+		$username = TSJIPPY\getAvailableUsername($firstName, $lastName);
 		
 		//Make up a non-existing emailaddress
 		$email = sanitize_email($username."@".$lastName.".empty");
@@ -325,13 +325,13 @@ function createUserAccount(){
 	}
 	
 	//Create the account
-	$userId = SIM\addUserAccount($firstName, $lastName, $email, $approved, $validity, $roles);
+	$userId = TSJIPPY\addUserAccount($firstName, $lastName, $email, $approved, $validity, $roles);
 	if(is_wp_error($userId)){
 		return $userId;
 	}
 	
     if(in_array('usermanagement', $userRoles)){
-        $url		= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user-edit-page')."?user-id=$userId";
+        $url		= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'user-edit-page')."?user-id=$userId";
         $message = "Succesfully created an useraccount for $firstName<br>You can edit the deails <a href='$url'>here</a>";
     }else{
         $message = "Succesfully created useraccount for $firstName<br>You can now select $firstName in the dropdowns";

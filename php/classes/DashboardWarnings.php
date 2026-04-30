@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 class DashboardWarnings{
     public $reminderCount;
@@ -12,7 +12,7 @@ class DashboardWarnings{
         $this->reminderHtml     = '';
         $this->userId           = $userId;
 
-        do_action('sim-dashboard-waring-construct', $this);
+        do_action('tsjippy-dashboard-waring-construct', $this);
 
         $this->vaccinationReminders();
     }
@@ -30,7 +30,7 @@ class DashboardWarnings{
         }
         
         //Check for children
-        $family = new SIM\FAMILY\Family();
+        $family = new TSJIPPY\FAMILY\Family();
 
         foreach($family->getChildren($this->userId) as $child){
             $result = vaccinationReminders($child);

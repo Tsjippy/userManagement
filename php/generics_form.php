@@ -1,10 +1,10 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 
 // Adds userdata to the user metadata
-add_filter('sim_forms_load_userdata', __NAMESPACE__.'\loadUserData', 10, 2);
+add_filter('tsjippy_forms_load_userdata', __NAMESPACE__.'\loadUserData', 10, 2);
 function loadUserData($usermeta,$userId){
 	$userdata	= (array)get_userdata($userId)->data;
 
@@ -16,9 +16,9 @@ function loadUserData($usermeta,$userId){
 }
 
 // phonenumbers and more
-add_filter('sim_before_inserting_formdata', __NAMESPACE__.'\beforeSavingData', 10, 2);
+add_filter('tsjippy_before_inserting_formdata', __NAMESPACE__.'\beforeSavingData', 10, 2);
 function beforeSavingData($submission, $object){
-	if($object->formData->name != 'user_generics'){
+	if($object->formData->slug != 'user_generics'){
 		return $submission;
 	}
 
@@ -63,7 +63,7 @@ function beforeSavingData($submission, $object){
 			$changedNumber = $submission->phonenumbers[$key]	= '+234'.$changedNumber;
 		}
 
-		do_action('sim-phonenumber-updated', $changedNumber, $object->userId);
+		do_action('tsjippy-phonenumber-updated', $changedNumber, $object->userId);
 	}
 	
 	// store changed date
@@ -75,7 +75,7 @@ function beforeSavingData($submission, $object){
 }
 
 //Add ministry modal
-add_filter('sim_before_form', __NAMESPACE__.'\beforeGenericsForm', 10, 2);
+add_filter('tsjippy_before_form', __NAMESPACE__.'\beforeGenericsForm', 10, 2);
 function beforeGenericsForm($html, $formName){
 	if($formName != 'user_generics'){
 		return $html;
@@ -109,7 +109,7 @@ function beforeGenericsForm($html, $formName){
 					<input type="text" class="longitude wide" name="location[longitude]">
 				</label>
 				
-				<?php echo SIM\addSaveButton('add_ministry','Add ministry page'); ?>
+				<?php echo TSJIPPY\addSaveButton('add_ministry','Add ministry page'); ?>
 			</form>
 		</div>
 	</div>

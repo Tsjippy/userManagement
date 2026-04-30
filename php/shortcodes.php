@@ -1,9 +1,9 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 //Shortcode for the dashboard
-add_action('sim_dashboard_warnings', __NAMESPACE__.'\dashboardWarnings', 20);
+add_action('tsjippy_dashboard_warnings', __NAMESPACE__.'\dashboardWarnings', 20);
 function dashboardWarnings($userId){
 	$dashboardWarnings	= new DashboardWarnings($userId);
 	
@@ -66,23 +66,23 @@ function userStatistics(){
 	}, 10, 3);
 
 	if(isset($_REQUEST['getlist'])){
-		SIM\USERPAGES\buildUserDetailPdf('screen');
+		TSJIPPY\USERPAGES\buildUserDetailPdf('screen');
 		return;
 	}
 
-	wp_enqueue_script('sim_table_script');
+	wp_enqueue_script('tsjippy_table_script');
 
 	ob_start();
 
-	$users 		= SIM\getUserAccounts(false, true);
+	$users 		= TSJIPPY\getUserAccounts(false, true);
 
-	$baseUrl	= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'user-edit-page');
+	$baseUrl	= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'user-edit-page');
 
 	
 	?>
 	<br>
 	<div class='table-wrapper'>
-		<table class='sim-table' style='max-height:500px;'>
+		<table class='tsjippy table' style='max-height:500px;'>
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -112,14 +112,14 @@ function userStatistics(){
 						}
 					}
 
-					$picture = SIM\displayProfilePicture($user->ID);
+					$picture = TSJIPPY\displayProfilePicture($user->ID);
 
 					echo "<tr class='table-row'>";
 						echo "<td>$picture <a href='$baseUrl/?user-id=$user->ID'>{$user->display_name}</a></td>";
 						echo "<td>$loginCount</td>";
 						echo "<td>$lastLoginDate</td>";
-						if(function_exists('SIM\MANDATORY\mustReadDocuments')){
-							echo "<td>".SIM\MANDATORY\mustReadDocuments($user->ID,true)."</td>";
+						if(function_exists('TSJIPPY\MANDATORY\mustReadDocuments')){
+							echo "<td>".TSJIPPY\MANDATORY\mustReadDocuments($user->ID,true)."</td>";
 						}
 						echo "<td>";
 						foreach($user->roles as $role){

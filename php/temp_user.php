@@ -1,9 +1,9 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 // Only load when option is activated
-if(!SIM\getModuleOption(MODULE_SLUG, 'tempuser')){
+if(!SETTINGS['tempuser'] ?? false){
     return;
 }
 

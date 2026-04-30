@@ -1,7 +1,7 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
-use SIM\ADMIN;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
+use TSJIPPY\ADMIN;
 
 class ChildVaccinationWarningMail extends ADMIN\MailSetting{
 
@@ -10,7 +10,7 @@ class ChildVaccinationWarningMail extends ADMIN\MailSetting{
 
     public function __construct($user, $reminderHtml='') {
         // call parent constructor
-		parent::__construct('child_vacc_warning', MODULE_SLUG);
+		parent::__construct('child_vacc_warning', PLUGINSLUG);
 
         $this->addUser($user);
 

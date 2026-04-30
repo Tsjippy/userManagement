@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 //check if account is disabled
 add_filter( 'wp_authenticate_user', __NAMESPACE__.'\authenticateUser', 10, 2);
@@ -42,17 +42,17 @@ function changePasswordForm($userId = null){
 		isset($_REQUEST['user-id'])			&&
 		wp_verify_nonce( $_REQUEST['wp-2fa-nonce'], "wp-2fa-reset-nonce_".$_REQUEST['user-id'])
 	){
-		if($_REQUEST['action'] == 'Reset 2FA' && function_exists('SIM\LOGIN\reset2fa')){
-			SIM\LOGIN\reset2fa($userId);
+		if($_REQUEST['action'] == 'Reset 2FA' && function_exists('TSJIPPY\LOGIN\reset2fa')){
+			TSJIPPY\LOGIN\reset2fa($userId);
 			echo "<div class='success'>Succesfully turned off 2fa for $name</div>";
 		}elseif($_REQUEST['action'] == 'Change to e-mail'){
-			SIM\LOGIN\addMethod('email', $user->ID);
+			TSJIPPY\LOGIN\addMethod('email', $user->ID);
 
 			delete_user_meta($user->ID, "2fa_methods", 'authenticator');
 			echo "<div class='success'>Succesfully changed the 2fa factor for $name to e-mail</div>";
 		}
 
-		do_action('sim-login-settings-save', $userId, $name);
+		do_action('tsjippy-login-settings-save', $userId, $name);
 	}
 				
 	//Content
@@ -62,9 +62,9 @@ function changePasswordForm($userId = null){
 
 		<?php
 		if(in_array('usermanagement', wp_get_current_user()->roles)){
-			wp_enqueue_script( 'sim_user_management');
+			wp_enqueue_script( 'tsjippy_user_management');
 			?>
-			<form data-reset=1 class='sim-form'>
+			<form data-reset=1 class='tsjippy-form'>
 				<input type="hidden" class="no-reset" name="disable-user-account"		value="<?php echo wp_create_nonce("disable-user-account");?>">
 				<input type="hidden" class="no-reset" name="user-id"					value="<?php echo $userId; ?>">
 				<input type="hidden" class="no-reset" name="action"					value="<?php echo $actionText;?>_useraccount">
@@ -73,13 +73,13 @@ function changePasswordForm($userId = null){
 					Click the button below if you want to <?php echo $actionText;?> the useraccount for <?php echo $name;?>.
 				</p>
 
-				<?php echo SIM\addSaveButton('disable-user-account', ucfirst($actionText)." useraccount for $name");?>
+				<?php echo TSJIPPY\addSaveButton('disable-user-account', ucfirst($actionText)." useraccount for $name");?>
 			</form>
 			<?php
 		}
 		
-		if(function_exists('SIM\LOGIN\passwordResetForm')){
-			echo SIM\LOGIN\passwordResetForm($user);
+		if(function_exists('TSJIPPY\LOGIN\passwordResetForm')){
+			echo TSJIPPY\LOGIN\passwordResetForm($user);
 		}
 		
 		$methods	= get_user_meta($userId, '2fa_methods');
@@ -116,7 +116,7 @@ function changePasswordForm($userId = null){
 		<?php
 		}
 
-		do_action('sim-after-login-settings', $userId, $nonce);
+		do_action('tsjippy-after-login-settings', $userId, $nonce);
 		?>
 	</div>
 	<?php

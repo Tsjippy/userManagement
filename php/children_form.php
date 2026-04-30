@@ -1,12 +1,12 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 /**
  * Displays the forms for children
  */
 function showChildrenFields($childId){
-	$availableForms		= (array)SIM\getModuleOption(MODULE_SLUG, 'enabled-forms');
+	$availableForms		= (array)SETTINGS['enabled-forms'] ?? [];
 
 	ob_start();
 	$active	= 'active';

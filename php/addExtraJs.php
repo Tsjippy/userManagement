@@ -1,10 +1,10 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 /* HELPER FUNCTIONS */
 //add special js to the dynamic form js
-add_filter('sim_form_extra_js', __NAMESPACE__.'\addJs', 10, 3);
+add_filter('tsjippy_form_extra_js', __NAMESPACE__.'\addJs', 10, 3);
 function addJs($js, $object, $minimized){
 	$path	= plugin_dir_path( __DIR__)."js/$object->formName.min.js";
 	if(!$minimized || !file_exists($path)){

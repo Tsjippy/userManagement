@@ -1,6 +1,6 @@
 <?php
-namespace SIM\USERMANAGEMENT;
-use SIM;
+namespace TSJIPPY\USERMANAGEMENT;
+use TSJIPPY;
 
 /**
  * Shows the user account dashboard of a user
@@ -45,12 +45,12 @@ function showDashboard($userId, $admin=false){
 	?>
 	<div id="warnings">
 		<?php
-		do_action('sim_dashboard_warnings', $userId, $admin);
+		do_action('tsjippy_dashboard_warnings', $userId, $admin);
 		?>
 	</div>
 
 	<?php
-	do_action('sim_user_dashboard', $userId, $admin);
+	do_action('tsjippy_user_dashboard', $userId, $admin);
 	?>
 	
 	<div id="ministrywarnings">
@@ -77,12 +77,12 @@ function showDashboard($userId, $admin=false){
 			$pageAge 	= $pageAge->format("%a");
 			
 			//Get the first warning parameter and convert to days
-			$days 		= SIM\getModuleOption('frontendposting', 'max-page-age') * 30;
+			$days 		= TSJIPPY\FRONTENDPOSTING\SETTINGS['max-page-age'] ?? 1 * 30;
 			
 			//If the page is not modified since the parameter
 			if ($pageAge > $days ){
 				//Get the edit page url
-				$url			= SIM\ADMIN\getDefaultPageLink(MODULE_SLUG, 'front-end-post-pages');
+				$url			= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'front-end-post-pages');
 				if(!$url){
 					$url 	= '';
 				}
