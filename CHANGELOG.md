@@ -4,6 +4,15 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+### Updated
+
+## [10.0.0] - 2026-05-01
+
+
+### Changed
 - main plugin name from sim-base to tsjippy-shared-functionality
 - module to plugin  Co-authored-by: Copilot <copilot@github.com>
 - updated forms imports
@@ -11,8 +20,6 @@
 
 ### Fixed
 - store auto pages in settings
-
-### Updated
 
 ## [8.3.4] - 2026-01-12
 
