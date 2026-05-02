@@ -6,7 +6,6 @@ add_action('init', __NAMESPACE__.'\taskInit');
 function taskInit(){
 	//add action for use in scheduled task
 	add_action( 'birthday_check_action', __NAMESPACE__.'\birthdayCheck' );
-    add_action( 'vaccination_reminder_action', __NAMESPACE__.'\vaccinationReminder' );
     add_action( 'check_details_mail_action', __NAMESPACE__.'\checkDetailsMail' );
     add_action( 'account_expiry_check_action', __NAMESPACE__.'\accountExpiryCheck' );
 	add_action( 'check_last_login_date_action', __NAMESPACE__.'\checkLastLoginDate' );
@@ -15,7 +14,6 @@ function taskInit(){
 function scheduleTasks(){
     TSJIPPY\scheduleTask('birthday_check_action', 'daily');
     TSJIPPY\scheduleTask('account_expiry_check_action', 'daily');
-    TSJIPPY\scheduleTask('vaccination_reminder_action', 'monthly');
 	TSJIPPY\scheduleTask('check_last_login_date_action', 'monthly');
 
 	$freq	= SETTINGS['check-details-mail-freq'] ?? false;
@@ -65,167 +63,6 @@ function birthdayCheck(){
 				$parent
 			);
 		}
-	}
-}
-
-/**
- * loop over all users and scan for expiry vaccinations
- */
-function vaccinationReminder(){
-	$family = new TSJIPPY\FAMILY\Family();
-
-	//Change the user to the adminaccount otherwise get_users will not work
-	wp_set_current_user(1);
-
-	//Retrieve all users
-	$users = get_users( array( 'fields' => array( 'ID','user_login','display_name' ) ) );
-
-	//loop over the users
-	foreach($users as $user){
-		$reminderHtml = vaccinationReminders($user->ID);
-
-		//If there are reminders, send an e-mail
-		if (!empty($reminderHtml)){
-			$userdata = get_userdata($user->ID);
-			if($userdata != null){
-				$parents 	= $family->getParents($user->ID);
-				$recipients = '';
-
-				//Is child
-				if($parents){
-
-					$reminderHtml = str_replace("Your", $userdata->first_name."'s", $reminderHtml);
-
-					$vaccinationWarningMail    	= new AdultVaccinationWarningMail($userdata);
-					$vaccinationWarningMail->filterMail();
-					$subject					= $vaccinationWarningMail->subject;
-					$message					= $vaccinationWarningMail->message;
-
-					foreach($parents as $parent){
-						if(!str_contains($parent->user_email,'.empty')){
-							if(!empty($recipients)){
-								$recipients .= ', ';
-							}
-							$recipients .= $parent->user_email;
-						}
-					}
-				//not a child
-				}else{
-					//If this not a valid email skip this email
-					if(!str_contains($userdata->user_email,'.empty')){
-						continue;
-					}
-
-					$vaccinationWarningMail    	= new AdultVaccinationWarningMail($userdata);
-					$vaccinationWarningMail->filterMail();
-					$subject					= $vaccinationWarningMail->subject;
-					$message					= $vaccinationWarningMail->message;
-					$headers					= $vaccinationWarningMail->headers;
-				}
-
-
-				if(!empty($recipients)){
-					//Get the current health coordinator
-					$healtCoordinators 			= get_users( array( 'fields' => array( 'ID','display_name' ),'role' => 'medicalinfo' ));
-					if($healtCoordinators != null){
-						$healtCoordinator = (object)$healtCoordinators[0];
-					}else{
-						$healtCoordinator = new \stdClass();
-						$healtCoordinator->display_name = '';
-						error_log("Please assign someone the health coorodinator role!");
-					}
-
-					//Send the mail
-					wp_mail($recipients , $subject, $message, $headers );
-				}
-			}
-		}
-	}
-}
-
-/**
- * Get the vaccination reminder html of an user
- *
- * @param	int		$userId	WP_User id
- *
- * @return	string	The html
- */
-function vaccinationReminders($userId){
-	//Get the current users medical data
-	$medicalUserInfo = (array)get_user_meta( $userId, "medical",true);
-
-	$reminderHtml = "";
-	foreach($medicalUserInfo as $key=>$info){
-		if (str_contains($key, 'expiry_date')) {
-			//Its an array, so another vaccination
-			if(is_array($info)){
-				foreach($info as $date_key=>$date){
-					//Get the vaccination name of this other vaccination
-					$vaccinationName = $medicalUserInfo['other_vaccination'][$date_key];
-					if($date != ""){
-						$reminderHtml .= checkExpiryDate($date, "$vaccinationName vaccination");
-					}
-				}
-			}else{
-				//Get the clean vaccination name
-				$vaccinationName = str_replace('expiry_date_of_your_','', $key);
-				$vaccinationName = str_replace('_vaccination', '', $vaccinationName);
-				$vaccinationName = ucwords(str_replace('_', ' ', $vaccinationName));
-				$reminderHtml .= checkExpiryDate($info, "$vaccinationName vaccination");
-			}
-		}
-	}
-
-	return $reminderHtml;
-}
-
-/**
- * Check expiry date of all vacination
- *
- * @param	string	$date			The expiry date
- * @param	string	$expiryName		The name of the vaccination
- *
- * @return	string					Html listing all vaccination who are expired
- */
-function checkExpiryDate($date, $expiryName){
-	$vaccinationWarningTime	= SETTINGS['vaccination-warning-time'] ?? false;
-	if ($vaccinationWarningTime && !empty($date)){
-		$reminderHtml 	= "";
-
-		//Vaccination expiry date
-		try{
-			$expiryDate = new \DateTime($date);
-		}catch (\Exception $e) {
-			return;
-		}
-
-		//Date of first warning
-		$warningDate	= new \DateTime($date);
-		$interval		= new \DateInterval('P'.$vaccinationWarningTime.'M');
-		date_sub($warningDate, $interval);
-
-		$now			= new \DateTime();
-
-		$niceExpiryDate = $expiryDate->format('j F Y');
-
-		//Expires today
-		if($niceExpiryDate == $now->format('j F Y')){
-			$reminderHtml .= "<li>Your $expiryName expires today.</li><br>";
-		//In the past
-		}elseif($expiryDate < $now){
-			$reminderHtml .= "<li>Your $expiryName is expired on $niceExpiryDate. </li><br>";
-		//In the near future
-		}elseif($now >= $warningDate){
-			$diff=date_diff(date_create(date("Y-m-d")), $expiryDate)->format("%a");
-			if($diff == 1){
-				$text = "tomorrow";
-			}else{
-				$text = "in $diff days on $niceExpiryDate";
-			}
-			$reminderHtml .= "<li>Your $expiryName will expire $text.</li><br>";
-		}
-
-		return $reminderHtml;
 	}
 }
 

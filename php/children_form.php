@@ -16,11 +16,6 @@ function showChildrenFields($childId){
 		$active= '';
 	}
 
-	if(in_array('vaccinations', $availableForms)){
-		echo "<button class='button tablink $active' id='show-generic-child-info-$childId' data-target='generic-child-info-$childId'>Vaccinations</button>";
-		$active= '';
-	}
-
 	if(in_array('profile picture', $availableForms)){
 		echo "<button class='button tablink $active' id='show-profile-picture-child-info-$childId' data-target='profile-picture-child-info-$childId'>Profile picture</button>";
 	}
@@ -31,14 +26,6 @@ function showChildrenFields($childId){
 			<?php echo do_shortcode("[formbuilder formname=child_generic user-id=$childId]"); ?>
 		</div>
 		<?php
-
-		$hidden	= 'hidden';
-	}
-
-	if(in_array('vaccinations', $availableForms)){
-		echo	"<div id='generic-child-info-$childId' class='tabcontent $hidden'>";
-			echo do_shortcode("[formbuilder formname=user_medical user-id=$childId]");
-		echo	"</div>";
 
 		$hidden	= 'hidden';
 	}

@@ -298,43 +298,6 @@ function userInfoPage($atts){
 		}
 	}
 
-	/*
-		Vaccinations Info
-	*/
-	if(
-		(
-			array_intersect($medicalRoles, $userRoles) ||
-			$showCurrentUserData
-		) &&
-		in_array('vaccinations', $availableForms)
-	){
-		$shouldShow	= apply_filters('tsjippy-should-show-vaccination-form', true, $userId);
-
-		if($shouldShow){
-			if($showCurrentUserData){
-				$active = '';
-				$class = 'class="hidden"';
-			}else{
-				$active = 'active';
-				$class = '';
-			}
-			
-			//Add tab button
-			$tabs[]	= "<li class='tablink $active' id='show-medical-info' data-target='medical-info'>Vaccinations</li>";
-			
-			//Content
-			$html	.= "<div id='medical-info' $class>";
-
-				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'medical-info'){
-					$html	.= getMedicalTab($userId);
-				}else{
-					$html	.= "<div class='loader-wrapper loading hidden'></div>";
-				}
-
-			$html	.= "</div>";
-		}
-	}
-
 	//  Add filter to add extra pages, children tabs should always be last
 	$filteredHtml	= apply_filters('tsjippy_user_info_page', ['tabs'=>$tabs, 'html'=>$html], $showCurrentUserData, $user, $userAge);
 	$tabs		 	= $filteredHtml['tabs'];

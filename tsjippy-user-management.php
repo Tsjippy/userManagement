@@ -113,7 +113,6 @@ register_deactivation_hook( __FILE__, function(){
 
 	wp_clear_scheduled_hook( 'birthday_check_action' );
 	wp_clear_scheduled_hook( 'account_expiry_check_action' );
-	wp_clear_scheduled_hook( 'vaccination_reminder_action' );
 	wp_clear_scheduled_hook( 'check-details-mail_action' );
 	wp_clear_scheduled_hook( 'check_last_login_date_action' );
 } );
