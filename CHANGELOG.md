@@ -16,7 +16,7 @@
 
 ### Changed
 - main plugin name from sim-base to tsjippy-shared-functionality
-- module to plugin  Co-authored-by: Copilot <copilot@github.com>
+- module to plugin  
 - updated forms imports
 - exclude .vscode from releases
 
