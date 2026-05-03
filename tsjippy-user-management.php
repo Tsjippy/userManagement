@@ -5,7 +5,7 @@ use TSJIPPY;
 /**
  * Plugin Name:  		Tsjippy User Management
  * Description:  		This plugin adds 5 shortcodes: <h4>user-info</h4> This shortcode displays all forms to set and update userdata.< You can also change userdata for other users if you have the 'usermanagement' role. Use like this: <code>[user-info currentuser='true']</code> <h4>userstatistics</h4> This shortcode displays a table listing all website users and some of their details. Use like this: <code>[userstatistics]</code> <h4>create_user_account</h4> This shortcode displays a from to create new user accounts. Use like this: <code>[create_user_account]</code> <h4>pending_user</h4> This shortcode displays all user account who are pending approval. Use like this: <code>[pending_user]</code> <h4>change_password</h4>This shortcode displays a form for users to reset their password. Use like this: <code>[change_password]</code>
- * Version:      		10.0.0
+ * Version:      		10.0.1
  * Author:       		Ewald Harmsen
  * AuthorURI:			harmseninnigeria.nl
  * Requires at least:	6.3
