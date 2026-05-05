@@ -5,13 +5,13 @@ use TSJIPPY;
 add_filter('display_post_states', __NAMESPACE__.'\postStates', 10, 2);
 function postStates( $states, $post ) {
 
-	if ( in_array($post->ID, SETTINGS['account_page'] ?? [])) {
+	if ( $post->ID == SETTINGS['account_page'] ?? '') {
 		$states[] = __('Account page');
-	}elseif(in_array($post->ID, SETTINGS['user-edit-page'] ?? []) ) {
+	}elseif($post->ID == SETTINGS['user-edit-page'] ?? '')  {
 		$states[] = __('User edit page');
-	}elseif(in_array($post->ID, SETTINGS['account-create-page'] ?? [])) {
+	}elseif($post->ID == SETTINGS['account-create-page'] ?? '') {
 		$states[] = __('Account create page');
-	}elseif(in_array($post->ID, SETTINGS['pending-users-page'] ?? [])) {
+	}elseif($post->ID == SETTINGS['pending-users-page'] ?? '') {
 		$states[] = __('Pending users page');
 	}
 
