@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- use formData->slug
 
 ### Fixed
 
 ### Updated
+
+## [10.0.5] - 2026-05-06
+
+
+### Changed
+- use formData->slug
 
 ## [10.0.4] - 2026-05-06
 
