@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- textdomain
 
 ### Updated
+
+## [10.0.4] - 2026-05-06
+
+
+### Fixed
+- textdomain
 
 ## [10.0.3] - 2026-05-05
 
