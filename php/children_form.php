@@ -23,7 +23,7 @@ function showChildrenFields($childId){
 	if(in_array('generic', $availableForms)){
 		?>
 		<div id='generic-child-info-<?php echo $childId;?>' class='tabcontent'>
-			<?php echo do_shortcode("[formbuilder formname=child_generic user-id=$childId]"); ?>
+			<?php echo do_shortcode("[formbuilder slug=child_generic user-id=$childId]"); ?>
 		</div>
 		<?php
 
@@ -32,7 +32,7 @@ function showChildrenFields($childId){
 
 	if(in_array('profile picture', $availableForms)){
 		echo	"<div id='profile-picture-child-info-$childId' class='tabcontent $hidden'>";
-			echo do_shortcode("[formbuilder formname=profile_picture user-id='$childId']");
+			echo do_shortcode("[formbuilder slug=profile_picture user-id='$childId']");
 		echo	"</div>";
 	}
 

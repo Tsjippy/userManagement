@@ -146,7 +146,7 @@ function userInfoPage($atts){
 			$html	.= '<div id="family-info" class="tabcontent hidden">';
 
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'family'){
-					$html	.= do_shortcode('[formbuilder formname=user_family]');
+					$html	.= do_shortcode('[formbuilder slug=user_family]');
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 				}
@@ -193,7 +193,7 @@ function userInfoPage($atts){
 			$html .= '<div id="location-info" class="tabcontent hidden">';
 			
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'location-info'){
-					$html	.= do_shortcode('[formbuilder formname=user_location]');
+					$html	.= do_shortcode('[formbuilder slug=user_location]');
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 				}
@@ -227,9 +227,9 @@ function userInfoPage($atts){
 
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == 'profile_picture'){
 					if($family->isChild($userId)){
-						$html	.= do_shortcode("[formbuilder formname=profile_picture user-id='$userId']");
+						$html	.= do_shortcode("[formbuilder slug=profile_picture user-id='$userId']");
 					}else{
-						$html	.= do_shortcode('[formbuilder formname=profile_picture]');
+						$html	.= do_shortcode('[formbuilder slug=profile_picture]');
 					}
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>";
@@ -289,7 +289,7 @@ function userInfoPage($atts){
 			$html	.= "<div id='security-info' class='tabcontent hidden'>";
 
 				if(isset($_GET['main-tab']) && $_GET['main-tab'] == "security-info"){
-					$html	.= do_shortcode('[formbuilder formname=security_questions]');
+					$html	.= do_shortcode('[formbuilder slug=security_questions]');
 				}else{
 					$html	.= "<div class='loader-wrapper loading hidden'></div>";
 				}
@@ -390,9 +390,9 @@ function getGenericsTab($userId){
 
 	if(empty($form)){
 		if($family->isChild($userId)){
-			$html	.= do_shortcode("[formbuilder formname=child_generic user-id=$userId]");
+			$html	.= do_shortcode("[formbuilder slug=child_generic user-id=$userId]");
 		}else{
-			$html	.= do_shortcode("[formbuilder formname=user_generics user-id='$userId']");
+			$html	.= do_shortcode("[formbuilder slug=user_generics user-id='$userId']");
 		}
 	}else{
 		$html	.= $form;
@@ -407,9 +407,9 @@ function getMedicalTab($userId){
 	ob_start();
 	
 	if($family->isChild($userId)){
-		echo do_shortcode("[formbuilder formname=user_medical user-id=$userId]");
+		echo do_shortcode("[formbuilder slug=user_medical user-id=$userId]");
 	}else{
-		echo do_shortcode('[formbuilder formname=user_medical]');
+		echo do_shortcode('[formbuilder slug=user_medical]');
 	}
 				
 	?>

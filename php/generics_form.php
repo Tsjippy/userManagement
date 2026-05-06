@@ -76,8 +76,8 @@ function beforeSavingData($submission, $object){
 
 //Add ministry modal
 add_filter('tsjippy_before_form', __NAMESPACE__.'\beforeGenericsForm', 10, 2);
-function beforeGenericsForm($html, $formName){
-	if($formName != 'user_generics'){
+function beforeGenericsForm($html, $formSlug){
+	if($formSlug != 'user_generics'){
 		return $html;
 	}
 

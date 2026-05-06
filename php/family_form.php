@@ -4,8 +4,8 @@ use TSJIPPY;
 
 //Add availbale partners as default
 add_filter( 'tsjippy_add_form_multi_defaults', __NAMESPACE__.'\addMultiDefault', 10, 3);
-function addMultiDefault($defaultArrayValues, $userId, $formName){
-	if($formName != 'user_family'){
+function addMultiDefault($defaultArrayValues, $userId, $formSlug){
+	if($formSlug != 'user_family'){
 		return $defaultArrayValues;
 	}
 	
@@ -46,8 +46,8 @@ function beforeSavingFormData($submission, $object){
 
 // add a family member modal
 add_filter('tsjippy_before_form', __NAMESPACE__.'\beforeForm', 10, 2);
-function beforeForm($html, $formName){
-	if($formName != 'user_family'){
+function beforeForm($html, $formSlug){
+	if($formSlug != 'user_family'){
 		return $html;
 	}
 	
