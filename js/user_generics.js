@@ -26,9 +26,6 @@ async function addNewMinistry(target){
 		</li>`;
 		
 		document.querySelector("#ministries-list").insertAdjacentHTML('beforeEnd', html);
-		
-		//hide the SWAL window
-		setTimeout(function(){document.querySelectorAll('.swal2-container').forEach(el=>el.remove());}, 1500);
 
 		//focus on the newly added input
 		document.getElementById('justadded').focus();

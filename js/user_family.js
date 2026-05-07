@@ -35,7 +35,7 @@ async function submitAddAccountForm(event){
 			}
 		});
 
-		Main.displayMessage(response.message, 'success');
+		Main.displayMessage(response.message);
 	}
 
 	Main.hideModals();

@@ -1,4 +1,4 @@
-import { addStyles } from '../../../plugins/tsjippy-shared-functionalityncludes/js/partials/load_assets.js';
+import { addStyles } from '../../tsjippy-shared-functionality/includes/js/partials/load_assets.js';
 
 async function loadTab(tab){
 	let formData    = new FormData();
