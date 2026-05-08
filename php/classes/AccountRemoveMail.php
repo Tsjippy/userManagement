@@ -13,7 +13,10 @@ class AccountRemoveMail extends ADMIN\MailSetting{
 
         $this->addUser($user);
 
-        $this->replaceArray['%account_page%']    = TSJIPPY\ADMIN\getDefaultPageLink($this->moduleSlug, 'account_page');
+        $url                    = get_permalink(SETTINGS['account_page'] ?? '');
+        if($url){
+            $this->replaceArray['%account_page%']    = $url;
+        }
 
         $this->defaultSubject    = 'Your account on %site_name% has been deleted';
 

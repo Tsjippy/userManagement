@@ -76,7 +76,10 @@ function userStatistics(){
 
 	$users 		= TSJIPPY\getUserAccounts(false, true);
 
-	$baseUrl	= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'user-edit-page');
+	$baseUrl    = get_permalink(SETTINGS['user-edit-page'] ?? '');
+	if(!$baseUrl){
+		$baseUrl = '';
+	}
 
 	
 	?>

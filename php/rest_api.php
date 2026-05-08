@@ -331,7 +331,11 @@ function createUserAccount(){
 	}
 	
     if(in_array('usermanagement', $userRoles)){
-        $url		= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'user-edit-page')."?user-id=$userId";
+        $url		= get_permalink(SETTINGS['user-edit-page'] ?? '');
+		if(!$url){
+			$url	= '';
+		}
+		$url= "?user-id=$userId";
         $message = "Succesfully created an useraccount for $firstName<br>You can edit the deails <a href='$url'>here</a>";
     }else{
         $message = "Succesfully created useraccount for $firstName<br>You can now select $firstName in the dropdowns";

@@ -9,7 +9,7 @@ function userDescription($user){
 
     //Add a useraccount edit button if the user has the usermanagement role
 	if (in_array('usermanagement', wp_get_current_user()->roles)){
-        $url	= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'user-edit-page');
+		$url    = get_permalink(SETTINGS['user-edit-page'] ?? '');
         if(!$url){
 			return;
 		}

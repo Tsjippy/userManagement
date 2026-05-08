@@ -82,7 +82,7 @@ function showDashboard($userId, $admin=false){
 			//If the page is not modified since the parameter
 			if ($pageAge > $days ){
 				//Get the edit page url
-				$url			= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'front-end-post-pages');
+				$url			= get_permalink(SETTINGS['front-end-post-page'] , '');
 				if(!$url){
 					$url 	= '';
 				}

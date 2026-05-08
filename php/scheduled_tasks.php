@@ -79,9 +79,9 @@ function checkDetailsMail(){
 	//Retrieve all users
 	$users 			= TSJIPPY\getUserAccounts(false, true);
 
-	$accountPageUrl	= TSJIPPY\ADMIN\getDefaultPageLink(PLUGINSLUG, 'account_page');
+	$accountPageUrl	= get_permalink(SETTINGS['account_page'] ?? '');
 
-	if(empty($accountPageUrl)){
+	if(!$accountPageUrl){
 		TSJIPPY\printArray('No account page defined');
 		return;
 	}
