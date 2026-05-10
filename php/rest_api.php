@@ -74,7 +74,9 @@ function restApiInit() {
 		'/add_useraccount',
 		array(
 			'methods' 				=> 'POST',
-			'callback' 				=> 	__NAMESPACE__.'\createUserAccount',
+			'callback' 				=> 	function(){
+				return TSJIPPY\createUserAccount(false);
+			},
 			'permission_callback' 	=> '__return_true',
 			'args'					=> array(
 				'first-name' => array(
@@ -287,64 +289,6 @@ function updateRoles($userId='', $newRoles=[]){
 	TSJIPPY\saveExtraUserRoles($userId, $newRoles);
 
     return "Updated roles succesfully";
-}
-
-/**
- * Creates a new useraccount from POST values
- */
-function createUserAccount(){
-    // Check if the current user has the right to create approved user accounts
-    $user 		= wp_get_current_user();
-	$userRoles	= $user->roles;
-	if(in_array('usermanagement', $userRoles)){
-		$approved = true;
-	}
-
-	$lastName	= ucfirst(sanitize_text_field($_POST["last-name"]));
-	$firstName	= ucfirst(sanitize_text_field($_POST["first-name"]));
-	
-	if (empty($_POST["email"])){
-		$username = TSJIPPY\getAvailableUsername($firstName, $lastName);
-		
-		//Make up a non-existing emailaddress
-		$email = sanitize_email($username."@".$lastName.".empty");
-	}else{
-        $email = sanitize_email($_POST["email"]);
-    }
-	
-	if(empty($_POST["validity"])){
-		$validity = "unlimited";
-	}else{
-        $validity = $_POST["validity"];
-	}
-
-	if(empty($_POST["roles"])){
-		$roles = ["revisor"];
-	}else{
-        $roles = $_POST["roles"];
-	}
-	
-	//Create the account
-	$userId = TSJIPPY\addUserAccount($firstName, $lastName, $email, $approved, $validity, $roles);
-	if(is_wp_error($userId)){
-		return $userId;
-	}
-	
-    if(in_array('usermanagement', $userRoles)){
-        $url		= get_permalink(SETTINGS['user-edit-page'] ?? '');
-		if(!$url){
-			$url	= '';
-		}
-		$url= "?user-id=$userId";
-        $message = "Succesfully created an useraccount for $firstName<br>You can edit the deails <a href='$url'>here</a>";
-    }else{
-        $message = "Succesfully created useraccount for $firstName<br>You can now select $firstName in the dropdowns";
-    }
-		
-	return [
-        'message'	=> $message,
-        'user_id'	=> $userId
-    ];
 }
 
 /**
