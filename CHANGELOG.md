@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- moved createUserAccount tot shared-functionality plugin
 
 ### Fixed
 
