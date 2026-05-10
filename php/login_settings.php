@@ -40,7 +40,7 @@ function changePasswordForm($userId = null){
 		isset($_REQUEST['action']) 			&&
 		isset($_REQUEST['wp-2fa-nonce'])	&&
 		isset($_REQUEST['user-id'])			&&
-		wp_verify_nonce( $_REQUEST['wp-2fa-nonce'], "wp-2fa-reset-nonce_".$_REQUEST['user-id'])
+		TSJIPPY\verifyNonce('wp-2fa-nonce', "wp-2fa-reset-nonce_".$_REQUEST['user-id'])
 	){
 		if($_REQUEST['action'] == 'Reset 2FA' && function_exists('TSJIPPY\LOGIN\reset2fa')){
 			TSJIPPY\LOGIN\reset2fa($userId);
