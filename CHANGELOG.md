@@ -5,6 +5,7 @@
 
 ### Changed
 - moved createUserAccount tot shared-functionality plugin
+- implemented new verifyNonce function
 
 ### Fixed
 
