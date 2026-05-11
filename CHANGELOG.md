@@ -6,6 +6,7 @@
 ### Changed
 - moved createUserAccount tot shared-functionality plugin
 - implemented new verifyNonce function
+- removed admin login for cron
 
 ### Fixed
 
