@@ -23,9 +23,6 @@ function scheduleTasks(){
 }
 
 function birthdayCheck(){
-	//Change the user to the admin account otherwise get_users will not work
-	wp_set_current_user(1);
-
 	//Current date time
 	$date   = new \DateTime();
 
@@ -70,7 +67,6 @@ function birthdayCheck(){
  * send an e-mail with an overview of an users details for them to check
  */
 function checkDetailsMail(){
-	wp_set_current_user(1);
 
 	$family 	= new TSJIPPY\FAMILY\Family();
 
@@ -330,9 +326,6 @@ function checkDetailsMail(){
 function accountExpiryCheck(){
 	require_once(ABSPATH.'wp-admin/includes/user.php');
 
-	//Change the user to the adminaccount otherwise get_users will not work
-	wp_set_current_user(1);
-
 	//Get the users who will expire in 1 month
 	$users = get_users(
 		array(
@@ -414,7 +407,6 @@ function accountExpiryCheck(){
  * Send reminder to people to login
  */
 function checkLastLoginDate(){
-	wp_set_current_user(1);
 
 	$users = TSJIPPY\getUserAccounts();
 	foreach($users as $user){
