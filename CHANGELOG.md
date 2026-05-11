@@ -4,13 +4,18 @@
 ### Added
 
 ### Changed
-- moved createUserAccount tot shared-functionality plugin
-- implemented new verifyNonce function
-- removed admin login for cron
 
 ### Fixed
 
 ### Updated
+
+## [10.0.8] - 2026-05-11
+
+
+### Changed
+- moved createUserAccount tot shared-functionality plugin
+- implemented new verifyNonce function
+- removed admin login for cron
 
 ## [10.0.7] - 2026-05-08
 
