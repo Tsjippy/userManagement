@@ -12,7 +12,9 @@ function restApiInit() {
 		array(
 			'methods' 				=> 'POST',
 			'callback' 				=> 	__NAMESPACE__.'\addMinistry',
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> function(){
+				return current_user_can('read');
+			},
 			'args'					=> array(
 				'location-name'		=> array(
 					'required'	=> true
@@ -77,7 +79,7 @@ function restApiInit() {
 			'callback' 				=> 	function(){
 				return TSJIPPY\createUserAccount(false);
 			},
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> '__return_true', // Allow non-logged in users to access this endpoint, as this is used for self-registration
 			'args'					=> array(
 				'first-name' => array(
 					'required'	=> true
@@ -120,7 +122,9 @@ function restApiInit() {
 		array(
 			'methods' 				=> 'POST',
 			'callback' 				=> 	__NAMESPACE__.'\getUserPageTab',
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> function(){
+				return current_user_can('read');
+			},
 			'args'					=> array(
 				'user-id'		=> array(
 					'required'	=> true,
@@ -136,12 +140,19 @@ function restApiInit() {
 	);
 }
 
+/**
+ * Get the content for a specific user page tab
+ * 
+ * @param \WP_REST_Request $wpRestRequest The REST request containing the user ID and tab name
+ * 
+ * @return array An array containing the HTML, JS, and CSS for the requested tab content
+ */
 function getUserPageTab($wpRestRequest){
 	$params				= $wpRestRequest->get_params();
 
 	$userId				= $params['user-id'];
 
-	$genericInfoRoles 	= array_merge(['usermanagement'], ["medicalinfo"], ['administrator']);
+	$genericInfoRoles 	= array_merge(['usermanagement'], ['administrator']);
 	$userSelectRoles	= apply_filters('tsjippy_user_page_dropdown', $genericInfoRoles);
 	$user 				= wp_get_current_user();
 	$userRoles 			= $user->roles;
@@ -161,9 +172,6 @@ function getUserPageTab($wpRestRequest){
 			break;
 		case 'family':
 			$html	= do_shortcode("[formbuilder slug=user_family user-id='$userId']");
-			break;
-		case 'location':
-			$html	= do_shortcode("[formbuilder slug=user_location user-id='$userId']");
 			break;
 		case 'location':
 			$html	= do_shortcode("[formbuilder slug=user_location user-id='$userId']");

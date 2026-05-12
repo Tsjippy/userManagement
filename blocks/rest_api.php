@@ -11,7 +11,9 @@ function blockRestApiInit() {
 		array(
 			'methods' 				=> 'GET',
 			'callback' 				=> __NAMESPACE__.'\expiryWarnings',
-			'permission_callback' 	=> '__return_true',
+			'permission_callback' 	=> function(){
+				return current_user_can('read');
+			},
 		)
 	);
 } 
