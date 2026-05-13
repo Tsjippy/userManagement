@@ -130,7 +130,7 @@ function checkDetailsMail(){
 			if(empty($birthday)){
 				$birthday = 'No birthday specified.';
 			}else{
-				$birthday = date('d  F Y', strtotime($birthday));
+				$birthday = gmdate('d  F Y', strtotime($birthday));
 			}
 			$message .= "<tr>";
 				$message .= "<td>";
@@ -263,7 +263,7 @@ function checkDetailsMail(){
 				$partner = $partner->display_name;
 
 				if($weddingDate){
-					$text	= date('d F Y', strtotime($weddingDate));
+					$text	= gmdate('d F Y', strtotime($weddingDate));
 				}else{
 					$text	= "No weddingdate provided";
 				}
@@ -342,7 +342,7 @@ function accountExpiryCheck(){
 				),
 				array(
 					'key' 		=> 'account_validity',
-					'value' 	=> date("Y-m-d", strtotime(" +1 months")),
+					'value' 	=> gmdate("Y-m-d", strtotime(" +1 months")),
 					'compare' 	=> '=',
 					'type' 		=> 'DATE'
 				),
@@ -382,7 +382,7 @@ function accountExpiryCheck(){
 				),
 				array(
 					'key'		=> 'account_validity',
-					'value' 	=> date("Y-m-d"),
+					'value' 	=> gmdate("Y-m-d"),
 					'compare' 	=> '<=',
 					'type' 		=> 'DATE'
 				),

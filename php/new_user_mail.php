@@ -33,7 +33,7 @@ function notificationEmail($args, $user){
 
 	$format				= get_option('date_format').' '.get_option('time_format');
 
-	$validTillString	= date($format, $validTill);
+	$validTillString	= gmdate($format, $validTill);
 
 	$pageUrl	= get_permalink(TSJIPPY\LOGIN\SETTINGS['password-reset-page'] ?? [] [0]);
 	$url		= "$pageUrl?key=$key&login=$user->user_login";

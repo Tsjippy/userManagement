@@ -68,9 +68,9 @@ class PotentialFamilyMembers{
 			$user->ageDifference 		= null;
 			$user->age 		= null;
 			if(!empty($user->birthday)){
-				$user->age = date_diff( date_create( date("Y-m-d")), date_create($user->birthday))->y;
+				$user->age = date_diff( date_create( gmdate("Y-m-d")), date_create($user->birthday))->y;
 				if (!empty($this->birthday)){
-					$user->ageDifference = date("Y", strtotime($user->birthday)) - date("Y", strtotime($this->birthday));
+					$user->ageDifference = gmdate("Y", strtotime($user->birthday)) - gmdate("Y", strtotime($this->birthday));
 				}
 			}
         }

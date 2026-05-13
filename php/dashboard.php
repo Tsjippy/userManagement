@@ -28,7 +28,7 @@ function showDashboard($userId, $admin=false){
 		if(is_numeric($loginCount)){
 			$timeString 	= strtotime($lastLogin);
 			if($timeString ){
-				$lastLogin = date('d F Y', $timeString);
+				$lastLogin = gmdate('d F Y', $timeString);
 			}
 
 			$message = "$firstName has logged in $loginCount times.<br>Last login was $lastLogin.";

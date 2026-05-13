@@ -111,7 +111,7 @@ function userStatistics(){
 					}else{
 						$timeString 	= strtotime($lastLoginDate);
 						if($timeString ){
-							$lastLoginDate = date('d F Y', $timeString);
+							$lastLoginDate = gmdate('d F Y', $timeString);
 						}
 					}
 

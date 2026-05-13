@@ -66,7 +66,7 @@ register_activation_hook( __FILE__, function(){
 
 	// add the last logindate for existing users
     foreach(get_users(['meta_key' => 'last_login_date','meta_compare'  => 'NOT EXISTS']) as $user){
-        update_user_meta( $user->ID, 'last_login_date', date('Y-m-d'));
+        update_user_meta( $user->ID, 'last_login_date', gmdate('Y-m-d'));
     }
 
 	/**
