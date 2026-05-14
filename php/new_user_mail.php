@@ -55,8 +55,16 @@ function notificationEmail($args, $user){
 	$format				= get_option('date_format').' '.get_option('time_format');
 
 	$validTillString	= gmdate($format, $validTill);
-
-	$pageUrl	= get_permalink(TSJIPPY\LOGIN\SETTINGS['password-reset-page'] ?? [] [0]);
+ $pageUrl = '';
+	
+	if(isset('TSJIPPY\LOGIN\SETTINGS'){
+		$pageUrl	= get_permalink(TSJIPPY\LOGIN\SETTINGS['password-reset-page'] ?? '' );
+	}
+	
+	if(empty($pageUrl){
+		$pageUrl = SITEURL;
+	}
+	
 	$url		= "$pageUrl?key=$key&login=$user->user_login";
 
 	if(get_user_meta($user->ID, 'disabled', true) == 'pending'){
