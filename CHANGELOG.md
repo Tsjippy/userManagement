@@ -6,10 +6,15 @@
 ### Changed
 
 ### Fixed
-- admin menu mail label
-- get reset password url when login plugin not active
 
 ### Updated
+
+## [10.1.1] - 2026-05-14
+
+
+### Fixed
+- admin menu mail label
+- get reset password url when login plugin not active
 
 ## [10.1.0] - 2026-05-14
 
