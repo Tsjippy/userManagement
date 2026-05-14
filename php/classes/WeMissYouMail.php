@@ -6,9 +6,17 @@ use TSJIPPY\ADMIN;
 
 class WeMissYouMail extends ADMIN\MailSetting{
 
-    public $user;
-    public $lastLogin;
+    public \WP_User $user;
+    public string $lastLogin;
 
+    /**
+     * Constructor
+     *
+     * @param \WP_User $user The user to send the email to
+     * @param string $lastLogin The date of the last login
+     *
+     * @return void
+     */
     public function __construct($user, $lastLogin='') {
         // call parent constructor
 		parent::__construct('miss_you', PLUGINSLUG);

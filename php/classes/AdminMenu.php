@@ -84,7 +84,7 @@ class AdminMenu extends TSJIPPY\ADMIN\SubAdminMenu{
 
         $buttons    = [
             'account-approved-email'        => 'Account Approved',
-            'account-created-email'         => 'Account Approved',
+            'account-created-email'         => 'Account Created',
             'account-will-expired-email'    => 'Account Will Expire',
             'account-deleted-email'         => 'Account Deleted',
             'not-seen-email'                => 'No Activity'

@@ -5,8 +5,15 @@ use TSJIPPY\ADMIN;
 
 class AccountRemoveMail extends ADMIN\MailSetting{
 
-    public $user;
+    public \WP_User$user;
 
+    /**
+     * Constructor
+     *
+     * @param \WP_User $user The user to send the email to
+     *
+     * @return void
+     */
     public function __construct($user) {
         // call parent constructor
 		parent::__construct('account_removal', PLUGINSLUG);

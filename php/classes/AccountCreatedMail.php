@@ -5,9 +5,18 @@ use TSJIPPY\ADMIN;
 
 class AccountCreatedMail extends ADMIN\MailSetting{
 
-    public $user;
-    public $loginUrl;
+    public \WP_User $user;
+    public string $loginUrl;
 
+    /**
+     * Constructor
+     *
+     * @param \WP_User $user The user to send the email to
+     * @param string $loginUrl The url to the login page
+     * @param string $validTill The date till the login link is valid
+     *
+     * @return void
+     */
     public function __construct($user, $loginUrl='', $validTill='') {
         // call parent constructor
 		parent::__construct('account_created', PLUGINSLUG);

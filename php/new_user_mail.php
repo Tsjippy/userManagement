@@ -4,6 +4,14 @@ use TSJIPPY;
 
 //Add link to the user menu to resend the confirmation e-mail
 add_filter( 'user_row_actions', __NAMESPACE__.'\userRowActions', 10, 2 );
+/**
+ * Filter the actions displayed for each user in the users list table.
+ *
+ * @param array $actions The actions to display.
+ * @param \WP_User $user The user object.
+ * 
+ * @return array The modified actions.
+ */
 function userRowActions( $actions, $user ) {
     $actions['Resend welcome mail'] = "<a href='".SITEURL."/wp-admin/users.php?send_activation_email=$user->ID'>Resend welcome email</a>";
     return $actions;
@@ -22,6 +30,19 @@ function adminMenu() {
 
 //Apply our e-mail settings
 add_filter( 'wp_new_user_notification_email', __NAMESPACE__.'\notificationEmail', 10, 2);
+/**
+ * Filter the e-mail sent to the user when a new account is created or when the password is reset.
+ * 
+ * @param array $args {
+ * 	@type string $to The email address(es) to send the email to.
+ * 	@type string $subject The subject of the email.
+ * 	@type string $message The message body of the email.
+ * 	@type string $headers The headers of the email.
+ * }
+ * @param \WP_User $user The user object for the user being notified.
+ * 
+ * @return array The modified email arguments.
+ */
 function notificationEmail($args, $user){
 	
 	$expirationDuration	= apply_filters( 'password_reset_expiration', DAY_IN_SECONDS );
