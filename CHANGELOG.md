@@ -7,6 +7,7 @@
 
 ### Fixed
 - admin menu mail label
+- get reset password url when login plugin not active
 
 ### Updated
 
