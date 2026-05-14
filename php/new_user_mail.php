@@ -55,17 +55,11 @@ function notificationEmail($args, $user){
 	$format				= get_option('date_format').' '.get_option('time_format');
 
 	$validTillString	= gmdate($format, $validTill);
- $pageUrl = '';
-	
-	if(isset('TSJIPPY\LOGIN\SETTINGS'){
-		$pageUrl	= get_permalink(TSJIPPY\LOGIN\SETTINGS['password-reset-page'] ?? '' );
-	}
-	
-	if(empty($pageUrl){
-		$pageUrl = SITEURL;
-	}
-	
-	$url		= "$pageUrl?key=$key&login=$user->user_login";
+
+	$url = add_query_arg([
+		'key' 	=> $key,
+		'login' => $user->user_login
+	], wp_lostpassword_url());
 
 	if(get_user_meta($user->ID, 'disabled', true) == 'pending'){
 		$mail = new AccountApproveddMail($user, $url, $validTillString);
