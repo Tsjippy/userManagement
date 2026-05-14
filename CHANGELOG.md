@@ -6,6 +6,7 @@
 ### Changed
 
 ### Fixed
+- admin menu mail label
 
 ### Updated
 
