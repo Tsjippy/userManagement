@@ -400,25 +400,3 @@ function getGenericsTab($userId){
 
 	return $html;
 }
-
-function getMedicalTab($userId){
-	$family	= new TSJIPPY\FAMILY\Family();
-
-	ob_start();
-	
-	if($family->isChild($userId)){
-		echo do_shortcode("[formbuilder slug=user_medical user-id=$userId]");
-	}else{
-		echo do_shortcode('[formbuilder slug=user_medical]');
-	}
-				
-	?>
-	<form method='post' id='print-medicals-form'>
-		<input type='hidden' class='no-reset' name='user-id' id='user-id' value='<?php echo $userId;?>'>
-		<button class='button button-primary' type='submit' name='print-medicals' value='generate'>Export data as PDF</button>
-	</form>
-	<?php
-
-	return ob_get_clean();
-
-}
