@@ -108,7 +108,7 @@ register_deactivation_hook( __FILE__, function(){
 	foreach(['2fa-page', 'user-edit-page', 'account-create-page', 'pending-users-page'] as $page){
 		if(is_numeric(SETTINGS[$page] ?? false))
 			// Remove the auto created page
-			wp_delete_post($page, true);
+			wp_delete_post(SETTINGS[$page], true);
 	}
 
 	wp_clear_scheduled_hook( 'birthday_check_action' );

@@ -268,6 +268,7 @@ function addMinistry(){
 /**
  * Update the users roles
  */
+add_action( 'tsjippy-after-user-register' , __NAMESPACE__.'\updateRoles');
 function updateRoles($userId='', $newRoles=[]){
 	if ( !function_exists( 'populate_roles' ) ) {
 		require_once( ABSPATH . 'wp-admin/includes/schema.php' );
