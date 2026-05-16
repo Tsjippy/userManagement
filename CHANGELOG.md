@@ -5,6 +5,7 @@
 
 ### Changed
 - update roles after user creation if needed
+- removed medical roles
 
 ### Fixed
 
