@@ -182,9 +182,6 @@ function getUserPageTab($wpRestRequest){
 		case 'security':
 			$html	= do_shortcode("[formbuilder slug=security_questions user-id='$userId']");
 			break;
-		case 'medical':
-			$html	= getMedicalTab($userId);
-			break;
 		default:
 			// check if tabname has a number
 			$childId	= explode('-', $params['tabname']);

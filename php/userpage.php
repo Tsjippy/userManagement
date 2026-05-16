@@ -60,8 +60,7 @@ function userInfoPage($atts){
 	
 	//Variables
 	$family				= new TSJIPPY\FAMILY\Family();
-	$medicalRoles		= ["medicalinfo"];
-	$genericInfoRoles 	= array_merge(['usermanagement'], $medicalRoles, ['administrator']);
+	$genericInfoRoles 	= array_merge(['usermanagement'], ['administrator']);
 	$user 				= wp_get_current_user();
 	$userRoles 			= $user->roles;
 	$tabs				= [];
@@ -352,8 +351,7 @@ function getGenericsTab($userId){
 	
 	$accountValidity 	= get_user_meta( $userId, 'account_validity',true);
 
-	$medicalRoles		= ["medicalinfo"];
-	$genericInfoRoles 	= array_merge(['usermanagement'], $medicalRoles, ['administrator']);
+	$genericInfoRoles 	= array_merge(['usermanagement'], ['administrator']);
 
 	$user 				= wp_get_current_user();
 	$userRoles 			= $user->roles;
