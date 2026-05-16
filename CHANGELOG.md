@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- update roles after user creation if needed
 
 ### Fixed
 
