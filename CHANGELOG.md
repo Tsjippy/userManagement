@@ -6,9 +6,14 @@
 ### Changed
 
 ### Fixed
-- user id error
 
 ### Updated
+
+## [10.1.2] - 2026-05-16
+
+
+### Fixed
+- user id error
 
 ## [10.1.1] - 2026-05-14
 
