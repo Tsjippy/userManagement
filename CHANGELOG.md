@@ -4,12 +4,17 @@
 ### Added
 
 ### Changed
-- update roles after user creation if needed
-- removed medical roles
 
 ### Fixed
 
 ### Updated
+
+## [10.1.3] - 2026-05-16
+
+
+### Changed
+- update roles after user creation if needed
+- removed medical roles
 
 ## [10.1.2] - 2026-05-16
 
